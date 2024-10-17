@@ -1,1 +1,3 @@
-export const IMeasurement = {}
+export const APP_CONSTANTS = {
+    COLLECTION_NAME: 'routines'
+}

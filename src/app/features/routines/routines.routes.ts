@@ -3,7 +3,11 @@ import { Routes } from '@angular/router';
 const routinesRoutes: Routes = [
     {
         path: '',
-        loadComponent: () => import('./list/list.component').then(m => m.ListComponent)
+        loadComponent: () => import('./routines.component').then(m => m.RoutinesComponent)
+    },
+    {
+        path: 'routine',
+        loadComponent: () => import('./new_edit/new_edit.component').then(m => m.NewEditComponent)
     }
 ]
 
