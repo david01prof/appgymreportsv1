@@ -31,6 +31,8 @@ export class ListComponent {
 
   public data = input.required<IRoutine[]>();
   public routines: IRoutine[] = [];
+  first = 0;
+  rows = 5;
 
   private _routineSvc = inject(RoutinesService);
 
@@ -41,4 +43,29 @@ export class ListComponent {
   deleteRoutine(id: string) {
     this._routineSvc.deleteRoutine(id);
   }
+
+  next() {
+    this.first = this.first + this.rows;
+}
+
+prev() {
+    this.first = this.first - this.rows;
+}
+
+reset() {
+    this.first = 0;
+}
+
+pageChange(event:any) {
+    this.first = event.first;
+    this.rows = event.rows;
+}
+
+isLastPage(): boolean {
+    return this.routines ? this.first === this.routines.length - this.rows : true;
+}
+
+isFirstPage(): boolean {
+    return this.routines ? this.first === 0 : true;
+}
 }

@@ -6,8 +6,38 @@
 
 <!-- Table -->
 
+<div class="mb-3">
+  <p-button 
+      type="button" 
+      icon="pi pi-chevron-left" 
+      (onClick)="prev()" 
+      [disabled]="isFirstPage()" 
+      styleClass="p-button-text" />
+  <p-button 
+      type="button"
+      icon="pi pi-refresh" 
+      (onClick)="reset()" 
+      styleClass="p-button-text" />
+  <p-button 
+      type="button" 
+      icon="pi pi-chevron-right" 
+      (onClick)="next()" 
+      [disabled]="isLastPage()" 
+      styleClass="p-button-text" />
+</div>
+
 <div class="card">
-  <p-table [value]="routines" [tableStyle]="{ 'min-width': '60rem' }">
+  <p-table
+    [value]="routines"
+    [tableStyle]="{ 'min-width': '60rem' }"
+    [paginator]="true"
+    [rows]="rows"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [first]="first"
+    [showCurrentPageReport]="true"
+    (onPage)="pageChange($event)"
+  >
     <ng-template pTemplate="body" let-routine>
       <tr>
         <td>
@@ -27,26 +57,22 @@
             <div class="flex justify-content-end gap-2">
               @if (routine.status == 'EnProceso') {
               <p-tag severity="success" value="En proceso" />
-              } 
-              @else if (routine.status == 'Pendiente') {
-                <p-tag severity="warning" value="Pendiente" />
-              } 
-              @else {
+              } @else if (routine.status == 'Pendiente') {
+              <p-tag severity="warning" value="Pendiente" />
+              } @else {
               <p-tag severity="danger" value="Finalizada" />
               }
             </div>
 
             <div class="flex justify-content-end">
-              <p-button icon="pi pi-plus" (onClick)="deleteRoutine(routine.id)" />
+              <p-button
+                icon="pi pi-plus"
+                (onClick)="deleteRoutine(routine.id)"
+              />
             </div>
           </p-card>
         </td>
       </tr>
-    </ng-template>
-    <ng-template pTemplate="summary">
-      <div class="flex align-items-center justify-content-between">
-        In total there are {{ routines ? routines.length : 0 }} products.
-      </div>
     </ng-template>
   </p-table>
 </div>
