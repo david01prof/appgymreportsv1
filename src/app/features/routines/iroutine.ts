@@ -1,12 +1,17 @@
+
 export interface IRoutine {
     titleExercise: string;
-    numSeries: number;
-    series: ISeries[];
-    date: Date;
+    numExercises : number,
+    exercises: IExercise[],
+    date: any;
     comments: string;
-    status: boolean;
+    status: string;
 }
 
+interface IExercise {
+    numSeries: number;
+    series: ISeries[];
+}
 
 interface ISeries {
     replays: number;

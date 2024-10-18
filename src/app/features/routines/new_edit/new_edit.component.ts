@@ -9,8 +9,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RoutinesService } from '../routines.service';
+import { DividerModule } from 'primeng/divider';
 
-const PRIME_MODULES = [CardModule,ButtonModule,CalendarModule,InputNumberModule,InputTextModule,InputTextareaModule]
+const PRIME_MODULES = [CardModule,ButtonModule,CalendarModule,InputNumberModule,InputTextModule,InputTextareaModule,DividerModule]
 @Component({
   selector: 'app-new',
   standalone: true,
@@ -30,12 +31,12 @@ export class NewEditComponent {
 
   constructor(private router: Router,private fb: FormBuilder) {
     this.forms = new FormGroup({
-      titleExercise: new FormControl(''),
-      numSeries: new FormControl(0),
-      series: this.fb.array([]),
+      numExercises: new FormControl(0),
+      exercises: this.fb.array([]),
       date: new FormControl(new Date()),
       comments: new FormControl(''),
-      status: new FormControl('EnProceso')
+      status: new FormControl('EnProceso'),
+
     });
   }
 
@@ -61,21 +62,46 @@ export class NewEditComponent {
     }
   }
 
-
-  onKeyDown(event:any){
-    this.generarControles();  // Generamos los controles
+  onKeyDownExercises(){
+    this.generateControlsExercises();  // Generamos los controles
   }
 
-  get series(): FormArray {
-    return this.forms.get('series') as FormArray;
+  onKeyDownSeries(index:number){
+    this.generateControlsSeries(index);  // Generamos los controles
   }
 
-  generarControles() {
+  get exercises(): FormArray {
+    return this.forms.get('exercises') as FormArray;
+  }
+
+  public getSeries(id:number): FormArray {
+    return this.exercises.at(id).get('series') as FormArray;
+  }
+
+  generateControlsExercises() {
     // Limpiar el FormArray actual en caso de que ya tenga controles
-    this.series.clear();
+    this.exercises.clear();
 
-    for (let i = 0; i < this.forms.value.numSeries; i++) {
-      this.series.push(
+    for (let i = 0; i < this.forms.value.numExercises; i++) {
+      this.exercises.push(
+        this.fb.group({
+          titleExercise: new FormControl(''),
+          numSeries: new FormControl(0),
+          series: this.fb.array([]),
+        })
+      ) 
+    }
+  }
+
+  generateControlsSeries(index:number) {
+
+    let series = this.forms.get(`exercises.${index}.series`) as FormArray;
+    series.clear();
+
+    let numSeries = this.forms.get(`exercises.${index}.numSeries`) as FormControl;
+
+    for (let i = 0; i < numSeries.value; i++) {
+      series.push(
         this.fb.group({
           replays: new FormControl(0),  // Control para replays
           weight:  new FormControl(0)   // Control para weight

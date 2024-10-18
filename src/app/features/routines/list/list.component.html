@@ -1,4 +1,4 @@
-<div class="flex justify-content-end">
+<div class="flex justify-content-end my-3">
   <p-button icon="pi pi-plus" [routerLink]="['routine']" />
 </div>
 
@@ -6,30 +6,34 @@
 
 <!-- Table -->
 
+@if (routines.length > rows) {
 <div class="mb-3">
-  <p-button 
-      type="button" 
-      icon="pi pi-chevron-left" 
-      (onClick)="prev()" 
-      [disabled]="isFirstPage()" 
-      styleClass="p-button-text" />
-  <p-button 
-      type="button"
-      icon="pi pi-refresh" 
-      (onClick)="reset()" 
-      styleClass="p-button-text" />
-  <p-button 
-      type="button" 
-      icon="pi pi-chevron-right" 
-      (onClick)="next()" 
-      [disabled]="isLastPage()" 
-      styleClass="p-button-text" />
+  <p-button
+    type="button"
+    icon="pi pi-chevron-left"
+    (onClick)="prev()"
+    [disabled]="isFirstPage()"
+    styleClass="p-button-text"
+  />
+  <p-button
+    type="button"
+    icon="pi pi-refresh"
+    (onClick)="reset()"
+    styleClass="p-button-text"
+  />
+  <p-button
+    type="button"
+    icon="pi pi-chevron-right"
+    (onClick)="next()"
+    [disabled]="isLastPage()"
+    styleClass="p-button-text"
+  />
 </div>
+}
 
 <div class="card">
   <p-table
     [value]="routines"
-    [tableStyle]="{ 'min-width': '60rem' }"
     [paginator]="true"
     [rows]="rows"
     [rowsPerPageOptions]="[5, 10, 20]"
@@ -37,39 +41,91 @@
     [first]="first"
     [showCurrentPageReport]="true"
     (onPage)="pageChange($event)"
+    #dt1
+    dataKey="id"
+    [loading]="loading"
+    [globalFilterFields]="['titleExercise']"
   >
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <p-button
+          label="Clear"
+          [outlined]="true"
+          icon="pi pi-filter-slash"
+          (onClick)="clear(dt1)"
+        />
+        <span class="p-input-icon-left ml-auto">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            [(ngModel)]="searchValue"
+            (input)="dt1.filterGlobal(searchValue, 'contains')"
+            placeholder="Buscar por titulo"
+          />
+        </span>
+      </div>
+    </ng-template>
+
     <ng-template pTemplate="body" let-routine>
       <tr>
         <td>
-          <p-card [style]="{ margin: '15px 0' }">
-            <div class="flex align-items-center">
-              <i class="pi pi-heart text-6xl text-blue-500"></i>
-              <div class="ml-3">
-                <span class="text-blue-500 block white-space-nowrap text-2xl">{{
-                  routine.titleExercise
-                }}</span
-                ><span class="text-blue-500 block font-bold text-sm">{{
-                  routine.date
-                }}</span>
+          <p-card [header]="routine.titleExercise">
+
+            <!-- TODO De momento no  -->
+            <!-- <ng-template pTemplate="header">
+
+              <img
+                alt="Card"
+                src="https://primefaces.org/cdn/primeng/images/card-ng.jpg"
+              />
+            </ng-template> -->
+
+            <div class="flex justify-content-between gap-2">
+
+              <div class="text-gray-400 ">
+                {{routine.date}}
               </div>
+
+              <div class="margen_tag">
+                @if (routine.status == 'EnProceso') {
+                  <p-tag severity="success" value="En proceso" />
+                  } @else if (routine.status == 'Pendiente') {
+                  <p-tag severity="warning" value="Pendiente" />
+                  } @else {
+                  <p-tag severity="danger" value="Finalizada" />
+                  }
+              </div>
+
             </div>
 
-            <div class="flex justify-content-end gap-2">
-              @if (routine.status == 'EnProceso') {
-              <p-tag severity="success" value="En proceso" />
-              } @else if (routine.status == 'Pendiente') {
-              <p-tag severity="warning" value="Pendiente" />
-              } @else {
-              <p-tag severity="danger" value="Finalizada" />
+            <div>
+              <p class="font-light">Descripción de la rutina: </p>
+              <p class="font-light">Total de series: {{routine.numSeries}}</p> 
+
+              @if(routine.numSeries > 0) {
+                @for (serie of routine.series; track $index) {
+                  <p class="font-light">Serie {{$index + 1}}: {{serie.title}}</p>
+                }
               }
             </div>
 
-            <div class="flex justify-content-end">
-              <p-button
-                icon="pi pi-plus"
-                (onClick)="deleteRoutine(routine.id)"
-              />
-            </div>
+            <ng-template pTemplate="footer">
+              <div class="flex gap-3 mt-1">
+                <p-button
+                  label="Cancel"
+                  severity="secondary"
+                  class="w-full"
+                  styleClass="w-full"
+                />
+                <p-button
+                  label="Save"
+                  class="w-full"
+                  styleClass="w-full"
+                  (onClick)="deleteRoutine(routine.id)"
+                />
+              </div>
+            </ng-template>
           </p-card>
         </td>
       </tr>

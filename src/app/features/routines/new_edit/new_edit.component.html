@@ -1,100 +1,117 @@
 <form [formGroup]="forms" (ngSubmit)="onSubmit()">
+  <p-card>
+    <!-- title -->
+    <div class="flex justify-content-center">
+      <input
+        pInputText
+        id="username"
+        aria-describedby="username-help"
+        [formControl]="titleRoutine"
+      />
+    </div>
 
-    <p-card>
-      <!-- <app-short-video></app-short-video> -->
-  
-      <!-- title -->
-      <div class="flex justify-content-center">
-        <input
-          pInputText
-          id="username"
-          aria-describedby="username-help"
-          [formControl]="titleRoutine"
-        />
-      </div>
-  
-      <hr />
-  
-      <!-- Subtitle -->
-      <div class="my-4">
-        <div class="flex flex-column gap-2">
-          <label for="username">Ejercicio 1:</label>
-          <input
-            pInputText
-            id="username"
-            aria-describedby="username-help"
-            formControlName="titleExercise"
-          />
-          <small id="username-help"> Introduce el nombre de la rutina </small>
-        </div>
-      </div>
-  
-      <!-- Num Series -->
-      <div class="flex flex-column gap-2 my-2 overflow-hidden">
-        <label for="username">Series</label>
-        <p-inputNumber
-          inputId="integeronly"
-          formControlName="numSeries"
-          (onKeyDown)="onKeyDown($event)"
-        />
-      </div>
-  
-      @if (forms.value.series != undefined && forms.value.series != 0) { 
-          
-          <!-- Series -->
-          <div formArrayName="series">
-              <div *ngFor="let set of series.controls; let i = index" [formGroupName]="i">
-  
-                  <label>Serie {{i + 1}}:</label>
-      
-                  <div class="flex overflow-hidden">
-                      <!-- Replays -->
-                      <div class="flex flex-column gap-2 my-2 overflow-hidden">
-                          <label>Repeticiones:</label>
-                          <p-inputNumber inputId="integeronly" formControlName="replays"  />
-                      </div>
-              
-                      <!-- Weight -->
-                      <div class="flex flex-column gap-2 my-2 overflow-hidden">
-                          <label>Peso (kg)</label>
-                          <p-inputNumber inputId="integeronly" formControlName="weight" />
-                      </div>
-                  </div>
-      
-              </div>
+    <p-divider />
+
+    <!-- Num Exercises -->
+    <div class="flex flex-column gap-2 my-2 overflow-hidden">
+      <label for="username">N de ejercicios </label>
+      <p-inputNumber
+        inputId="integeronly"
+        formControlName="numExercises"
+        (onKeyDown)="onKeyDownExercises()"
+      />
+    </div>
+
+    <p-divider />
+
+    @if (forms.value.numExercises != undefined && forms.value.numExercises > 0)
+    {
+
+    <div formArrayName="exercises">
+      <div
+        *ngFor="let exercise of exercises.controls; let i = index"
+        [formGroupName]="i"
+      >
+        <div class="my-4">
+          <div class="flex flex-column gap-2">
+            <label for="username">Ejercicio {{ i + 1 }}:</label>
+            <input
+              pInputText
+              id="username"
+              aria-describedby="username-help"
+              formControlName="titleExercise"
+            />
+            <small id="username-help"> Introduce el nombre de la rutina </small>
           </div>
-      }
-  
-      <hr />
-  
-      <!-- Date -->
-      <div class="flex flex-column gap-2 my-2">
-        <label for="username">Fecha</label>
-        <p-calendar
-          [iconDisplay]="'input'"
-          [showIcon]="true"
-          inputId="icondisplay"
-          formControlName="date"
-          dateFormat="dd.mm.yy"
-        />
+        </div>
+
+        <!-- Num Series -->
+        <div class="flex flex-column gap-2 my-2 overflow-hidden">
+          <label for="username">Series</label>
+          <p-inputNumber
+            inputId="integeronly"
+            (onKeyDown)="onKeyDownSeries(i)"
+            formControlName="numSeries"
+          />
+        </div>
+
+        <p-divider />
+
+        @if (forms.value.exercises[i].series != undefined &&
+        forms.value.exercises[i].series != 0) {
+
+        <!-- Series -->
+        <div formArrayName="series">
+          <div *ngFor="let member of getSeries(i).controls; let memberIndex = index" [formGroupName]="memberIndex">
+            <label>Serie {{ memberIndex + 1 }}:</label>
+
+            <div class="flex overflow-hidden">
+              <div class="flex flex-column gap-2 my-2 overflow-hidden">
+                <label>Repeticiones:</label>
+                <p-inputNumber inputId="integeronly" formControlName="replays" />
+              </div>
+
+              <div class="flex flex-column gap-2 my-2 overflow-hidden">
+                <label>Peso (kg)</label>
+                <p-inputNumber inputId="integeronly" formControlName="weight" />
+              </div>
+            </div>
+          </div>
+        </div>
+        }
+
       </div>
-  
-      <!-- Comments -->
-      <div class="my-2 gap-2">
-        <span id="address2">Comentarios</span> <br />
-        <textarea
-          pInputTextarea
-          aria-labelledby="address2"
-          formControlName="comments"
-        ></textarea>
-      </div>
-  
-      <!-- Submit -->
-      <div class="flex justify-content-center mt-4">
-        <p-button type="submit" label="Crear" [disabled]="forms.invalid" />
-      </div>
-  
-    </p-card>
-    
-  </form>
-  
+    </div>
+
+    } @if (forms.value.numExercises == undefined && forms.value.numExercises ==
+    0) { <p-divider />}
+
+    <!-- Date -->
+    <div class="flex flex-column gap-2 my-2">
+      <label for="icondisplay">Fecha</label>
+      <p-calendar
+        [iconDisplay]="'input'"
+        [showIcon]="true"
+        inputId="icondisplay"
+        formControlName="date"
+        dateFormat="dd.mm.yy"
+        [showButtonBar]="true"
+      />
+    </div>
+
+    <!-- Comments -->
+    <div class="my-2 gap-2">
+      <span id="address2">Comentarios</span> <br />
+      <textarea
+        pInputTextarea
+        aria-labelledby="address2"
+        formControlName="comments"
+      ></textarea>
+    </div>
+
+    <!-- Submit -->
+    <div class="flex justify-content-center mt-4">
+      <p-button type="submit" label="Crear" [disabled]="forms.invalid" />
+    </div>
+  </p-card>
+</form>
