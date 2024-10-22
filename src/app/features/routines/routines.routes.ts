@@ -8,6 +8,10 @@ const routinesRoutes: Routes = [
     {
         path: 'routine',
         loadComponent: () => import('./new_edit/new_edit.component').then(m => m.NewEditComponent)
+    },
+    {
+        path: 'routine/:id',
+        loadComponent: () => import('./new_edit/new_edit.component').then(m => m.NewEditComponent)
     }
 ]
 

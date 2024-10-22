@@ -1,39 +1,17 @@
-<div class="flex justify-content-end my-3">
-  <p-button icon="pi pi-plus" [routerLink]="['routine']" />
-</div>
-
-@if (routines && routines.length > 0) {
+@if (dataRoutines()) {
 
 <!-- Table -->
 
-@if (routines.length > rows) {
-<div class="mb-3">
-  <p-button
-    type="button"
-    icon="pi pi-chevron-left"
-    (onClick)="prev()"
-    [disabled]="isFirstPage()"
-    styleClass="p-button-text"
-  />
-  <p-button
-    type="button"
-    icon="pi pi-refresh"
-    (onClick)="reset()"
-    styleClass="p-button-text"
-  />
-  <p-button
-    type="button"
-    icon="pi pi-chevron-right"
-    (onClick)="next()"
-    [disabled]="isLastPage()"
-    styleClass="p-button-text"
-  />
-</div>
-}
+<app-top-menu-list
+  [first]="first"
+  [rows]="rows"
+  [dataRoutines]="dataRoutines()"
+  (firstout)="getFirstOut($event)"
+></app-top-menu-list>
 
 <div class="card">
   <p-table
-    [value]="routines"
+    [value]="dataRoutines()"
     [paginator]="true"
     [rows]="rows"
     [rowsPerPageOptions]="[5, 10, 20]"
@@ -45,7 +23,9 @@
     dataKey="id"
     [loading]="loading"
     [globalFilterFields]="['titleExercise']"
+    [ngClass]="{ 'disabled-card': isCardDisabled }"
   >
+    <!-- Filter -->
     <ng-template pTemplate="caption">
       <div class="flex">
         <p-button
@@ -72,58 +52,55 @@
         <td>
           <p-card [header]="routine.titleExercise">
 
-            <!-- TODO De momento no  -->
-            <!-- <ng-template pTemplate="header">
-
-              <img
-                alt="Card"
-                src="https://primefaces.org/cdn/primeng/images/card-ng.jpg"
-              />
-            </ng-template> -->
-
+            <!-- Date and Status -->
             <div class="flex justify-content-between gap-2">
-
-              <div class="text-gray-400 ">
-                {{routine.date}}
+              <div class="text-gray-400">
+                {{ routine.date }}
               </div>
 
               <div class="margen_tag">
                 @if (routine.status == 'EnProceso') {
-                  <p-tag severity="success" value="En proceso" />
-                  } @else if (routine.status == 'Pendiente') {
-                  <p-tag severity="warning" value="Pendiente" />
-                  } @else {
-                  <p-tag severity="danger" value="Finalizada" />
-                  }
+                <p-tag severity="success" value="En proceso" />
+                } @else if (routine.status == 'Pendiente') {
+                <p-tag severity="warning" value="Pendiente" />
+                } @else {
+                <p-tag severity="danger" value="Finalizada" />
+                }
               </div>
-
             </div>
 
+            <!-- Description -->
             <div>
-              <p class="font-light">Descripción de la rutina: </p>
-              <p class="font-light">Total de series: {{routine.numSeries}}</p> 
+              <p class="font-light">Descripción de la rutina:</p>
+              <p class="font-light">Total de ejercicios: {{ routine.numExercises }} </p>
 
               @if(routine.numSeries > 0) {
                 @for (serie of routine.series; track $index) {
-                  <p class="font-light">Serie {{$index + 1}}: {{serie.title}}</p>
+                  <p class="font-light">
+                    Serie {{ $index + 1 }}: {{ serie.title }}
+                  </p>
                 }
               }
             </div>
 
+            <!-- Buttons actions -->
             <ng-template pTemplate="footer">
-              <div class="flex gap-3 mt-1">
-                <p-button
-                  label="Cancel"
-                  severity="secondary"
-                  class="w-full"
-                  styleClass="w-full"
-                />
-                <p-button
-                  label="Save"
-                  class="w-full"
-                  styleClass="w-full"
-                  (onClick)="deleteRoutine(routine.id)"
-                />
+              <div class="flex justify-content-center mt-1">
+
+                <!-- Updated -->
+                <app-dialog-detail
+                  [routine]="routine"
+                  [isUpdate]="true"
+                ></app-dialog-detail>
+
+                <!-- Detail -->
+                <app-dialog-detail
+                  [routine]="routine"
+                  [isUpdate]="false"
+                ></app-dialog-detail>
+
+                <!-- Delete -->
+                <app-dialog-detail [isUpdate]="false" [isDelete]="true" [routine]="routine"></app-dialog-detail>
               </div>
             </ng-template>
           </p-card>

@@ -1,112 +1,169 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, inject, input, OnInit } from '@angular/core';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
+import { DividerModule } from 'primeng/divider';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { IRoutine } from '../iroutine';
 import { RoutinesService } from '../routines.service';
-import { DividerModule } from 'primeng/divider';
 
-const PRIME_MODULES = [CardModule,ButtonModule,CalendarModule,InputNumberModule,InputTextModule,InputTextareaModule,DividerModule]
+const PRIME_MODULES = [
+  CardModule,
+  ButtonModule,
+  CalendarModule,
+  InputNumberModule,
+  InputTextModule,
+  InputTextareaModule,
+  DividerModule,
+];
 @Component({
-  selector: 'app-new',
+  selector: 'app-new-edit',
   standalone: true,
-  imports: [ReactiveFormsModule, PRIME_MODULES,CommonModule],
+  imports: [ReactiveFormsModule, PRIME_MODULES, CommonModule],
   templateUrl: './new_edit.component.html',
-  styleUrl: './new_edit.component.scss'
+  styleUrl: './new_edit.component.scss',
 })
-export class NewEditComponent {
-
-
-  titleRoutine: FormControl = new FormControl('Crear nueva rutina' )
-  value: string | undefined;
-  private readonly _routineSvc = inject(RoutinesService)
-
-
+export class NewEditComponent implements OnInit {
+  public routine = input<IRoutine>();
   public forms!: FormGroup;
 
-  constructor(private router: Router,private fb: FormBuilder) {
-    this.forms = new FormGroup({
-      numExercises: new FormControl(0),
-      exercises: this.fb.array([]),
-      date: new FormControl(new Date()),
-      comments: new FormControl(''),
-      status: new FormControl('EnProceso'),
+  private readonly _routineSvc = inject(RoutinesService);
 
-    });
-  }
+  constructor(private router: Router, private fb: FormBuilder) {}
 
-  async onSubmit() {
-    if (this.forms.valid) {
-      console.log(this.forms.value);
-      if((this.forms.value.date.getDate() < new Date().getDate())){
-        this.forms.value.status = 'Finalizada';
-      }else if ((this.forms.value.date.getDate() == new Date().getDate()) && (this.forms.value.date.getMonth() < new Date().getMonth())){
-        this.forms.value.status = 'Finalizada';
-      }else if ((this.forms.value.date.getDate() == new Date().getDate()) && (this.forms.value.date.getMonth() > new Date().getMonth())){
-        this.forms.value.status = 'Pendiente';
-      }else if ((this.forms.value.date.getDate() > new Date().getDate())){
-        this.forms.value.status = 'Pendiente';
-      }
-      
-      console.log(this.forms.value.date);
-      
-      await this._routineSvc.newRoutine(this.forms.value)
-      this.router.navigate(['routines']);
+  ngOnInit(): void {
+    if (this.routine() == undefined) {
+      this.forms = new FormGroup({
+        titleRoutine: new FormControl('Crear nueva rutina'),
+        numExercises: new FormControl(0),
+        exercises: this.fb.array([]),
+        date: new FormControl(new Date()),
+        comments: new FormControl(''),
+        status: new FormControl('EnProceso'),
+      });
     } else {
-      console.log('Formulario inválido');
+      this.forms = new FormGroup({
+        titleRoutine: new FormControl(this.routine()?.titleRoutine),
+        numExercises: new FormControl(this.routine()?.numExercises),
+        exercises: this.fb.array([]),
+        date: new FormControl(new Date()),
+        comments: new FormControl(this.routine()?.comments),
+        status: new FormControl(this.routine()?.status),
+      });
+
+      this.generateControlsExercises();
     }
-  }
 
-  onKeyDownExercises(){
-    this.generateControlsExercises();  // Generamos los controles
-  }
-
-  onKeyDownSeries(index:number){
-    this.generateControlsSeries(index);  // Generamos los controles
+    console.log(this.routine());
   }
 
   get exercises(): FormArray {
     return this.forms.get('exercises') as FormArray;
   }
 
-  public getSeries(id:number): FormArray {
-    return this.exercises.at(id).get('series') as FormArray;
-  }
+  public async onSubmit() {
+    let _refForm = this.forms.value;
 
-  generateControlsExercises() {
-    // Limpiar el FormArray actual en caso de que ya tenga controles
-    this.exercises.clear();
+    if (this.forms.valid) {
+      if (_refForm.date.getDate() < new Date().getDate()) {
+        _refForm.status = 'Finalizada';
+      } else if (
+        _refForm.date.getDate() == new Date().getDate() &&
+        _refForm.date.getMonth() < new Date().getMonth()
+      ) {
+        _refForm.status = 'Finalizada';
+      } else if (
+        _refForm.date.getDate() == new Date().getDate() &&
+        _refForm.date.getMonth() > new Date().getMonth()
+      ) {
+        _refForm.status = 'Pendiente';
+      } else if (_refForm.date.getDate() > new Date().getDate()) {
+        _refForm.status = 'Pendiente';
+      }
 
-    for (let i = 0; i < this.forms.value.numExercises; i++) {
-      this.exercises.push(
-        this.fb.group({
-          titleExercise: new FormControl(''),
-          numSeries: new FormControl(0),
-          series: this.fb.array([]),
-        })
-      ) 
+      await this._routineSvc.newRoutine(_refForm);
+
+      this.router.navigate(['routines']);
+    } else {
+      console.log('Formulario inválido');
     }
   }
 
-  generateControlsSeries(index:number) {
+  public getSeries(id: number): FormArray {
+    return this.exercises.at(id).get('series') as FormArray;
+  }
 
-    let series = this.forms.get(`exercises.${index}.series`) as FormArray;
-    series.clear();
+  public generateControlsExercises() {
+    if (this.routine() === undefined) {
+      this.exercises.clear();
 
-    let numSeries = this.forms.get(`exercises.${index}.numSeries`) as FormControl;
+      for (let i = 0; i < this.forms.value.numExercises; i++) {
+        this.exercises.push(
+          this.fb.group({
+            titleExercise: new FormControl(''),
+            numSeries: new FormControl(0),
+            series: this.fb.array([]),
+          })
+        );
+      }
+    } else {
+      for (let i = 0; i < this.routine()!.numExercises; i++) {
+        this.exercises.push(
+          this.fb.group({
+            titleExercise: new FormControl(
+              this.routine()?.exercises[i].titleExercise
+            ),
+            numSeries: new FormControl(this.routine()?.exercises[i].numSeries),
+            series: this.fb.array([]),
+          })
+        );
 
-    for (let i = 0; i < numSeries.value; i++) {
-      series.push(
-        this.fb.group({
-          replays: new FormControl(0),  // Control para replays
-          weight:  new FormControl(0)   // Control para weight
-        })
-      ) 
+        this.generateControlsSeries(i);
+      }
+    }
+  }
+
+  public generateControlsSeries(index: number) {
+    if (this.routine() === undefined) {
+      let series = this.forms.get(`exercises.${index}.series`) as FormArray;
+      series.clear();
+
+      let numSeries = this.forms.get(
+        `exercises.${index}.numSeries`
+      ) as FormControl;
+
+      for (let i = 0; i < numSeries.value; i++) {
+        series.push(
+          this.fb.group({
+            replays: new FormControl(0), // Control para replays
+            weight: new FormControl(0), // Control para weight
+          })
+        );
+      }
+    } else {
+      let series = this.routine()?.exercises[index].series;
+      let formSeries = this.forms.get(`exercises.${index}.series`) as FormArray;
+      let numSeries = this.routine()?.exercises[index].numSeries;
+
+      for (let i = 0; i < numSeries!; i++) {
+        formSeries!.push(
+          this.fb.group({
+            replays: new FormControl(series![i].replays), //Control para replays
+            weight: new FormControl(series![i].weight), // Control para weight
+          })
+        );
+      }
     }
   }
 }

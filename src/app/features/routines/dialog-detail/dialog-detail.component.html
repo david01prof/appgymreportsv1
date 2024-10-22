@@ -1,0 +1,78 @@
+@if (!isUpdate() && !isDelete() && routine() != undefined) {
+
+<!-- Detail dialog -->
+<div class="card flex justify-content-center">
+  <p-button
+    (onClick)="showDialog()"
+    icon="pi pi-eye"
+    severity="secondary"
+    class="w-full"
+  />
+  <p-dialog
+    [header]="routine()?.titleRoutine"
+    [modal]="true"
+    [(visible)]="visible"
+    [style]="{ width: '90%' }"
+  >
+    @for (exercise of routine()?.exercises; track $index) {
+    <span class="p-text-secondary block mb-5"
+      >Ejercicio {{ $index + 1 }}: {{ exercise.titleExercise }}</span
+    >
+
+    <p-accordion>
+      @for (serie of exercise.series; track $index) {
+      <p-accordionTab header="Serie: {{ $index + 1 }}">
+        <div class="flex justify-content-between gap-2">
+          <div class="text-gray-400">
+            <span>Repeticiones: {{ serie.replays }},</span>
+          </div>
+          <div class="text-gray-400">
+            <span>Peso: {{ serie.weight }}</span>
+          </div>
+        </div>
+      </p-accordionTab>
+      <br />
+      }
+    </p-accordion>
+
+    }
+  </p-dialog>
+</div>
+
+} @else if (isUpdate() && routine() != undefined) {
+
+<!-- Update dialog -->
+<div class="card flex justify-content-center">
+  <p-button
+    (onClick)="showDialogUpdated()"
+    icon="pi pi-file-edit"
+    severity="warning"
+    class="w-full"
+  />
+  <p-dialog [modal]="true" [(visible)]="visible" [style]="{ width: '90%' }">
+    <app-new-edit *ngIf="chargeComponent" [routine]="routine()"></app-new-edit>
+  </p-dialog>
+</div>
+
+}@else if (isDelete() && routine() != undefined){
+
+<!-- delete dialog -->
+<div class="card flex justify-content-center">
+  <p-button
+    (onClick)="showDialog()"
+    icon="pi pi-trash"
+    severity="danger"
+    class="w-full"
+  />
+  <p-dialog [modal]="true" [(visible)]="visible" [style]="{ width: '90%' }">
+    <div class="flex justify-content-end gap-2">
+      <p-button
+        label="Cancel"
+        severity="secondary"
+        (onClick)="visible = false"
+      />
+      <p-button label="Save" (onClick)="deleteRoutine(routine()?.id)" />
+    </div>
+  </p-dialog>
+</div>
+}

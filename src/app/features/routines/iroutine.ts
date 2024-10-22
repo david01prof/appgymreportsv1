@@ -1,6 +1,7 @@
 
 export interface IRoutine {
-    titleExercise: string;
+    id: string
+    titleRoutine: string;
     numExercises : number,
     exercises: IExercise[],
     date: any;
@@ -8,12 +9,13 @@ export interface IRoutine {
     status: string;
 }
 
-interface IExercise {
+export interface IExercise {
+    titleExercise: string;
     numSeries: number;
     series: ISeries[];
 }
 
-interface ISeries {
+export interface ISeries {
     replays: number;
     weight: number;
 }

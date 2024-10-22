@@ -1,17 +1,22 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, inject, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
+import { MenuModule } from 'primeng/menu';
+import { PanelModule } from 'primeng/panel';
 import { Table, TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
+import { ToastModule } from 'primeng/toast';
+import { DialogDetailComponent } from '../dialog-detail/dialog-detail.component';
 import { IRoutine } from '../iroutine';
-import { RoutinesService } from '../routines.service';
-import { PanelModule } from 'primeng/panel';
-import { AvatarModule } from 'primeng/avatar';
-import { MenuModule } from 'primeng/menu';
+import { TopMenuListComponent } from './top-menu/top-menu-list.component';
 
 const PRIME_MODULES = [
   ButtonModule,
@@ -20,84 +25,50 @@ const PRIME_MODULES = [
   TableModule,
   TagModule,
   InputTextModule,
-  PanelModule, AvatarModule,MenuModule
+  PanelModule,
+  AvatarModule,
+  MenuModule,
+  DialogModule,
+  ConfirmDialogModule,
+  ToastModule,
 ];
+
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [PRIME_MODULES, CommonModule, FormsModule, RouterModule],
+  imports: [PRIME_MODULES, CommonModule, FormsModule, RouterModule,DialogDetailComponent,TopMenuListComponent],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
-  providers: [DatePipe],
+  providers: [DatePipe, ConfirmationService, MessageService],
 })
 export class ListComponent {
-  public data = input.required<IRoutine[]>();
-  public routines: IRoutine[] = [];
+  
+  public dataRoutines = input.required<IRoutine[]>();
   public first = 0;
   public rows = 5;
   public loading: boolean = true;
   public searchValue: string | undefined;
+  public isCardDisabled: boolean = true; // ! A futuro
 
-  items: { label?: string; icon?: string; separator?: boolean }[] = [];
-
-  private _routineSvc = inject(RoutinesService);
-
-  constructor(private datePipe: DatePipe) {}
-
-  ngOnInit(): void {
-    this.items = [
-      {
-          label: 'Refresh',
-          icon: 'pi pi-refresh'
-      },
-      {
-          label: 'Search',
-          icon: 'pi pi-search'
-      },
-      {
-          separator: true
-      },
-      {
-          label: 'Delete',
-          icon: 'pi pi-times'
-      }
-  ];
-  }
+  constructor( private datePipe: DatePipe ) {}
 
   ngOnChanges(): void {
-    this.routines = this.data();
-    if (this.data() != undefined && this.data().length > 0) {
+    if (this.dataRoutines() != undefined && this.dataRoutines().length > 0) {
       this.loading = false;
 
-      for (let index in this.routines) {
-        const date = this.routines[index].date;
+      for (let index in this.dataRoutines()) {
+        const date = this.dataRoutines()[index].date;
 
-        this.routines[index].date = new Date(
+        this.dataRoutines()[index].date = new Date(
           date.seconds * 1000 + date.nanoseconds / 1000000
         );
 
-        this.routines[index].date = this.datePipe.transform(
-          this.routines[index].date,
+        this.dataRoutines()[index].date = this.datePipe.transform(
+          this.dataRoutines()[index].date,
           'dd/MM/yyyy'
         );
       }
     }
-  }
-
-  deleteRoutine(id: string) {
-    this._routineSvc.deleteRoutine(id);
-  }
-
-  next() {
-    this.first = this.first + this.rows;
-  }
-
-  prev() {
-    this.first = this.first - this.rows;
-  }
-
-  reset() {
-    this.first = 0;
   }
 
   pageChange(event: any) {
@@ -105,18 +76,12 @@ export class ListComponent {
     this.rows = event.rows;
   }
 
-  isLastPage(): boolean {
-    return this.routines
-      ? this.first === this.routines.length - this.rows
-      : true;
-  }
-
-  isFirstPage(): boolean {
-    return this.routines ? this.first === 0 : true;
-  }
-
   clear(table: Table) {
     table.clear();
     this.searchValue = '';
+  }
+
+  getFirstOut(first: number){
+    this.first = first;
   }
 }

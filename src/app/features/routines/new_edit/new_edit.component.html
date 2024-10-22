@@ -1,3 +1,122 @@
+@if (routine() != undefined) {
+<form [formGroup]="forms" (ngSubmit)="onSubmit()">
+  <!-- title -->
+  <div class="flex justify-content-center">
+    <input
+      pInputText
+      id="username"
+      aria-describedby="username-help"
+      formControlName="titleRoutine"
+    />
+  </div>
+
+  <p-divider />
+
+  <!-- Num Exercises -->
+  <div class="flex flex-column gap-2 my-2 overflow-hidden">
+    <label for="username">N de ejercicios </label>
+    <p-inputNumber
+      inputId="integeronly"
+      formControlName="numExercises"
+      (onKeyDown)="generateControlsExercises()"
+    />
+  </div>
+
+  <p-divider />
+
+  @if (forms.value.numExercises != undefined && forms.value.numExercises > 0 &&
+  exercises.controls.length > 0) {
+
+  <div formArrayName="exercises">
+    <div
+      *ngFor="let exercise of exercises.controls; let i = index"
+      [formGroupName]="i"
+    >
+      <div class="my-4">
+        <div class="flex flex-column gap-2">
+          <label for="username">Ejercicio {{ i + 1 }}:</label>
+          <input
+            pInputText
+            id="username"
+            aria-describedby="username-help"
+            formControlName="titleExercise"
+          />
+          <small id="username-help"> Introduce el nombre de la rutina </small>
+        </div>
+      </div>
+
+      <!-- Num Series -->
+      <div class="flex flex-column gap-2 my-2 overflow-hidden">
+        <label for="username">Series</label>
+        <p-inputNumber
+          inputId="integeronly"
+          (onKeyDown)="generateControlsSeries(i)"
+          formControlName="numSeries"
+        />
+      </div>
+
+      <p-divider />
+
+      @if (forms.value.exercises[i].series != undefined &&
+      forms.value.exercises[i].series != 0) {
+
+      <!-- Series -->
+      <div formArrayName="series">
+        <div
+          *ngFor="let member of getSeries(i).controls; let memberIndex = index"
+          [formGroupName]="memberIndex"
+        >
+          <label>Serie {{ memberIndex + 1 }}:</label>
+
+          <div class="flex overflow-hidden">
+            <div class="flex flex-column gap-2 my-2 overflow-hidden">
+              <label>Repeticiones:</label>
+              <p-inputNumber inputId="integeronly" formControlName="replays" />
+            </div>
+
+            <div class="flex flex-column gap-2 my-2 overflow-hidden">
+              <label>Peso (kg)</label>
+              <p-inputNumber inputId="integeronly" formControlName="weight" />
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+
+  } @if (forms.value.numExercises == undefined && forms.value.numExercises == 0)
+  { <p-divider />}
+
+  <!-- Date -->
+  <div class="flex flex-column gap-2 my-2">
+    <label for="icondisplay">Fecha</label>
+    <p-calendar
+      [iconDisplay]="'input'"
+      [showIcon]="true"
+      inputId="icondisplay"
+      formControlName="date"
+      dateFormat="dd.mm.yy"
+      [showButtonBar]="true"
+    />
+  </div>
+
+  <!-- Comments -->
+  <div class="my-2 gap-2">
+    <span id="address2">Comentarios</span> <br />
+    <textarea
+      pInputTextarea
+      aria-labelledby="address2"
+      formControlName="comments"
+    ></textarea>
+  </div>
+
+  <!-- Submit -->
+  <div class="flex justify-content-center mt-4">
+    <p-button type="submit" label="Crear" [disabled]="forms.invalid" />
+  </div>
+</form>
+} @else {
 <form [formGroup]="forms" (ngSubmit)="onSubmit()">
   <p-card>
     <!-- title -->
@@ -6,7 +125,7 @@
         pInputText
         id="username"
         aria-describedby="username-help"
-        [formControl]="titleRoutine"
+        formControlName="titleRoutine"
       />
     </div>
 
@@ -18,7 +137,7 @@
       <p-inputNumber
         inputId="integeronly"
         formControlName="numExercises"
-        (onKeyDown)="onKeyDownExercises()"
+        (onKeyDown)="generateControlsExercises()"
       />
     </div>
 
@@ -50,7 +169,7 @@
           <label for="username">Series</label>
           <p-inputNumber
             inputId="integeronly"
-            (onKeyDown)="onKeyDownSeries(i)"
+            (onKeyDown)="generateControlsSeries(i)"
             formControlName="numSeries"
           />
         </div>
@@ -62,13 +181,22 @@
 
         <!-- Series -->
         <div formArrayName="series">
-          <div *ngFor="let member of getSeries(i).controls; let memberIndex = index" [formGroupName]="memberIndex">
+          <div
+            *ngFor="
+              let member of getSeries(i).controls;
+              let memberIndex = index
+            "
+            [formGroupName]="memberIndex"
+          >
             <label>Serie {{ memberIndex + 1 }}:</label>
 
             <div class="flex overflow-hidden">
               <div class="flex flex-column gap-2 my-2 overflow-hidden">
                 <label>Repeticiones:</label>
-                <p-inputNumber inputId="integeronly" formControlName="replays" />
+                <p-inputNumber
+                  inputId="integeronly"
+                  formControlName="replays"
+                />
               </div>
 
               <div class="flex flex-column gap-2 my-2 overflow-hidden">
@@ -79,7 +207,6 @@
           </div>
         </div>
         }
-
       </div>
     </div>
 
@@ -115,3 +242,5 @@
     </div>
   </p-card>
 </form>
+
+}
