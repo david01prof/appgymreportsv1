@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit, output } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -35,8 +35,11 @@ const PRIME_MODULES = [
   styleUrl: './new_edit.component.scss',
 })
 export class NewEditComponent implements OnInit {
+  
   public routine = input<IRoutine>();
   public forms!: FormGroup;
+
+  public sendSubmitValue = output<boolean>();
 
   private readonly _routineSvc = inject(RoutinesService);
 
@@ -64,8 +67,6 @@ export class NewEditComponent implements OnInit {
 
       this.generateControlsExercises();
     }
-
-    console.log(this.routine());
   }
 
   get exercises(): FormArray {
@@ -94,6 +95,7 @@ export class NewEditComponent implements OnInit {
 
       await this._routineSvc.newRoutine(_refForm);
 
+      this.sendSubmitValue.emit(true);
       this.router.navigate(['routines']);
     } else {
       console.log('Formulario inválido');

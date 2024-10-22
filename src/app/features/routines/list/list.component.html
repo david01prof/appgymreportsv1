@@ -50,7 +50,7 @@
     <ng-template pTemplate="body" let-routine>
       <tr>
         <td>
-          <p-card [header]="routine.titleExercise">
+          <p-card [header]="routine.titleRoutine">
 
             <!-- Date and Status -->
             <div class="flex justify-content-between gap-2">
@@ -85,7 +85,7 @@
 
             <!-- Buttons actions -->
             <ng-template pTemplate="footer">
-              <div class="flex justify-content-center mt-1">
+              <div class="flex justify-content-center mt-1 gap-4">
 
                 <!-- Updated -->
                 <app-dialog-detail
@@ -103,6 +103,7 @@
                 <app-dialog-detail [isUpdate]="false" [isDelete]="true" [routine]="routine"></app-dialog-detail>
               </div>
             </ng-template>
+
           </p-card>
         </td>
       </tr>

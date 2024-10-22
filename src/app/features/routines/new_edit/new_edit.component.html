@@ -118,7 +118,6 @@
 </form>
 } @else {
 <form [formGroup]="forms" (ngSubmit)="onSubmit()">
-  <p-card>
     <!-- title -->
     <div class="flex justify-content-center">
       <input
@@ -240,7 +239,6 @@
     <div class="flex justify-content-center mt-4">
       <p-button type="submit" label="Crear" [disabled]="forms.invalid" />
     </div>
-  </p-card>
 </form>
 
 }

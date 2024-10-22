@@ -25,7 +25,7 @@ export class ToolbarComponent {
               url: 'dashboard'
           },
           {
-              label: 'Calculadora',
+              label: 'Calculadora(PGC)',
               icon: 'pi pi-star',
               url: 'calculator'
           },
