@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
+import { TableComponent } from '../table/table.component';
 
 @Component({
   selector: 'app-toolbar',
   standalone: true,
-  imports: [MenubarModule],
+  imports: [MenubarModule,TableComponent],
   template: `
     <div class="card">
       <p-menubar [model]="items" />
@@ -15,7 +16,7 @@ import { MenubarModule } from 'primeng/menubar';
 })
 export class ToolbarComponent {
   
-  items: MenuItem[] | undefined;
+  public items: MenuItem[] | undefined;
 
   ngOnInit() {
       this.items = [
@@ -25,7 +26,7 @@ export class ToolbarComponent {
               url: 'dashboard'
           },
           {
-              label: 'Calculadora(PGC)',
+              label: 'Reportes',
               icon: 'pi pi-star',
               url: 'calculator'
           },
@@ -36,4 +37,5 @@ export class ToolbarComponent {
           }
       ]
   }
+
 }

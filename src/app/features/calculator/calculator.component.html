@@ -1,5 +1,9 @@
 
 <h3 class="text-center">Bienvenido a la calculadora de PGC</h3>
+
+<p-button>Nuevo registro</p-button>
+
+
 <form [formGroup]="forms" (ngSubmit)="onSubmit()">
   <p-card [style]="{ width: '280px', margin: '5% auto', }">
     <div class="flex flex-column gap-2">
@@ -52,3 +56,8 @@
     />
   </p-card>
 </form>
+
+<app-steps-registers></app-steps-registers>
+<p-card>
+  <app-table [data]="data"></app-table>
+</p-card>
