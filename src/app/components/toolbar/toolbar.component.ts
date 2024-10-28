@@ -28,7 +28,7 @@ export class ToolbarComponent {
           {
               label: 'Reportes',
               icon: 'pi pi-star',
-              url: 'calculator'
+              url: 'registers'
           },
           {
               label: 'Rutinas',

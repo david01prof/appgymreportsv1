@@ -7,7 +7,7 @@ import { IMeasurement } from './imeasurement';
 @Injectable({
   providedIn: 'root'
 })
-export class CalculatorService {
+export class RegistersService {
 
   private readonly _firestore = inject(Firestore);
   private readonly _measurementCollection = collection(this._firestore, APP_CONSTANTS.COLLECTION_NAME_CALCULATOR);
