@@ -12,18 +12,20 @@ import { StepsRegistersComponent } from '../../components/steps-registers/steps-
 import { TableComponent } from '../../components/table/table.component';
 import { IRoutine } from '../routines/iroutine';
 import { RoutinesService } from '../routines/routines.service';
+import { SpeedDialComponent } from "../../components/speed-dial/speed-dial.component";
+import { DialogModule } from 'primeng/dialog';
 
-const PRIME_MODULES = [InputNumberModule,ButtonModule,ToastModule,CardModule,TableComponent];
+const PRIME_MODULES = [InputNumberModule,ButtonModule,ToastModule,CardModule,TableComponent,DialogModule];
 
 @Component({
   selector: 'app-calculator',
   standalone: true,
-  imports: [PRIME_MODULES,ReactiveFormsModule,CommonModule,StepsRegistersComponent],
+  imports: [PRIME_MODULES, ReactiveFormsModule, CommonModule, StepsRegistersComponent, SpeedDialComponent],
   templateUrl: './registers.component.html',
   styleUrl: './registers.component.scss',
   providers: [MessageService],
 })
-export class RegistersComponent {
+export default class RegistersComponent {
 
   public forms!: FormGroup;
 
@@ -49,5 +51,11 @@ export class RegistersComponent {
         tap((routines: IRoutine[]) => (this.data = [...routines]))
       )
       .subscribe();
+  }
+
+  visible: boolean = false;
+
+  showDialog() {
+      this.visible = true;
   }
 }

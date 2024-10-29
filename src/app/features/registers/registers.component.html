@@ -1,9 +1,13 @@
 
-<h3 class="text-center">Bienvenido a la calculadora de PGC</h3>
+<!-- <h3 class="text-center">Bienvenido a la calculadora de PGC</h3> -->
+<div class="separator"></div>
 
-<p-button>Nuevo registro</p-button>
+<p-button (onClick)="showDialog()" label="Nuevo registro" />
+<p-dialog header="Nuevo registro" [modal]="true" [(visible)]="visible">
+  <app-steps-registers></app-steps-registers>
+</p-dialog>
 
-<app-steps-registers></app-steps-registers>
+<div class="separator"></div>
 
 <p-card>
   <app-table [data]="data"></app-table>

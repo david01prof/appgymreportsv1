@@ -1,3 +1,5 @@
+
+<h3 class="text-center">Bienvenido a la calculadora de PGC</h3>
 <form [formGroup]="forms" (ngSubmit)="onSubmit()">
   <p-card [style]="{ width: '280px', margin: '5% auto', }">
     <div class="flex flex-column gap-2">
@@ -34,7 +36,11 @@
       </div>
 
       <!-- Submit -->
-      <p-button label="Calcular" class="pl-7 pt-4" type="submit" />
+      <p-button
+        label="Calcular"
+        class="pl-7 pt-4"
+        type="submit"
+      />
     </div>
 
     @if(forms.value.totaligc != ''){
