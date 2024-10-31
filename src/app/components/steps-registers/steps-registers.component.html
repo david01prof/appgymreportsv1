@@ -10,14 +10,14 @@
                             'surface-border': index > active
                         }"
                     >
-                        <i class="pi pi-user"></i>
+                        <i class="pi pi-calculator"></i>
                     </span>
                 </button>
             </ng-template>
             <ng-template pTemplate="content" let-nextCallback="nextCallback">
                 <app-calculator></app-calculator>
                 <div class="flex pt-4 justify-content-end">
-                    <p-button (onClick)="nextCallback.emit()" label="Next" icon="pi pi-arrow-right" iconPos="right" />
+                    <p-button (onClick)="nextCallback.emit()" label="Siguiente" icon="pi pi-arrow-right" iconPos="right" />
                 </div>
             </ng-template>
         </p-stepperPanel>
@@ -31,15 +31,15 @@
                             'surface-border': index > active
                         }"
                     >
-                        <i class="pi pi-star"></i>
+                        <i class="pi pi-camera"></i>
                     </span>
                 </button>
             </ng-template>
             <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback">
                 <app-photos></app-photos>
                 <div class="flex pt-4 justify-content-between">
-                    <p-button (onClick)="prevCallback.emit()" label="Back" severity="secondary" icon="pi pi-arrow-left" />
-                    <p-button (onClick)="nextCallback.emit()" label="Next" icon="pi pi-arrow-right" iconPos="right" />
+                    <p-button (onClick)="prevCallback.emit()" label="Anterior" severity="secondary" icon="pi pi-arrow-left" />
+                    <p-button (onClick)="nextCallback.emit();" label="Siguiente" icon="pi pi-arrow-right" iconPos="right" />
                 </div>
             </ng-template>
         </p-stepperPanel>
@@ -53,14 +53,15 @@
                             'surface-border': index > active
                         }"
                     >
-                        <i class="pi pi-id-card"></i>
+                        <i class="pi pi-list"></i>
                     </span>
                 </button>
             </ng-template>
             <ng-template pTemplate="content" let-prevCallback="prevCallback">
                 <app-resumen></app-resumen>
-                <div class="flex pt-4 justify-content-start">
-                    <p-button (onClick)="prevCallback.emit()" label="Back" severity="secondary" icon="pi pi-arrow-left" />
+                <div class="flex pt-4 justify-content-between">
+                    <p-button (onClick)="prevCallback.emit()" label="Anterior" severity="secondary" icon="pi pi-arrow-left" />
+                    <p-button (onClick)="saveRegister()" label="Guardar" icon="pi pi-arrow-right" iconPos="right" />
                 </div>
             </ng-template>
         </p-stepperPanel>

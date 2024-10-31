@@ -1,14 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ToastModule } from 'primeng/toast';
 import { TableComponent } from '../../../components/table/table.component';
-import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { CalculatorService } from './calculator.service';
 import { RegistersService } from '../registers.service';
-import { Router } from '@angular/router';
 
 const PRIME_MODULES = [InputNumberModule,ButtonModule,ToastModule,CardModule,TableComponent];
 
@@ -24,6 +25,7 @@ export class CalculatorComponent {
 
   public forms!: FormGroup;
 
+  private readonly _calculatorSvc = inject(CalculatorService);
   private readonly _registerSvc = inject(RegistersService);
 
   constructor(private messageService: MessageService, private router: Router) {
@@ -47,8 +49,10 @@ export class CalculatorComponent {
       hip: parseInt(this.forms.value.hip),
     };
 
-    this.forms.value.totaligc = this._registerSvc.calculateMeasurement(measurement);
-    this._registerSvc.newMeasurement(this.forms.value);
+    this.forms.value.totaligc = this._calculatorSvc.calculateMeasurement(measurement);
+
+    this._calculatorSvc.newMeasurement(this.forms.value);
+    this._registerSvc.pushCalculatorInRegister(this.forms.value);
 
     this.messageService.add({
       severity: 'success',
@@ -56,8 +60,4 @@ export class CalculatorComponent {
       detail: 'PGC actualizado correctamente',
     });
   }
-
-  nextPage() {
-    this.router.navigate([`/registers`, { outlets: { steps: ['photos'] } }]);
-}
 }

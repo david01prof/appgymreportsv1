@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -8,6 +8,7 @@ import { StepperModule } from 'primeng/stepper';
 import { CalculatorComponent } from '../../features/registers/calculator/calculator.component';
 import { PhotosComponent } from '../../features/registers/photos/photos.component';
 import { ResumenComponent } from '../../features/registers/resumen/resumen.component';
+import { RegistersService } from '../../features/registers/registers.service';
 
 const PRIME_MODULES = [
   IconFieldModule,
@@ -33,5 +34,11 @@ export class StepsRegistersComponent implements OnInit {
 
   public active: number = 0;
 
+  private readonly _registerSvc = inject(RegistersService);
+
   ngOnInit(): void {}
+
+  saveRegister(){
+    this._registerSvc.newRegister();
+  }
 }
