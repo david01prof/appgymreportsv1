@@ -5,4 +5,5 @@ export interface IMeasurement {
     age: number;
     waist: number;
     hip: number;
+    totaligc: string;
 }

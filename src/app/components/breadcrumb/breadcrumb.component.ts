@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 
@@ -9,7 +9,7 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
   imports: [BreadcrumbModule,CommonModule],
   template: `
     <div class="flex justify-content-left">
-      <p-breadcrumb class="max-w-full" [model]="items">
+      <p-breadcrumb class="max-w-full" [model]="items()">
         <ng-template pTemplate="item" let-item>
           <ng-container *ngIf="item.route; else elseBlock">
             <a [routerLink]="item.route" class="p-menuitem-link">
@@ -31,14 +31,6 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
   styles: ``,
 })
 export class BreadcrumbComponent {
-  items: MenuItem[] | undefined;
 
-  home: MenuItem | undefined;
-
-  ngOnInit() {
-    this.items = [
-      { icon: 'pi pi-home', route: '/dashboard' },
-      { label: 'Dashboard'  }
-    ];
-  }
+  items = input.required<MenuItem[] | undefined>();
 }

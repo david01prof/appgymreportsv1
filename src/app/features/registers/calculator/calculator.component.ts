@@ -1,15 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ToastModule } from 'primeng/toast';
 import { TableComponent } from '../../../components/table/table.component';
-import { CalculatorService } from './calculator.service';
 import { RegistersService } from '../registers.service';
+import { CalculatorService } from './calculator.service';
 
 const PRIME_MODULES = [InputNumberModule,ButtonModule,ToastModule,CardModule,TableComponent];
 
@@ -28,7 +27,7 @@ export class CalculatorComponent {
   private readonly _calculatorSvc = inject(CalculatorService);
   private readonly _registerSvc = inject(RegistersService);
 
-  constructor(private messageService: MessageService, private router: Router) {
+  constructor(private messageService: MessageService) {
     this.forms = new FormGroup({
       height: new FormControl(''),
       age: new FormControl(''),
@@ -47,6 +46,7 @@ export class CalculatorComponent {
       age: parseInt(this.forms.value.age),
       waist: parseInt(this.forms.value.waist),
       hip: parseInt(this.forms.value.hip),
+      totaligc: this.forms.value.totaligc,
     };
 
     this.forms.value.totaligc = this._calculatorSvc.calculateMeasurement(measurement);

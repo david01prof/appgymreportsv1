@@ -29,6 +29,10 @@ export default class DashboardComponent {
   public currentUrl: string = '';
   public visible: boolean = false;
   public data: IRoutine[] = [];
+  public items = [
+    { icon: 'pi pi-home', route: '/dashboard' },
+    { label: 'Dashboard'  }
+  ];
 
   private _routineSvc = inject(RoutinesService);
   private readonly _destroyRef = inject(DestroyRef);

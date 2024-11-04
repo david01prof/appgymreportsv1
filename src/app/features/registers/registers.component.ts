@@ -5,22 +5,24 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ToastModule } from 'primeng/toast';
 import { tap } from 'rxjs';
+import { SpeedDialComponent } from "../../components/speed-dial/speed-dial.component";
 import { StepsRegistersComponent } from '../../components/steps-registers/steps-registers.component';
 import { TableComponent } from '../../components/table/table.component';
-import { IRoutine } from '../routines/iroutine';
-import { RoutinesService } from '../routines/routines.service';
-import { SpeedDialComponent } from "../../components/speed-dial/speed-dial.component";
-import { DialogModule } from 'primeng/dialog';
+import { IRegister } from './interfaces/iregister';
+import { RegistersService } from './registers.service';
+import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
+import { TreeTableComponent } from '../../components/tree-table/tree-table.component';
 
 const PRIME_MODULES = [InputNumberModule,ButtonModule,ToastModule,CardModule,TableComponent,DialogModule];
 
 @Component({
   selector: 'app-calculator',
   standalone: true,
-  imports: [PRIME_MODULES, ReactiveFormsModule, CommonModule, StepsRegistersComponent, SpeedDialComponent],
+  imports: [PRIME_MODULES, ReactiveFormsModule, CommonModule, StepsRegistersComponent, SpeedDialComponent,BreadcrumbComponent,TreeTableComponent],
   templateUrl: './registers.component.html',
   styleUrl: './registers.component.scss',
   providers: [MessageService],
@@ -28,27 +30,32 @@ const PRIME_MODULES = [InputNumberModule,ButtonModule,ToastModule,CardModule,Tab
 export default class RegistersComponent {
 
   public forms!: FormGroup;
+  public columns : string[] = ['id', 'totaligc','photos'];
 
   public totaligc: string | undefined;
-  public data: IRoutine[] = [];
+  public data: IRegister[] = [];
+  public items = [
+    { icon: 'pi pi-home', route: '/registers' },
+    { label: 'Registros'  }
+  ];
 
-  private _routineSvc = inject(RoutinesService);
   private readonly _destroyRef = inject(DestroyRef);
+  private readonly _registerSvc = inject(RegistersService);
 
 
   constructor() {
   }
 
   ngOnInit(): void {
-    this.getAllRoutines();
+    this.getAllRegisters();
   }
 
-  getAllRoutines() {
-    this._routineSvc
-      .getAllRoutines()
+  getAllRegisters() {
+    this._registerSvc
+      .getAllRegisters()
       .pipe(
         takeUntilDestroyed(this._destroyRef),
-        tap((routines: IRoutine[]) => (this.data = [...routines]))
+        tap((registers: IRegister[]) => (this.data = [...registers]))
       )
       .subscribe();
   }

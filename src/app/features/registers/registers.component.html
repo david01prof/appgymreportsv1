@@ -1,5 +1,6 @@
 
 <!-- <h3 class="text-center">Bienvenido a la calculadora de PGC</h3> -->
+<!-- <app-breadcrumb [items]="items"></app-breadcrumb> -->
 <div class="separator"></div>
 
 <p-button (onClick)="showDialog()" label="Nuevo registro" />
@@ -10,5 +11,7 @@
 <div class="separator"></div>
 
 <p-card>
-  <app-table [data]="data"></app-table>
+  <!-- <app-table [data]="data" [columns]="columns"></app-table> -->
+
+  <app-tree-table [data]="data"></app-tree-table>
 </p-card>
