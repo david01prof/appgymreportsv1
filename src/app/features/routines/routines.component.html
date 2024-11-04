@@ -1,0 +1,44 @@
+<!-- <div class="flex justify-content-end my-3">
+  <p-button icon="pi pi-plus" (onClick)="showDialog()" />
+  <p-dialog [modal]="true" [(visible)]="visible" [style]="{ width: '90%' }">
+    <app-new-edit
+      *ngIf="chargeComponent"
+      (sendSubmitValue)="getValueSubmit($event)"
+    ></app-new-edit>
+  </p-dialog>
+</div> -->
+<br>
+<app-breadcrumb [items]="items"></app-breadcrumb>
+<br>
+<!-- <app-list [dataRoutines]="data"></app-list> -->
+
+<div class="card flex justify-content-between flex-wrap">
+  <div>
+    <p-card class="mb-3 new-card" (click)="showDialog()">
+      <i class="pi pi-plus p-6 text-2xl"> </i>
+    </p-card>
+    <pre class="text-center">Crear nueva rutina</pre>
+  </div>
+
+  @for (item of data; track $index) {
+  <p-card class="mb-3 custom-card" (click)="checkActiveCard(item)">
+    <div class="flex justify-content-center">
+      <img src=".../../assets/images/serio.png" alt="" width="90" />
+    </div>
+
+    <pre class="text-center">{{ item.titleRoutine }}</pre>
+    <i class="pi pi-bookmark-fill icon-marker"></i>
+  </p-card>
+  }
+</div>
+
+<div class="card flex flex-wrap justify-content-center gap-2">
+  <p-sidebar
+    [(visible)]="sidebarVisible4"
+    position="bottom"
+    styleClass="h-30rem"
+    (onHide)="handleSidebarHide()"
+  >
+    <app-new-edit *ngIf="chargeComponent" [routine]="item"></app-new-edit>
+  </p-sidebar>
+</div>

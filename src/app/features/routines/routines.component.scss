@@ -1,0 +1,32 @@
+.icon-marker{
+    position: absolute;
+    top: -0.1rem;
+    left: 0.5rem;
+    font-size: 2.3rem;
+    color: #dadee3;
+}
+
+.new-card{
+    transition: transform 0.1s ease-in-out; /* Suaviza el efecto de escalado */
+    cursor: pointer; /* Cambia el cursor a pointer */
+}
+
+.new-card:active {
+    transform: scale(0.98);
+}
+
+.custom-card {
+    position: relative;
+    width: 160px;
+    overflow: hidden;
+    transition: transform 0.1s ease-in-out; /* Suaviza el efecto de escalado */
+    cursor: pointer; /* Cambia el cursor a pointer */
+}
+.custom-card:active {
+    transform: scale(0.98);
+}
+pre {
+    white-space: pre-wrap;      /* Permite que el texto se ajuste y rompa en varias líneas */
+    word-wrap: break-word;      /* Fuerza la ruptura de palabras largas que exceden el ancho del contenedor */
+    overflow-wrap: break-word;  /* Asegura compatibilidad en más navegadores */
+}
