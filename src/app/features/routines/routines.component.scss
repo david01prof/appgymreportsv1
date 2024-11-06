@@ -30,3 +30,18 @@ pre {
     word-wrap: break-word;      /* Fuerza la ruptura de palabras largas que exceden el ancho del contenedor */
     overflow-wrap: break-word;  /* Asegura compatibilidad en más navegadores */
 }
+
+.favouriteItem {
+    position: absolute;
+    top: 0rem;
+    font-size: 2.2rem;
+    right: 0.5rem;
+    color: orange;
+    & i {
+        position: absolute;
+        top: 0.3rem;
+        font-size: 1rem;
+        right: 0.6rem;
+        color: white;
+    }
+}

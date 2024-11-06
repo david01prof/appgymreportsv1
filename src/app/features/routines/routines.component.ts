@@ -1,22 +1,24 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { ListComponent } from './list/list.component';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { tap } from 'rxjs';
-import { IRoutine } from './iroutine';
-import { RoutinesService } from './routines.service';
-import { ButtonModule } from 'primeng/button';
-import { NewEditComponent } from './new_edit/new_edit.component';
-import { DialogModule } from 'primeng/dialog';
 import { CommonModule } from '@angular/common';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
 import { SidebarModule } from 'primeng/sidebar';
+import { TagModule } from 'primeng/tag';
+import { tap } from 'rxjs';
 import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
+import { IRoutine } from './iroutine';
+import { NewRoutineComponent } from './new-routine/new-routine.component';
+import { RoutinesService } from './routines.service';
 
-const PRIME_MODULES = [ButtonModule, DialogModule,CardModule,SidebarModule];
+const PRIME_MODULES = [ButtonModule, DialogModule,CardModule,SidebarModule,TagModule,InputTextModule];
 @Component({
   selector: 'app-routines',
   standalone: true,
-  imports: [ListComponent, PRIME_MODULES, NewEditComponent, CommonModule,BreadcrumbComponent],
+  imports: [PRIME_MODULES, NewRoutineComponent, CommonModule,BreadcrumbComponent,ReactiveFormsModule],
   templateUrl: './routines.component.html',
   styleUrl: './routines.component.scss'
 })
@@ -29,6 +31,7 @@ export class RoutinesComponent implements OnInit {
     { icon: 'pi pi-home', route: '/routines' },
     { label: 'Rutinas'  }
   ];
+  public searchControl = new FormControl('');
 
   private readonly _routineSvc = inject(RoutinesService);
   private readonly _destroyRef = inject(DestroyRef);

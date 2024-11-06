@@ -17,6 +17,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { IRoutine } from '../iroutine';
 import { RoutinesService } from '../routines.service';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 
 const PRIME_MODULES = [
   CardModule,
@@ -26,6 +27,7 @@ const PRIME_MODULES = [
   InputTextModule,
   InputTextareaModule,
   DividerModule,
+  ScrollPanelModule
 ];
 @Component({
   selector: 'app-new-edit',
@@ -62,7 +64,6 @@ export class NewEditComponent implements OnInit {
         exercises: this.fb.array([]),
         date: new FormControl(new Date()),
         comments: new FormControl(this.routine()?.comments),
-        status: new FormControl(this.routine()?.status),
       });
 
       this.generateControlsExercises();

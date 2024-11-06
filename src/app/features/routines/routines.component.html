@@ -1,16 +1,11 @@
-<!-- <div class="flex justify-content-end my-3">
-  <p-button icon="pi pi-plus" (onClick)="showDialog()" />
-  <p-dialog [modal]="true" [(visible)]="visible" [style]="{ width: '90%' }">
-    <app-new-edit
-      *ngIf="chargeComponent"
-      (sendSubmitValue)="getValueSubmit($event)"
-    ></app-new-edit>
-  </p-dialog>
-</div> -->
-<br>
+<br />
 <app-breadcrumb [items]="items"></app-breadcrumb>
-<br>
+<br />
+
 <!-- <app-list [dataRoutines]="data"></app-list> -->
+<div class="card flex justify-content-center mb-4">
+  <input type="text" pInputText [formControl]="searchControl" placeholder="Buscar..." />
+</div>
 
 <div class="card flex justify-content-between flex-wrap">
   <div>
@@ -18,16 +13,44 @@
       <i class="pi pi-plus p-6 text-2xl"> </i>
     </p-card>
     <pre class="text-center">Crear nueva rutina</pre>
+    <p-dialog
+      [modal]="true"
+      [(visible)]="visible"
+      [style]="{ width: '90%' }"
+      [dismissableMask]="true"
+    >
+      <ng-template pTemplate="headless">
+        <div class="flex flex-column px-2 py-5 border-round-2xl">
+          <app-new-routine
+            *ngIf="chargeComponent"
+            (sendSubmitValue)="getValueSubmit($event)"
+          ></app-new-routine>
+        </div>
+      </ng-template>
+    </p-dialog>
   </div>
 
   @for (item of data; track $index) {
   <p-card class="mb-3 custom-card" (click)="checkActiveCard(item)">
+
+    <!-- <i class="pi pi-bookmark-fill icon-marker"></i> -->
+
+    @if (item.favourite) {
+      <i class="pi pi-bookmark-fill favouriteItem">
+        <i class="pi pi-star-fill"></i
+      ></i>
+    }
+
     <div class="flex justify-content-center">
       <img src=".../../assets/images/serio.png" alt="" width="90" />
     </div>
 
-    <pre class="text-center">{{ item.titleRoutine }}</pre>
-    <i class="pi pi-bookmark-fill icon-marker"></i>
+    <pre class="text-center text-base">{{ item.titleRoutine }}</pre>
+
+    <div class="card flex justify-content-center">
+      <p-tag [value]="item.tag"  [severity]="item.severityTag.code"/>
+  </div>
+    
   </p-card>
   }
 </div>
@@ -39,6 +62,6 @@
     styleClass="h-30rem"
     (onHide)="handleSidebarHide()"
   >
-    <app-new-edit *ngIf="chargeComponent" [routine]="item"></app-new-edit>
+    <!-- <app-new-edit *ngIf="chargeComponent" [routine]="item"></app-new-edit> -->
   </p-sidebar>
 </div>
