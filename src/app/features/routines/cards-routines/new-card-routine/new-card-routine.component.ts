@@ -15,9 +15,9 @@ const PRIME_MODULES = [CardModule, DialogModule,InputTextModule];
   template: `
     <div>
       <p-card class="mb-3 new-card" (click)="showDialog()">
-        <i class="pi pi-plus p-6 text-2xl"> </i>
+        <i class="pi pi-plus p-6 text-2xl text-color-secondary"> </i>
       </p-card>
-      <pre class="text-center">Crear nueva rutina</pre>
+      <pre class="text-center text-color-secondary ">Crear nueva rutina</pre>
       
       <p-dialog
         [modal]="true"

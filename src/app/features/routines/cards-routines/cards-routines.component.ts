@@ -29,10 +29,10 @@ const PRIME_MODULES = [CardModule, TagModule];
           <img src=".../../assets/images/serio.png" alt="" width="90" />
         </div>
 
-        <pre class="text-center text-base">{{ item.titleRoutine }}</pre>
+        <pre class="text-center text-base text-color-secondary">{{ item.titleRoutine }}</pre>
 
         <div class="card flex justify-content-center">
-          <p-tag [value]="item.tag" [severity]="item.severityTag.code" />
+          <p-tag [value]="item.tag" [severity]="item.severityTag.code"/>
         </div>
       </p-card>
       }
