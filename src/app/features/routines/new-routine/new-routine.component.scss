@@ -26,5 +26,24 @@
 }
 
 ::ng-deep .classDropdown{
-    margin-top: 1.6rem;
+    margin-top: 0.5rem;
+}
+
+li{
+    border-bottom: 1px solid;
+    width: fit-content;
+    padding: 5px;
+    margin-bottom: 12px;
+    color: #495057;
+    font-family: Lato, Helvetica, sans-serif;
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+::ng-deep textarea{height: 68px !important;}
+
+::ng-deep .p-dialog-draggable .p-dialog-header{
+    background: aliceblue;
+    height: 60px;
+    margin-bottom: 10px;
 }

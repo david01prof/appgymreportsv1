@@ -1,67 +1,9 @@
-<br />
-<app-breadcrumb [items]="items"></app-breadcrumb>
-<br />
-
-<!-- <app-list [dataRoutines]="data"></app-list> -->
+<app-breadcrumb [itemsLabels]="itemsLabels" [urlActive]="'dashboard'"></app-breadcrumb>
 <div class="card flex justify-content-center mb-4">
-  <input type="text" pInputText [formControl]="searchControl" placeholder="Buscar..." />
+  <input type="text" pInputText [formControl]="searchControl"
+    placeholder="Buscar..." />
 </div>
 
-<div class="card flex justify-content-between flex-wrap">
-  <div>
-    <p-card class="mb-3 new-card" (click)="showDialog()">
-      <i class="pi pi-plus p-6 text-2xl"> </i>
-    </p-card>
-    <pre class="text-center">Crear nueva rutina</pre>
-    <p-dialog
-      [modal]="true"
-      [(visible)]="visible"
-      [style]="{ width: '90%' }"
-      [dismissableMask]="true"
-    >
-      <ng-template pTemplate="headless">
-        <div class="flex flex-column px-2 py-5 border-round-2xl">
-          <app-new-routine
-            *ngIf="chargeComponent"
-            (sendSubmitValue)="getValueSubmit($event)"
-          ></app-new-routine>
-        </div>
-      </ng-template>
-    </p-dialog>
-  </div>
+<app-cards-routines [data]="data" (activeItem)="getActiveItem($event)"></app-cards-routines>
 
-  @for (item of data; track $index) {
-  <p-card class="mb-3 custom-card" (click)="checkActiveCard(item)">
-
-    <!-- <i class="pi pi-bookmark-fill icon-marker"></i> -->
-
-    @if (item.favourite) {
-      <i class="pi pi-bookmark-fill favouriteItem">
-        <i class="pi pi-star-fill"></i
-      ></i>
-    }
-
-    <div class="flex justify-content-center">
-      <img src=".../../assets/images/serio.png" alt="" width="90" />
-    </div>
-
-    <pre class="text-center text-base">{{ item.titleRoutine }}</pre>
-
-    <div class="card flex justify-content-center">
-      <p-tag [value]="item.tag"  [severity]="item.severityTag.code"/>
-  </div>
-    
-  </p-card>
-  }
-</div>
-
-<div class="card flex flex-wrap justify-content-center gap-2">
-  <p-sidebar
-    [(visible)]="sidebarVisible4"
-    position="bottom"
-    styleClass="h-30rem"
-    (onHide)="handleSidebarHide()"
-  >
-    <!-- <app-new-edit *ngIf="chargeComponent" [routine]="item"></app-new-edit> -->
-  </p-sidebar>
-</div>
+<app-dialog-detail *ngIf="chargeComponent" [routine]="activeForm.value" [form]="activeForm" (sendDialogHide)="getValueHideDialog()"></app-dialog-detail>

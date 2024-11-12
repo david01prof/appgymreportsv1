@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, input, output, ViewChild } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -9,7 +9,6 @@ import {
 } from '@angular/forms';
 
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
@@ -23,6 +22,8 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { TagModule } from 'primeng/tag';
 import { IRoutine, ITag } from '../iroutine';
 import { RoutinesService } from '../routines.service';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 
 const PRIME_MODULES = [
   CardModule,
@@ -35,7 +36,9 @@ const PRIME_MODULES = [
   ScrollPanelModule,
   TagModule,
   DropdownModule,
-  CheckboxModule
+  CheckboxModule,
+  InputGroupModule,
+  InputGroupAddonModule
 ];
 
 @Component({
@@ -47,30 +50,25 @@ const PRIME_MODULES = [
 })
 export class NewRoutineComponent {
 
-  @ViewChild('itemFavourite') imgElement!: ElementRef;
-  
   public routine = input<IRoutine>();
+  public titleRoutine = input.required<string>();
   public forms!: FormGroup;
   public sendSubmitValue = output<boolean>();
-  public colorsTag: any[] = [
-    { name: 'Azul', code: 'primary' },
-    { name: 'Rojo', code: 'danger' },
-    { name: 'Verde', code: 'success' },
-    { name: 'Naranja', code: 'warning' },
-    { name: 'Gris', code: 'secondary' },
-    { name: 'Negro', code: 'contrast' },
-  ];
+  public colorsTag: any[] = []
   public selectedOption: ITag = { name: 'verde', code: 'success' };
   public checked = new FormControl(false);
 
   private readonly _routineSvc = inject(RoutinesService);
 
-  constructor(private router: Router, private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
+
+    this.colorsTag =  this._routineSvc.getColorsTag();
+
     if (this.routine() == undefined) {
       this.forms = new FormGroup({
-        titleRoutine: new FormControl('Crear nueva rutina'),
+        titleRoutine: new FormControl(''),
         numExercises: new FormControl(0),
         exercises: this.fb.array([]),
         date: new FormControl(new Date()),
@@ -79,6 +77,12 @@ export class NewRoutineComponent {
         severityTag: new FormControl(this.selectedOption.code),
         favourite: new FormControl(false),
       });
+    }
+  }
+
+  ngOnChanges(): void {
+    if(this.forms != undefined){
+      this.forms.controls['titleRoutine'].setValue(this.titleRoutine());
     }
   }
 

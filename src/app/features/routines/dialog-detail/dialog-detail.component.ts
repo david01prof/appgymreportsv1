@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -7,6 +7,7 @@ import { IRoutine } from '../iroutine';
 import { NewEditComponent } from '../new_edit/new_edit.component';
 import { RoutinesService } from '../routines.service';
 import { CommonModule } from '@angular/common';
+import { FormGroup } from '@angular/forms';
 
 const PRIME_MODULES = [DialogModule, ButtonModule, InputTextModule,AccordionModule]
 @Component({
@@ -18,28 +19,23 @@ const PRIME_MODULES = [DialogModule, ButtonModule, InputTextModule,AccordionModu
 })
 export class DialogDetailComponent {
   
-  public isUpdate = input.required<boolean>();
-  public isDelete = input<boolean>();
-  public routine = input<IRoutine>();
+  public routine = input.required<IRoutine>();
+  public form = input.required<FormGroup>();
 
-  public visible : boolean = false;
-  public chargeComponent : boolean = false;
+  public sendDialogHide = output();
+
+  public visible : boolean = true;
 
   private readonly _routineSvc = inject(RoutinesService);
-
-  showDialog() {
-    this.visible = true;
-  }
-
-  showDialogUpdated() {
-    this.visible = true;
-    this.chargeComponent = true;
-  }
 
   deleteRoutine(id: any) {
     if(id != undefined){
       this._routineSvc.deleteRoutine(id);
     }
     this.visible = false;
+  }
+
+  hideDialog(){
+    this.sendDialogHide.emit();
   }
 }

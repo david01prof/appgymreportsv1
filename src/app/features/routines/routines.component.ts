@@ -1,57 +1,81 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  forwardRef,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { SidebarModule } from 'primeng/sidebar';
 import { TagModule } from 'primeng/tag';
 import { tap } from 'rxjs';
 import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
+import { CardsRoutinesComponent } from './cards-routines/cards-routines.component';
+import { DetailEditRoutineComponent } from './detail-edit-routine/detail-edit-routine.component';
 import { IRoutine } from './iroutine';
-import { NewRoutineComponent } from './new-routine/new-routine.component';
 import { RoutinesService } from './routines.service';
+import { DividerModule } from 'primeng/divider';
+import { DialogModule } from 'primeng/dialog';
+import { DialogDetailComponent } from './dialog-detail/dialog-detail.component';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { MenuItem } from 'primeng/api';
 
-const PRIME_MODULES = [ButtonModule, DialogModule,CardModule,SidebarModule,TagModule,InputTextModule];
+const PRIME_MODULES = [
+  ButtonModule,
+  CardModule,
+  SidebarModule,
+  TagModule,
+  InputTextModule,
+  DividerModule,
+  DialogModule,
+  BreadcrumbModule,
+];
 @Component({
   selector: 'app-routines',
   standalone: true,
-  imports: [PRIME_MODULES, NewRoutineComponent, CommonModule,BreadcrumbComponent,ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    PRIME_MODULES,
+    BreadcrumbComponent,
+    DetailEditRoutineComponent,
+    CardsRoutinesComponent,
+    DialogDetailComponent,
+  ],
   templateUrl: './routines.component.html',
-  styleUrl: './routines.component.scss'
+  styleUrl: './routines.component.scss',
 })
 export class RoutinesComponent implements OnInit {
-  public visible: boolean = false;
-  public data : IRoutine[] = [];
+  public data: IRoutine[] = [];
   public chargeComponent: boolean = false;
-  public item !: IRoutine;
-  public items = [
-    { icon: 'pi pi-home', route: '/routines' },
-    { label: 'Rutinas'  }
-  ];
+  public item!: IRoutine;
   public searchControl = new FormControl('');
+  public activeForm!: FormGroup;
+  public visible: boolean = false;
+  public itemsLabels : MenuItem[] = [];
+
 
   private readonly _routineSvc = inject(RoutinesService);
   private readonly _destroyRef = inject(DestroyRef);
 
-  sidebarVisible4: boolean = false;
-
+  form!: FormGroup;
   ngOnInit(): void {
     this.getAllRoutines();
+    this.itemsLabels = this._routineSvc.getBreadcrumbLabels();
   }
 
-  showDialog() {
-    this.visible = true;
-    this.chargeComponent = true;
-  }
-
-  getValueSubmit(e:any){
-    this.visible = false;
-  }
-
-  getAllRoutines() {
+  public getAllRoutines() {
     this._routineSvc
       .getAllRoutines()
       .pipe(
@@ -61,14 +85,19 @@ export class RoutinesComponent implements OnInit {
       .subscribe();
   }
 
-  checkActiveCard(item: IRoutine) {
-    this.sidebarVisible4 = true;
-    this.item = item;
-    this.chargeComponent = true;
+  public handleSidebarHide() {
+    this.chargeComponent = false;
   }
 
-  handleSidebarHide(){
-    this.sidebarVisible4 = false;
+  public getActiveItem(e: IRoutine) {
+    this.chargeComponent = true;
+    this.visible = true;
+    this.item = e;
+    this.activeForm = this._routineSvc.generateFormRoutines(e);
+  }
+
+  public getValueHideDialog() {
     this.chargeComponent = false;
+    this.visible = false;
   }
 }

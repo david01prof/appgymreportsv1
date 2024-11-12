@@ -1,4 +1,6 @@
+<div class="cabecera"></div>
 <form [formGroup]="forms" (ngSubmit)="onSubmit()">
+
 
     <!-- Favourite Item -->
     <i class="pi pi-bookmark-fill favouriteItem" [ngClass]="show()">
@@ -6,16 +8,16 @@
     ></i>
 
     <!-- title -->
-    <div class="flex justify-content-center">
+    <!-- <div class="flex justify-content-center">
         <input
         pInputText
         id="username"
         aria-describedby="username-help"
         formControlName="titleRoutine"
         />
-    </div>
+    </div> -->
 
-    <p-divider />
+    <!-- <p-divider /> -->
 
     <!-- Num Exercises -->
     <div class="flex flex-column gap-2 my-2 overflow-hidden">
@@ -39,15 +41,17 @@
                     <div *ngFor="let exercise of exercises.controls; let i = index" [formGroupName]="i">
                         <div class="mb-3">
                             <div class="flex flex-column gap-2">
-                            <label for="username">Ejercicio {{ i + 1 }}:</label>
-                            <input
-                                pInputText
-                                id="username"
-                                aria-describedby="username-help"
-                                formControlName="titleExercise"
-                            />
+                                <ul for="username" class="p-0 pl-3 m-0"><li>Ejercicio {{ i + 1 }}:</li></ul>
+                                <div class="flex flex-column gap-2">
+                                    <label for="username">Titulo del ejercicio</label>
+                                    <input 
+                                        pInputText 
+                                        id="username" 
+                                        aria-describedby="username-help" 
+                                        formControlName="titleExercise" />
+                                </div>
                             </div>
-                            <small id="username-help"> Introduce el nombre del ejercicio </small>
+           
                         </div>
                     
 
@@ -105,40 +109,43 @@
                 </div>
             }
 
-            <span>Anadir tag:</span>
-            <div class="flex justify-content-around mt-1">
+            <div class="flex justify-content-between">
                 <div class="card flex justify-content-left">
                     <div class="flex flex-column gap-2">
-                        <label for="username">Titulo</label>
+                        <label for="tag">Tag</label>
                         <input 
                             pInputText
-                            id="username" 
+                            id="tag" 
                             aria-describedby="username-help" 
                             formControlName="tag"
                             class="input-stylingTitleTag" />
-                        <small id="username-help">
+                        <!-- <small id="username-help">
                             Introduce el titulo del tag
-                        </small>
+                        </small> -->
                     </div>
                 </div>
-                <div class="card flex justify-content-left">
-                    <p-dropdown 
-                        [options]="colorsTag" 
-                        formControlName="severityTag"
-                        optionLabel="name"
-                        placeholder="Color Tag"
-                        [(ngModel)]="selectedOption" 
-                        styleClass="w-8rem classDropdown"/>
+                <div class="card flex justify-content-left mr-1">
+                    <div class="flex flex-column">
+                        <label for="tag">Color</label>
+                        <p-dropdown 
+                            [options]="colorsTag" 
+                            formControlName="severityTag"
+                            optionLabel="name"
+                            placeholder="Color Tag"
+                            [(ngModel)]="selectedOption" 
+                            styleClass="w-8rem classDropdown"/>
+                    </div>
+                   
                 </div>
                
             </div>
             
-            <div class="card flex justify-content-left mt-1">
+            <div class="flex justify-content-left mt-1">
                 <p-tag value="{{forms.value.tag}}" [severity]="forms.value.severityTag.code"></p-tag>
             </div>
             <!-- Comments -->
             <div class="my-3 gap-2">
-                <span id="address2">Comentarios</span> <br />
+                <label id="address2">Comentarios</label> <br />
                 <textarea
                 pInputTextarea
                 aria-labelledby="address2"
@@ -152,7 +159,7 @@
             </div>
 
             <div class="flex mb-2">
-                <span class="w-6 text-center">Anadir a Favoritos:</span>
+                <label class="w-6 text-center">Anadir a Favoritos:</label>
                 <div class="card flex justify-content-center w-6">
                     <p-checkbox 
                         formControlName="favourite"
@@ -174,12 +181,9 @@
                 
                 />
                 <p-button
-                type="submit"
                 label="Salir"
                 severity="secondary"
                 (onClick)="sendSubmitValue.emit(false)"
-                [disabled]="forms.invalid"
-                
                 />
             </div>
         </p-scrollPanel>

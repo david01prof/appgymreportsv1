@@ -6,31 +6,30 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 @Component({
   selector: 'app-breadcrumb',
   standalone: true,
-  imports: [BreadcrumbModule,CommonModule],
+  imports: [BreadcrumbModule, CommonModule],
   template: `
-    <div class="flex justify-content-left">
-      <p-breadcrumb class="max-w-full" [model]="items()">
-        <ng-template pTemplate="item" let-item>
-          <ng-container *ngIf="item.route; else elseBlock">
-            <a [routerLink]="item.route" class="p-menuitem-link">
-              <span
-                [ngClass]="[item.icon ? item.icon : '', 'text-color']"
-              ></span>
-              <span class="text-primary font-semibold">{{ item.label }}</span>
-            </a>
-          </ng-container>
-          <ng-template #elseBlock>
-            <a [href]="item.url">
-              <span class="text-color">{{ item.label }}</span>
-            </a>
-          </ng-template>
-        </ng-template>
-      </p-breadcrumb>
+    <div class="card flex justify-content-left my-3">
+      <p-breadcrumb
+        class="custom-breadcrumb"
+        class="max-w-full"
+        [model]="itemsLabels()"
+        [home]="home"
+      />
     </div>
   `,
-  styles: ``,
+  styles: `
+    ::ng-deep .p-breadcrumb {
+      background-color: transparent;
+  }
+  `,
 })
 export class BreadcrumbComponent {
+  itemsLabels = input.required<MenuItem[] | undefined>();
+  urlActive = input.required<string>();
 
-  items = input.required<MenuItem[] | undefined>();
+  home: MenuItem | undefined;
+
+  ngOnInit() {
+    this.home = { icon: 'pi pi-home', routerLink: '/' + this.urlActive };
+  }
 }
