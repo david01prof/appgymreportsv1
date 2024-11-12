@@ -38,4 +38,12 @@ export class DialogDetailComponent {
   hideDialog(){
     this.sendDialogHide.emit();
   }
+
+  show(){
+    if(this.routine().favourite){
+      return 'block'
+    }else{
+      return 'hidden'
+    }
+  }
 }

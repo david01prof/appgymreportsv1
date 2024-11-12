@@ -1,0 +1,22 @@
+::ng-deep .p-dialog-draggable .p-dialog-header{
+    background: white;
+    margin-bottom: 0;
+    span {
+        font-weight: lighter;
+    }
+}
+
+.favouriteItem {
+    position: absolute;
+    top: -0.2rem;
+    font-size: 2.2rem;
+    right: 0.5rem;
+    color: orange;
+    & i {
+        position: absolute;
+        top: 0.3rem;
+        font-size: 1rem;
+        right: 0.6rem;
+        color: white;
+    }
+}

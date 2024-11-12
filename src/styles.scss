@@ -2,12 +2,16 @@
 @import "primeicons/primeicons.css";
 
 html{
-    background-color: #eff3f8
+    background-color: #eff3f8;
 }
 
+* {
+    font-family: 'Lato, Helvetica, sans-serif';
+    font-weight: lighter;
+}
 
 .separator{
-    height: 20px;
+    height: 1.2rem;
     width: 100%;
 }
 
@@ -17,7 +21,10 @@ html{
 
 label{
     color: #495057;
-    font-family: Lato, Helvetica, sans-serif;
-    font-size: 0.95rem;
-    font-weight: lighter;
+    font-size: 1rem;
+}
+
+.p-dialog-draggable .p-dialog-header{
+    height: 3.75rem;
+    margin-bottom: 1rem;
 }

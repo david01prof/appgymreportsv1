@@ -1,30 +1,36 @@
 <p-dialog
-[header]="routine().titleRoutine"
-[modal]="true"
-[(visible)]="visible"
-[style]="{ width: '90%' }"
-(onHide)="hideDialog()"
+  [header]="routine().titleRoutine"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '90%' }"
+  (onHide)="hideDialog()"
 >
-@for (exercise of routine().exercises; track $index) {
-<span class="p-text-secondary block mb-5"
-  >Ejercicio {{ $index + 1 }}: {{ exercise.titleExercise }}</span
->
+  <!-- Favourite Item -->
+  <i class="pi pi-bookmark-fill favouriteItem" [ngClass]="show()">
+    <i class="pi pi-star-fill"></i
+  ></i>
 
-<p-accordion>
-  @for (serie of exercise.series; track $index) {
-  <p-accordionTab header="Serie: {{ $index + 1 }}">
-    <div class="flex justify-content-between gap-2">
-      <div class="text-gray-400">
-        <span>Repeticiones: {{ serie.replays }},</span>
+  @for (exercise of routine().exercises; track $index) {
+
+  <ul for="username" class="p-0 pl-3 mb-2">
+    <li>Ejercicio {{ $index + 1 }}: {{ exercise.titleExercise }}</li>
+  </ul>
+
+  <p-accordion>
+    @for (serie of exercise.series; track $index) {
+    <p-accordionTab header="Serie: {{ $index + 1 }}">
+      <div class="flex flex-column gap-2">
+        <div class="text-gray-400">
+          <span>Repeticiones: {{ serie.replays }}</span>
+        </div>
+        <div class="text-gray-400">
+          <span>Peso: {{ serie.weight }}</span>
+        </div>
       </div>
-      <div class="text-gray-400">
-        <span>Peso: {{ serie.weight }}</span>
-      </div>
-    </div>
-  </p-accordionTab>
-  <br />
+    </p-accordionTab>
+    <br />
+    }
+  </p-accordion>
+
   }
-</p-accordion>
-
-}
 </p-dialog>
