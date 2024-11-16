@@ -26,7 +26,7 @@ const PRIME_MODULES = [
   AccordionModule,
   ConfirmDialogModule,
   InputNumberModule,
-  DividerModule
+  DividerModule,
 ];
 
 @Component({
@@ -38,7 +38,6 @@ const PRIME_MODULES = [
   providers: [ConfirmationService],
 })
 export class DialogDetailComponent {
-
   public routine = input.required<IRoutine>();
   public sendDialogHide = output();
   public titleRoutine = new FormControl({ value: '', disabled: false });
@@ -49,10 +48,13 @@ export class DialogDetailComponent {
 
   public readonly _routineSvc = inject(RoutinesService);
 
-  constructor( private confirmationService: ConfirmationService, private fb: FormBuilder ) {}
+  constructor(
+    private confirmationService: ConfirmationService,
+    private fb: FormBuilder
+  ) {}
 
   ngOnChanges(): void {
-    if (this.routine() != undefined) { 
+    if (this.routine() != undefined) {
       this.titleRoutine.setValue(this.routine().titleRoutine);
 
       this.forms = this.fb.group({
@@ -66,42 +68,95 @@ export class DialogDetailComponent {
         favourite: new FormControl(this.routine().favourite),
       });
 
-      this.generateControlsExercises()
+      this.generateControlsExercises();
 
       this.editRoutine();
     }
   }
 
-  public generateControlsExercises() {   
-    for (let i = 0; i < this.forms.value.numExercises; i++) {
-      this.exercises.push(
-        this.fb.group({
-          titleExercise: new FormControl({value: this.routine()?.exercises[i].titleExercise, disabled: false}),
-          numSeries: new FormControl(this.routine()?.exercises[i].numSeries),
-          series: this.fb.array([]),
-        })
-      ); 
-      
-      this.generateControlsSeries(i);
+  public generateControlsExercises() {
+    if (
+      this.forms.value.numExercises != undefined &&
+      this.forms.value.numExercises > this.exercises.length
+    ) {
+      this.exercises.clear();
+
+      for (let i = 0; i < this.forms.value.numExercises; i++) {
+        if (this.routine()?.exercises[i] == undefined) {
+          this.exercises.push(
+            this.fb.group({
+              titleExercise: new FormControl('nueva rutina'),
+              numSeries: new FormControl(0),
+              series: this.fb.array([]),
+            })
+          );
+        } else {
+          this.exercises.push(
+            this.fb.group({
+              titleExercise: new FormControl({
+                value: this.routine()?.exercises[i].titleExercise,
+                disabled: false,
+              }),
+              numSeries: new FormControl(
+                this.routine()?.exercises[i].numSeries
+              ),
+              series: this.fb.array([]),
+            })
+          );
+        }
+
+        if (this.forms.value.numExercises > 0) {
+          this.generateControlsSeries(i);
+        }
+      }
+    } else if (
+      this.forms.value.numExercises != undefined &&
+      this.forms.value.numExercises < this.exercises.length
+    ) {
+      const number = this.exercises.length - 1;
+      this.exercises.removeAt(number);
+      if (this.routine()?.exercises[number] != undefined) {
+        this.routine().exercises = this.routine()?.exercises.filter(
+          (item, index) => index !== number
+        );
+      }
     }
   }
 
   public generateControlsSeries(index: number) {
     let series = this.forms.get(`exercises.${index}.series`) as FormArray;
-    series.clear;
+    let numSeries = this.forms.get(`exercises.${index}.numSeries`) as FormControl;
 
-    let numSeries = this.forms.get(
-      `exercises.${index}.numSeries`
-    ) as FormControl;
+
+    if(numSeries.value < series.length && series.length === this.routine().exercises[index].series.length){
+      this.routine().exercises[index].series.pop();
+    }
+
+    series.clear();
     
     for (let i = 0; i < numSeries.value; i++) {
-      series.push(
-        this.fb.group({
-          replays: new FormControl( { value: this.routine().exercises[index].series[i].replays, disabled: false }),
-          weight: new FormControl( { value: this.routine().exercises[index].series[i].weight, disabled: false }),
-        })
-      );
-    }    
+      if (this.routine().exercises[index] != undefined && this.routine().exercises[index].series[i] != undefined) {
+        series.push(
+          this.fb.group({
+            replays: new FormControl({
+              value: this.routine().exercises[index].series[i].replays,
+              disabled: false,
+            }),
+            weight: new FormControl({
+              value: this.routine().exercises[index].series[i].weight,
+              disabled: false,
+            }),
+          })
+        );
+      } else {
+        series.push(
+          this.fb.group({
+            replays: new FormControl(0),
+            weight: new FormControl(0),
+          })
+        );
+      }
+    }
   }
 
   deleteRoutine(id: any) {
@@ -115,13 +170,19 @@ export class DialogDetailComponent {
     if (this.isDisabledEditAction) {
       this.isDisabledEditAction = false;
       this.titleRoutine.disable();
-      this.disabledEvent(this.isDisabledEditAction)
-      document.documentElement.style.setProperty('--displayRowInputNumber', 'none');
+      this.disabledEvent(this.isDisabledEditAction);
+      document.documentElement.style.setProperty(
+        '--displayRowInputNumber',
+        'none'
+      );
     } else {
       this.isDisabledEditAction = true;
       this.titleRoutine.enable();
-      this.disabledEvent(this.isDisabledEditAction)
-      document.documentElement.style.setProperty('--displayRowInputNumber', 'block');
+      this.disabledEvent(this.isDisabledEditAction);
+      document.documentElement.style.setProperty(
+        '--displayRowInputNumber',
+        'block'
+      );
     }
   }
 
@@ -151,40 +212,40 @@ export class DialogDetailComponent {
   }
 
   private disabledEvent(isDisabledEditAction: boolean) {
-    if(isDisabledEditAction){
-
-      let exercise : any= this.forms.controls['exercises'];
+    if (isDisabledEditAction) {
+      let exercise: any = this.forms.controls['exercises'];
       for (let i in this.forms.controls['exercises'].value) {
-
         exercise.controls[i].controls['titleExercise'].enable();
         exercise.controls[i].controls['numSeries'].enable();
 
         for (let j in exercise.controls[i].controls['series'].value) {
-          
-          exercise.controls[i].controls['series'].controls[j].controls['weight'].enable();
+          exercise.controls[i].controls['series'].controls[j].controls[
+            'weight'
+          ].enable();
 
-          exercise.controls[i].controls['series'].controls[j].controls['replays'].enable();
+          exercise.controls[i].controls['series'].controls[j].controls[
+            'replays'
+          ].enable();
         }
       }
       this.forms.controls['exercises'] = exercise;
-      
-    }else{
-      
-      let exercise : any= this.forms.controls['exercises'];
+    } else {
+      let exercise: any = this.forms.controls['exercises'];
       for (let i in this.forms.controls['exercises'].value) {
-
         exercise.controls[i].controls['titleExercise'].disable();
         exercise.controls[i].controls['numSeries'].disable();
 
         for (let j in exercise.controls[i].controls['series'].value) {
-          exercise.controls[i].controls['series'].controls[j].controls['weight'].disable();
-          exercise.controls[i].controls['series'].controls[j].controls['replays'].disable();
+          exercise.controls[i].controls['series'].controls[j].controls[
+            'weight'
+          ].disable();
+          exercise.controls[i].controls['series'].controls[j].controls[
+            'replays'
+          ].disable();
         }
       }
 
       this.forms.controls['exercises'] = exercise;
-      
     }
-
   }
 }
