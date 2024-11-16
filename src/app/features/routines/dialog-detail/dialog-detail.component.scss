@@ -1,3 +1,10 @@
+::host {
+    --displayRowInputNumber: block;
+    --displayShadowInputnumber: 0 0 #0000,
+    0 0 #0000,
+    0 1px 2px 0 rgba(18, 18, 23, 0.05);
+}
+
 ::ng-deep .p-dialog-draggable .p-dialog-header{
     background: white;
     margin-bottom: 0;
@@ -48,9 +55,9 @@
 }
 
 ::ng-deep .p-inputnumber.p-inputnumber-buttons-stacked .p-inputnumber-button-group {
-    display: none; // flechas tipo input number
+    display: var(--displayRowInputNumber); // flechas tipo input number
 }
 
 ::ng-deep .p-inputtext {
-    box-shadow: none;
+    box-shadow: var(--displayShadowInputnumber);
 }

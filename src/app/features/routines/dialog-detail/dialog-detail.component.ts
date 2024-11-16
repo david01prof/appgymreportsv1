@@ -116,10 +116,12 @@ export class DialogDetailComponent {
       this.isDisabledEditAction = false;
       this.titleRoutine.disable();
       this.disabledEvent(this.isDisabledEditAction)
+      document.documentElement.style.setProperty('--displayRowInputNumber', 'none');
     } else {
       this.isDisabledEditAction = true;
       this.titleRoutine.enable();
       this.disabledEvent(this.isDisabledEditAction)
+      document.documentElement.style.setProperty('--displayRowInputNumber', 'block');
     }
   }
 
