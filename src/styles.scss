@@ -15,9 +15,6 @@ html{
     width: 100%;
 }
 
-.p-ripple{
-    width: 100px;
-}
 
 label{
     color: #495057;
@@ -27,4 +24,9 @@ label{
 .p-dialog-draggable .p-dialog-header{
     height: 3.75rem;
     margin-bottom: 1rem;
+}
+
+.p-inputtext:disabled {
+    background-color: transparent;
+    border: none;
 }

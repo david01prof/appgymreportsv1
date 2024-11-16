@@ -5,7 +5,7 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { IRoutine } from '../../iroutine';
-import { NewRoutineComponent } from '../../new-routine/new-routine.component';
+import { NewRoutineComponent } from './new-routine/new-routine.component';
 
 const PRIME_MODULES = [CardModule, DialogModule,InputTextModule];
 @Component({
@@ -42,6 +42,16 @@ const PRIME_MODULES = [CardModule, DialogModule,InputTextModule];
     .cabecera{
       background: red;
     }  
+
+    ::ng-deep .p-inputtext {
+      width: auto;
+    }
+
+    ::ng-deep .p-dialog .p-dialog-header-icons {
+      display: flex;
+      align-items: center;
+      margin-right: 1.5rem;
+    }
   `,
 })
 export class NewCardRoutineComponent {

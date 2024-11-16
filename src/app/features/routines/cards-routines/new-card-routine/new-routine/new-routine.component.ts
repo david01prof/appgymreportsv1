@@ -20,10 +20,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { TagModule } from 'primeng/tag';
-import { IRoutine, ITag } from '../iroutine';
-import { RoutinesService } from '../routines.service';
+
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { IRoutine, ITag } from '../../../iroutine';
+import { RoutinesService } from '../../../routines.service';
 
 const PRIME_MODULES = [
   CardModule,

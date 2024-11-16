@@ -20,3 +20,37 @@
         color: white;
     }
 }
+
+::ng-deep .p-ripple{
+    margin-right: 20px;
+}
+
+::ng-deep .p-dialog{
+    width: 95%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+::ng-deep .p-dialog-mask.p-component-overlay {
+    background: transparent;
+}
+
+::ng-deep .inputAccordion{
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+::ng-deep .inputSeriesAccordion{
+    margin-top: -8px;
+}
+
+::ng-deep .p-accordion .p-accordion-tab-active>.p-toggleable-content:not(.ng-animating) {
+    height: 70px;
+}
+
+::ng-deep .p-inputnumber.p-inputnumber-buttons-stacked .p-inputnumber-button-group {
+    display: none; // flechas tipo input number
+}
+
+::ng-deep .p-inputtext {
+    box-shadow: none;
+}

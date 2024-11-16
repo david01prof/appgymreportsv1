@@ -16,7 +16,7 @@ import {
 import { APP_CONSTANTS } from '../../shared/constants';
 import { Observable } from 'rxjs';
 import { IRoutine, ITag } from './iroutine';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -88,6 +88,7 @@ export class RoutinesService {
     return [{ label: 'Rutinas' }];
   }
 
+  // TODO Porque uso este metodo
   public generateFormRoutines(routine: IRoutine) {
     this.form = new FormGroup({
       titleRoutine: new FormControl(routine.titleRoutine),
@@ -103,5 +104,8 @@ export class RoutinesService {
     return this.form;
   }
 
+  public getSeries(id: number,exercises:any): FormArray {
+    return exercises.at(id).get('series') as FormArray;
+  }
   
 }

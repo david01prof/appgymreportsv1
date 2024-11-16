@@ -2,20 +2,21 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   DestroyRef,
-  forwardRef,
   inject,
-  OnInit,
+  OnInit
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormControl,
   FormGroup,
-  NG_VALUE_ACCESSOR,
-  ReactiveFormsModule,
-  Validators,
+  ReactiveFormsModule
 } from '@angular/forms';
+import { MenuItem } from 'primeng/api';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { DialogModule } from 'primeng/dialog';
+import { DividerModule } from 'primeng/divider';
 import { InputTextModule } from 'primeng/inputtext';
 import { SidebarModule } from 'primeng/sidebar';
 import { TagModule } from 'primeng/tag';
@@ -23,13 +24,9 @@ import { tap } from 'rxjs';
 import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
 import { CardsRoutinesComponent } from './cards-routines/cards-routines.component';
 import { DetailEditRoutineComponent } from './detail-edit-routine/detail-edit-routine.component';
+import { DialogDetailComponent } from './dialog-detail/dialog-detail.component';
 import { IRoutine } from './iroutine';
 import { RoutinesService } from './routines.service';
-import { DividerModule } from 'primeng/divider';
-import { DialogModule } from 'primeng/dialog';
-import { DialogDetailComponent } from './dialog-detail/dialog-detail.component';
-import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { MenuItem } from 'primeng/api';
 
 const PRIME_MODULES = [
   ButtonModule,

@@ -1,36 +1,158 @@
 <p-dialog
-  [header]="routine().titleRoutine"
   [modal]="true"
   [(visible)]="visible"
   [style]="{ width: '90%' }"
-  (onHide)="hideDialog()"
+  (onHide)="this.sendDialogHide.emit()"
+  header="cabecera"
 >
-  <!-- Favourite Item -->
-  <i class="pi pi-bookmark-fill favouriteItem" [ngClass]="show()">
-    <i class="pi pi-star-fill"></i
-  ></i>
+  @if (forms != undefined) {
 
-  @for (exercise of routine().exercises; track $index) {
+      <!-- Favourite Item -->
+      <i class="pi pi-bookmark-fill favouriteItem" [ngClass]="{'block': forms.value.favourite, 'hidden': !forms.value.favourite}">
+        <i class="pi pi-star-fill"></i
+      ></i>
+  
 
-  <ul for="username" class="p-0 pl-3 mb-2">
-    <li>Ejercicio {{ $index + 1 }}: {{ exercise.titleExercise }}</li>
-  </ul>
-
-  <p-accordion>
-    @for (serie of exercise.series; track $index) {
-    <p-accordionTab header="Serie: {{ $index + 1 }}">
-      <div class="flex flex-column gap-2">
-        <div class="text-gray-400">
-          <span>Repeticiones: {{ serie.replays }}</span>
+      <ng-template pTemplate="header" class="cabecera">
+        <input
+          id="disabled-input"
+          type="text"
+          pInputText
+          [formControl]="titleRoutine"
+        />
+  
+        <div class="flex justify-content-around w-4rem ml-2">
+          <p-confirmDialog #cd>
+            <ng-template pTemplate="headless" let-message>
+              <div
+                class="flex flex-column align-items-center p-5 surface-overlay border-round"
+              >
+                <div
+                  class="border-circle inline-flex justify-content-center align-items-center h-6rem w-6rem"
+                >
+                  <i class="pi pi-exclamation-triangle text-6xl text-red-300"></i>
+                </div>
+                <span class="font-bold text-2xl block mb-2 mt-2">
+                  {{ message.header }}
+                </span>
+                <p class="mb-0">{{ message.message }}</p>
+                <div class="flex align-items-center gap-2 mt-4">
+                  <button
+                    pButton
+                    label="Eliminar"
+                    (click)="cd.accept()"
+                    class="w-8rem p-button-outlined"
+                    severity="danger"
+                  ></button>
+                  <button
+                    pButton
+                    label="Cancelar"
+                    (click)="cd.reject()"
+                    class="p-button-outlined w-8rem"
+                  ></button>
+                </div>
+              </div>
+            </ng-template>
+          </p-confirmDialog>
+  
+          <i
+            class="pi pi-trash text-red-400 text-md mr-3 ml-2"
+            (click)="confirm1($event)"
+          ></i>
+  
+          <i
+            class="pi pi-pencil text-yellow-400 text-md mr-2"
+            (click)="editRoutine()"
+          ></i>
         </div>
-        <div class="text-gray-400">
-          <span>Peso: {{ serie.weight }}</span>
-        </div>
-      </div>
-    </p-accordionTab>
-    <br />
-    }
-  </p-accordion>
+      </ng-template>
+    
+    <form [formGroup]="forms"  (ngSubmit)="onSubmit()">
 
+      @if (isDisabledEditAction) {
+        <div class="flex flex-column gap-2 mt-2 mb-5 overflow-hidden">
+          <label for="username">N de ejercicios: </label>
+          <p-inputNumber
+          inputId="integeronly"
+          formControlName="numExercises"
+          (onKeyDown)="generateControlsExercises()"
+          [showButtons]="true"
+          (onInput)="generateControlsExercises()"
+          />
+        </div>
+      }
+
+      @if (forms.value.numExercises > 0) {
+
+        <div formArrayName="exercises">
+          <div *ngFor="let exercise of exercises.controls; let i = index" [formGroupName]="i" ngClass="{'mt-2' : isDisabledEditAction }">
+         
+  
+            <ul for="username" class="p-0 pl-3 mb-2">
+              <li>
+                <div class="flex">
+                  <div>Ejercicio {{ i + 1 }}:</div> <input type="text" pInputText formControlName="titleExercise" class="inputAccordion"/>
+                </div>
+              </li>
+
+              @if (isDisabledEditAction) {
+                <div class="flex mt-1">
+                  <div>N de series:</div>                   <p-inputNumber
+                  inputId="integeronly"
+                  formControlName="numSeries"
+                  (onKeyDown)="generateControlsSeries(i)"
+                  [showButtons]="true"
+                  (onInput)="generateControlsSeries(i)"
+                  class="inputAccordion"
+                  />
+                </div>
+                <p-divider></p-divider>
+              } 
+            </ul>
+            
+            <div formArrayName="series" class="pr-1">
+              <p-accordion>
+                <div *ngFor="let member of _routineSvc.getSeries(i,exercises).controls;let memberIndex = index"[formGroupName]="memberIndex" >
+                    <p-accordionTab header="Serie: {{ memberIndex + 1 }}">
+                      <div class="flex flex-column gap-2 mt-2">
+                        <div class="text-gray-400 flex">
+                          <span>Repeticiones:</span>
+                          <p-inputNumber
+                          inputId="integeronly"
+                          formControlName="replays"
+                          [showButtons]="true"
+                          class="inputSeriesAccordion"
+                          />
+                        </div>
+                        <div class="text-gray-400 mt-2">
+                          <span>Peso:</span>
+                          <p-inputNumber
+                          inputId="integeronly"
+                          formControlName="weight"
+                          [showButtons]="true"
+                          class="inputSeriesAccordion"
+                          />
+                        </div>
+                      </div>
+                    </p-accordionTab>
+                    <br />
+                </div>
+              </p-accordion>
+            </div>
+          </div>
+        </div>
+
+      }
+
+      <div class="flex justify-content-center mt-4">
+        <p-button
+        type="submit"
+        label="Editar"
+        [disabled]="forms.invalid"
+        />
+    </div>
+
+    </form>
   }
+
 </p-dialog>

@@ -7,4 +7,4 @@
 
 <app-cards-routines [data]="data" (activeItem)="getActiveItem($event)"></app-cards-routines>
 
-<app-dialog-detail *ngIf="chargeComponent" [routine]="activeForm.value" [form]="activeForm" (sendDialogHide)="getValueHideDialog()"></app-dialog-detail>
+<app-dialog-detail *ngIf="chargeComponent" [routine]="activeForm.value" (sendDialogHide)="getValueHideDialog()"></app-dialog-detail>
