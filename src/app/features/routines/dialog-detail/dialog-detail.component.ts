@@ -1,12 +1,5 @@
-import { Component, inject, input, output } from '@angular/core';
-import { AccordionModule } from 'primeng/accordion';
-import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
-import { InputTextModule } from 'primeng/inputtext';
-import { IRoutine } from '../iroutine';
-import { NewEditComponent } from '../new_edit/new_edit.component';
-import { RoutinesService } from '../routines.service';
 import { CommonModule } from '@angular/common';
+import { Component, inject, input, output } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -14,10 +7,16 @@ import {
   FormGroup,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { AccordionModule } from 'primeng/accordion';
 import { ConfirmationService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { InputNumberModule } from 'primeng/inputnumber';
+import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { IRoutine } from '../interfaces/iroutine';
+import { RoutinesService } from '../services/routines.service';
 
 const PRIME_MODULES = [
   DialogModule,
@@ -32,7 +31,7 @@ const PRIME_MODULES = [
 @Component({
   selector: 'app-dialog-detail',
   standalone: true,
-  imports: [PRIME_MODULES, NewEditComponent, CommonModule, ReactiveFormsModule],
+  imports: [PRIME_MODULES, CommonModule, ReactiveFormsModule],
   templateUrl: './dialog-detail.component.html',
   styleUrl: './dialog-detail.component.scss',
   providers: [ConfirmationService],

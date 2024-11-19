@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { TagModule } from 'primeng/tag';
-import { IRoutine } from '../iroutine';
+import { IRoutine } from '../interfaces/iroutine';
 import { NewCardRoutineComponent } from './new-card-routine/new-card-routine.component';
 
 const PRIME_MODULES = [CardModule, TagModule];

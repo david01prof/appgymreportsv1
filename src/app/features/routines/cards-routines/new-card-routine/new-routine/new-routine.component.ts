@@ -23,8 +23,8 @@ import { TagModule } from 'primeng/tag';
 
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
-import { IRoutine, ITag } from '../../../iroutine';
-import { RoutinesService } from '../../../routines.service';
+import { IRoutine, ITag } from '../../../interfaces/iroutine';
+import { RoutinesService } from '../../../services/routines.service';
 
 const PRIME_MODULES = [
   CardModule,

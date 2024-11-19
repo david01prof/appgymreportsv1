@@ -24,8 +24,8 @@ import { tap } from 'rxjs';
 import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
 import { CardsRoutinesComponent } from './cards-routines/cards-routines.component';
 import { DialogDetailComponent } from './dialog-detail/dialog-detail.component';
-import { IRoutine } from './iroutine';
-import { RoutinesService } from './routines.service';
+import { IRoutine } from './interfaces/iroutine';
+import { RoutinesService } from './services/routines.service';
 
 const PRIME_MODULES = [
   ButtonModule,
@@ -51,7 +51,7 @@ const PRIME_MODULES = [
   templateUrl: './routines.component.html',
   styleUrl: './routines.component.scss',
 })
-export class RoutinesComponent implements OnInit {
+export default class RoutinesComponent implements OnInit {
   public data: IRoutine[] = [];
   public chargeComponent: boolean = false;
   public item!: IRoutine;

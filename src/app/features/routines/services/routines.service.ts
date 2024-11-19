@@ -13,9 +13,9 @@ import {
   query,
   updateDoc,
 } from '@angular/fire/firestore';
-import { APP_CONSTANTS } from '../../shared/constants';
+import { APP_CONSTANTS } from '../../../shared/constants';
 import { Observable } from 'rxjs';
-import { IRoutine, ITag } from './iroutine';
+import { IRoutine, ITag } from '../interfaces/iroutine';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Injectable({
@@ -88,7 +88,6 @@ export class RoutinesService {
     return [{ label: 'Rutinas' }];
   }
 
-  // TODO Porque uso este metodo
   public generateFormRoutines(routine: IRoutine) {
     this.form = new FormGroup({
       titleRoutine: new FormControl(routine.titleRoutine),

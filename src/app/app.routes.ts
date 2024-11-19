@@ -8,7 +8,7 @@ export const routes: Routes = [
   },
   {
     path: 'routines',
-    loadChildren: () => import('./features/routines/routines.routes'),
+    loadComponent: () => import('./features/routines/routines.component'),
   },
   {
     path: 'registers',

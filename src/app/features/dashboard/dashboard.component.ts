@@ -10,8 +10,8 @@ import { tap } from 'rxjs';
 import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
 import { ChartLinearComponent } from '../../components/chart/chartLinear.component';
 import { TableComponent } from '../../components/table/table.component';
-import { IRoutine } from '../routines/iroutine';
-import { RoutinesService } from '../routines/routines.service';
+import { IRoutine } from '../routines/interfaces/iroutine';
+import { RoutinesService } from '../routines/services/routines.service';
 
 const PRIME_MODULES = [DialogModule, ButtonModule, InputTextModule,CardModule];
 

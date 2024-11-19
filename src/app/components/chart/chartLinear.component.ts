@@ -4,8 +4,8 @@ import { CardModule } from 'primeng/card';
 import * as shape from 'd3-shape';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { tap } from 'rxjs';
-import { IRoutine } from '../../features/routines/iroutine';
-import { RoutinesService } from '../../features/routines/routines.service';
+import { IRoutine } from '../../features/routines/interfaces/iroutine';
+import { RoutinesService } from '../../features/routines/services/routines.service';
 
 @Component({
   selector: 'app-chart-linear',
