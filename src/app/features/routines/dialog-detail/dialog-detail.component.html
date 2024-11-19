@@ -18,7 +18,7 @@
   <ng-template pTemplate="header" class="cabecera">
     <span>{{ date | date : "longDate" }}</span>
 
-    <div class="flex justify-content-around w-4rem ml-6">
+    <div class="flex justify-content-around w-5rem ml-5">
       <app-delete-routine-dialog
         [forms]="forms"
         (isVisible)="getVisible($event)"

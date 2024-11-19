@@ -34,6 +34,7 @@ const PRIME_MODULES = [
   TagModule,
 ];
 
+
 @Component({
   selector: 'app-dialog-detail',
   standalone: true,
@@ -91,6 +92,8 @@ export class DialogDetailComponent {
       this.generateControlsExercises();
 
       this.editRoutine();
+
+      this.show();
     }
   }
 
@@ -190,13 +193,6 @@ export class DialogDetailComponent {
         );
       }
     }
-    // if(this.routine().exercises.length > 0 ){
-    //   if(numSeries.value < series.length && series.length === this.routine().exercises[index].series.length){
-    //     this.routine().exercises[index].series.pop();
-    //   }
-    // }
-
-    // series.clear();
   }
 
   editRoutine() {
@@ -291,10 +287,16 @@ export class DialogDetailComponent {
 
   show(){
     if(this.forms.value.favourite){
-      // this.sendIsFavourite.emit(true);
+      document.documentElement.style.setProperty(
+        '--displayRippleButton',
+        '20px'
+      );
       return 'block'
     }else{
-      // this.sendIsFavourite.emit(false);
+      document.documentElement.style.setProperty(
+        '--displayRippleButton',
+        '0px'
+      );
       return 'hidden'
     }
   }
