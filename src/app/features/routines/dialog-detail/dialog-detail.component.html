@@ -22,44 +22,9 @@
         />
   
         <div class="flex justify-content-around w-4rem ml-2">
-          <p-confirmDialog #cd>
-            <ng-template pTemplate="headless" let-message>
-              <div
-                class="flex flex-column align-items-center p-5 surface-overlay border-round"
-              >
-                <div
-                  class="border-circle inline-flex justify-content-center align-items-center h-6rem w-6rem"
-                >
-                  <i class="pi pi-exclamation-triangle text-6xl text-red-300"></i>
-                </div>
-                <span class="font-bold text-2xl block mb-2 mt-2">
-                  {{ message.header }}
-                </span>
-                <p class="mb-0">{{ message.message }}</p>
-                <div class="flex align-items-center gap-2 mt-4">
-                  <button
-                    pButton
-                    label="Eliminar"
-                    (click)="cd.accept()"
-                    class="w-8rem p-button-outlined"
-                    severity="danger"
-                  ></button>
-                  <button
-                    pButton
-                    label="Cancelar"
-                    (click)="cd.reject()"
-                    class="p-button-outlined w-8rem"
-                  ></button>
-                </div>
-              </div>
-            </ng-template>
-          </p-confirmDialog>
-  
-          <i
-            class="pi pi-trash text-red-400 text-md mr-3 ml-2"
-            (click)="confirm1($event)"
-          ></i>
-  
+          
+          <app-confirmation-dialog [forms]="forms" (isVisible)="getVisible($event)"></app-confirmation-dialog>  
+          
           <i
             class="pi pi-pencil text-yellow-400 text-md mr-2"
             (click)="editRoutine()"
@@ -144,13 +109,37 @@
 
       }
 
-      <div class="flex justify-content-center mt-4">
-        <p-button
-        type="submit"
-        label="Editar"
-        [disabled]="forms.invalid"
-        />
-    </div>
+      @if (forms.value.comments != '') {
+        <p-divider></p-divider>
+        <label for="comments">Comentarios:</label>
+
+
+        @if(isDisabledEditAction) {
+          <textarea
+          pInputTextarea
+          aria-labelledby="comments"
+          formControlName="comments"
+          rows="5"
+          cols="30"
+          pInputTextarea
+          [autoResize]="true"
+          class="mt-2"
+          ></textarea>
+        }
+        @else {
+          <p id="comments">{{forms.value.comments}}</p>
+        }
+      }
+
+      @if (isDisabledEditAction) {
+        <div class="flex justify-content-center mt-4">
+          <p-button
+          type="submit"
+          label="Editar"
+          [disabled]="forms.invalid"
+          />
+        </div>
+      }
 
     </form>
   }

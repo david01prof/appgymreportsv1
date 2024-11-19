@@ -94,6 +94,10 @@ export class CardsRoutinesComponent {
   public sidebarVisible = output<boolean>();
   public activeItem = output<IRoutine>(); 
 
+  ngOnChanges(): void {
+    console.log(this.data());
+  }
+
   checkActiveCard(item: IRoutine) {
     this.sidebarVisible.emit(true);
     this.activeItem.emit(item);

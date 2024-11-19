@@ -17,6 +17,7 @@ import { APP_CONSTANTS } from '../../../shared/constants';
 import { Observable } from 'rxjs';
 import { IRoutine, ITag } from '../interfaces/iroutine';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { log } from 'console';
 
 @Injectable({
   providedIn: 'root',
@@ -89,7 +90,10 @@ export class RoutinesService {
   }
 
   public generateFormRoutines(routine: IRoutine) {
+    console.log(routine);
+    
     this.form = new FormGroup({
+      id: new FormControl(routine.id),
       titleRoutine: new FormControl(routine.titleRoutine),
       numExercises: new FormControl(routine.numExercises),
       exercises: this.fb.array(routine.exercises),

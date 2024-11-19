@@ -8,55 +8,58 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { AccordionModule } from 'primeng/accordion';
-import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ConfirmationDialogComponent } from '../../../components/confirmation-dialog/confirmation-dialog.component';
 import { IRoutine } from '../interfaces/iroutine';
 import { RoutinesService } from '../services/routines.service';
+import { ConfirmationService } from 'primeng/api';
 
 const PRIME_MODULES = [
   DialogModule,
   ButtonModule,
   InputTextModule,
   AccordionModule,
-  ConfirmDialogModule,
   InputNumberModule,
   DividerModule,
+  InputTextareaModule
 ];
 
 @Component({
   selector: 'app-dialog-detail',
   standalone: true,
-  imports: [PRIME_MODULES, CommonModule, ReactiveFormsModule],
+  imports: [PRIME_MODULES, CommonModule, ReactiveFormsModule,ConfirmationDialogComponent],
   templateUrl: './dialog-detail.component.html',
   styleUrl: './dialog-detail.component.scss',
-  providers: [ConfirmationService],
+  providers: [ConfirmationService]
 })
 export class DialogDetailComponent {
   public routine = input.required<IRoutine>();
   public sendDialogHide = output();
   public titleRoutine = new FormControl({ value: '', disabled: false });
+  public showDialog = false;
 
   public isDisabledEditAction = true;
   public forms!: FormGroup;
   public visible: boolean = true;
 
-  public readonly _routineSvc = inject(RoutinesService);
+  public readonly _routineSvc = inject(RoutinesService)
 
   constructor(
-    private confirmationService: ConfirmationService,
     private fb: FormBuilder
   ) {}
 
   ngOnChanges(): void {
     if (this.routine() != undefined) {
+
       this.titleRoutine.setValue(this.routine().titleRoutine);
 
       this.forms = this.fb.group({
+        id: new FormControl(this.routine().id),
         titleRoutine: new FormControl(this.titleRoutine.value),
         numExercises: new FormControl(this.routine().numExercises),
         exercises: this.fb.array([]),
@@ -185,14 +188,8 @@ export class DialogDetailComponent {
     }
   }
 
-  confirm1(event: Event) {
-    this.confirmationService.confirm({
-      target: event.target as EventTarget,
-      message: 'Quieres eliminar esta rutina?',
-      header: 'Confirmacion',
-      accept: () => {},
-      reject: () => {},
-    });
+  getVisible(e:boolean){
+    this.visible = e
   }
 
   get exercises(): FormArray {
@@ -203,8 +200,8 @@ export class DialogDetailComponent {
     let _refForm = this.forms.value;
 
     if (this.forms.valid) {
-      // await this._routineSvc.newRoutine(_refForm);
-      // this.sendSubmitValue.emit(true);
+      await this._routineSvc.updateRoutine(this.forms.value.id, _refForm);
+      this.visible = false;
     } else {
       console.log('Formulario inválido');
     }
