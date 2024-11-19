@@ -70,7 +70,7 @@ export class NewRoutineComponent {
 
     if (this.routine() == undefined) {
       this.forms = new FormGroup({
-        titleRoutine: new FormControl(''),
+        titleRoutine: new FormControl('Nueva rutina'),
         numExercises: new FormControl(0),
         exercises: this.fb.array([]),
         date: new FormControl(new Date()),

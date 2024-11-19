@@ -20,6 +20,7 @@ import { IRoutine, ITag } from '../interfaces/iroutine';
 import { RoutinesService } from '../services/routines.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { TagModule } from 'primeng/tag';
+import { CheckboxModule } from 'primeng/checkbox';
 
 const PRIME_MODULES = [
   DialogModule,
@@ -30,47 +31,57 @@ const PRIME_MODULES = [
   DividerModule,
   InputTextareaModule,
   DropdownModule,
-  TagModule
+  TagModule,
 ];
 
 @Component({
   selector: 'app-dialog-detail',
   standalone: true,
-  imports: [PRIME_MODULES, CommonModule, ReactiveFormsModule,DeleteRoutineDialog],
+  imports: [
+    PRIME_MODULES,
+    CommonModule,
+    ReactiveFormsModule,
+    DeleteRoutineDialog,
+    CheckboxModule
+  ],
   templateUrl: './dialog-detail.component.html',
   styleUrl: './dialog-detail.component.scss',
-  providers: [ConfirmationService]
+  providers: [ConfirmationService],
 })
 export class DialogDetailComponent {
   public routine = input.required<IRoutine>();
   public sendDialogHide = output();
   public showDialog = false;
-  public colorsTag: any[] = []
+  public colorsTag: any[] = [];
   public selectedOption: ITag = { name: 'verde', code: 'success' };
-  public date = new Date()
+  public date: Date = new Date();
 
   public isDisabledEditAction = true;
   public forms!: FormGroup;
   public visible: boolean = true;
 
-  public readonly _routineSvc = inject(RoutinesService)
+  public readonly _routineSvc = inject(RoutinesService);
 
-  constructor(
-    private fb: FormBuilder
-  ) {  this.colorsTag =  this._routineSvc.getColorsTag();}
+  constructor(private fb: FormBuilder) {
+    this.colorsTag = this._routineSvc.getColorsTag();
+  }
 
   ngOnChanges(): void {
     if (this.routine() != undefined) {
+      let actualColor: ITag = this.colorsTag.find((x: ITag) =>
+        x.code.includes(this.routine().severityTag.code)
+      );
+      this.selectedOption = { name: actualColor.name, code: actualColor.code };
+      console.log(this.routine());
 
-      let actualColor : ITag = this.colorsTag.find( (x: ITag) => x.code.includes(this.routine().severityTag.code));
-      this.selectedOption = { name: actualColor.name, code: actualColor.code};
+      this.date = this.routine().updated;
 
       this.forms = this.fb.group({
         id: new FormControl(this.routine().id),
         titleRoutine: new FormControl(this.routine().titleRoutine),
         numExercises: new FormControl(this.routine().numExercises),
         exercises: this.fb.array([]),
-        date: new FormControl(this.routine().date),
+        date: new FormControl(this.routine().updated),
         comments: new FormControl(this.routine().comments),
         tag: new FormControl(this.routine().tag),
         severityTag: new FormControl(this.routine().severityTag),
@@ -134,29 +145,42 @@ export class DialogDetailComponent {
 
   public generateControlsSeries(index: number) {
     let series = this.forms.get(`exercises.${index}.series`) as FormArray;
-    let numSeries = this.forms.get(`exercises.${index}.numSeries`) as FormControl;
+    let numSeries = this.forms.get(
+      `exercises.${index}.numSeries`
+    ) as FormControl;
 
-
-    if(numSeries.value < series.length && series.length === this.routine().exercises[index].series.length){
-      this.routine().exercises[index].series.pop();
-    }
-
-    series.clear();
-    
-    for (let i = 0; i < numSeries.value; i++) {
-      if (this.routine().exercises[index] != undefined && this.routine().exercises[index].series[i] != undefined) {
-        series.push(
-          this.fb.group({
-            replays: new FormControl({
-              value: this.routine().exercises[index].series[i].replays,
-              disabled: false,
-            }),
-            weight: new FormControl({
-              value: this.routine().exercises[index].series[i].weight,
-              disabled: false,
-            }),
-          })
-        );
+    if (numSeries.value < series.length) {
+      if (series.length > 0) {
+        series.removeAt(series.length - 1);
+        if(numSeries.value < this.routine().exercises[index].series.length){
+          this.routine().exercises[index].series.pop();
+        }
+      }
+    } else if (numSeries.value > series.length) {
+      if (
+        this.routine().exercises.length > 0 &&
+        this.routine().exercises[index].series.length > 0 &&
+        this.routine().exercises[index].series.length > series.length
+      ) {
+        for (let i = 0; i < numSeries.value; i++) {
+          if (
+            this.routine().exercises[index] != undefined &&
+            this.routine().exercises[index].series[i] != undefined
+          ) {
+            series.push(
+              this.fb.group({
+                replays: new FormControl({
+                  value: this.routine().exercises[index].series[i].replays,
+                  disabled: false,
+                }),
+                weight: new FormControl({
+                  value: this.routine().exercises[index].series[i].weight,
+                  disabled: false,
+                }),
+              })
+            );
+          }
+        }
       } else {
         series.push(
           this.fb.group({
@@ -166,6 +190,13 @@ export class DialogDetailComponent {
         );
       }
     }
+    // if(this.routine().exercises.length > 0 ){
+    //   if(numSeries.value < series.length && series.length === this.routine().exercises[index].series.length){
+    //     this.routine().exercises[index].series.pop();
+    //   }
+    // }
+
+    // series.clear();
   }
 
   editRoutine() {
@@ -186,7 +217,9 @@ export class DialogDetailComponent {
     }
   }
 
-  getVisible(e:boolean){ this.visible = e }
+  getVisible(e: boolean) {
+    this.visible = e;
+  }
 
   get exercises(): FormArray {
     return this.forms.get('exercises') as FormArray;
@@ -194,9 +227,12 @@ export class DialogDetailComponent {
 
   public async onSubmit() {
     if (this.forms.valid) {
-      console.log( this.forms.value);
-      
-      await this._routineSvc.updateRoutine(this.forms.value.id,  this.forms.value);
+      console.log(this.forms.value);
+
+      await this._routineSvc.updateRoutine(
+        this.forms.value.id,
+        this.forms.value
+      );
       this.visible = false;
     } else {
       console.log('Formulario inválido');
@@ -249,6 +285,17 @@ export class DialogDetailComponent {
       }
 
       this.forms.controls['exercises'] = exercise;
+    }
+  }
+
+
+  show(){
+    if(this.forms.value.favourite){
+      // this.sendIsFavourite.emit(true);
+      return 'block'
+    }else{
+      // this.sendIsFavourite.emit(false);
+      return 'hidden'
     }
   }
 }

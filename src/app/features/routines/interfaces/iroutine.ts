@@ -3,7 +3,7 @@ export interface IRoutine {
   titleRoutine: string;
   numExercises: number;
   exercises: IExercise[];
-  date: any;
+  updated: any;
   favourite: boolean;
   severityTag: ITag;
   tag:string;

@@ -24,6 +24,7 @@ export class NewCardRoutineComponent {
   public visible: boolean = false;
   public chargeComponent: boolean = false;
   public item!: IRoutine;
+  public date: Date = new Date();
   public titleRoutine = new FormControl('Nueva rutina');
 
   showDialog() {

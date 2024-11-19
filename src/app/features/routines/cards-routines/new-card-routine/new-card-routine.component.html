@@ -12,12 +12,7 @@
       header="cabecera "
     >
       <ng-template pTemplate="header" class="cabecera">
-        <input
-          type="text"
-          pInputText
-          [formControl]="titleRoutine"
-          class="mr-5"
-        />
+        <span>{{ date | date : "longDate" }}</span>
       </ng-template>
 
       <app-new-routine

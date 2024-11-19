@@ -94,7 +94,7 @@ export class RoutinesService {
       titleRoutine: new FormControl(routine.titleRoutine),
       numExercises: new FormControl(routine.numExercises),
       exercises: this.fb.array(routine.exercises),
-      date: new FormControl(routine.date),
+      updated: new FormControl(routine.updated),
       comments: new FormControl(routine.comments),
       tag: new FormControl(routine.tag),
       severityTag: new FormControl(routine.severityTag),
@@ -106,6 +106,10 @@ export class RoutinesService {
 
   public getSeries(id: number,exercises:any): FormArray {
     return exercises.at(id).get('series') as FormArray;
+  }
+
+  public convertTimeStamptoDate(timestamp: any) {
+    return new Date(1732047698633);
   }
   
 }
