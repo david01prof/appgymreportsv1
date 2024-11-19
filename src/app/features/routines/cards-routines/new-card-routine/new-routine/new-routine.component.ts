@@ -55,6 +55,7 @@ export class NewRoutineComponent {
   public titleRoutine = input.required<string>();
   public forms!: FormGroup;
   public sendSubmitValue = output<boolean>();
+  public sendIsFavourite = output<boolean>();
   public colorsTag: any[] = []
   public selectedOption: ITag = { name: 'verde', code: 'success' };
   public checked = new FormControl(false);
@@ -140,8 +141,10 @@ export class NewRoutineComponent {
 
   show(){
     if(this.forms.value.favourite){
+      this.sendIsFavourite.emit(true);
       return 'block'
     }else{
+      this.sendIsFavourite.emit(false);
       return 'hidden'
     }
   }

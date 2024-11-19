@@ -1,0 +1,16 @@
+::host {
+    --alignItemFavourite: 0rem;
+}
+.cabecera{
+  background: red;
+}  
+
+::ng-deep .p-inputtext {
+  width: auto;
+}
+
+::ng-deep .p-dialog .p-dialog-header-icons {
+  display: flex;
+  align-items: center;
+  margin-right: var(--alignItemFavourite)
+}
