@@ -23,7 +23,6 @@ import { TagModule } from 'primeng/tag';
 import { tap } from 'rxjs';
 import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
 import { CardsRoutinesComponent } from './cards-routines/cards-routines.component';
-import { DetailEditRoutineComponent } from './detail-edit-routine/detail-edit-routine.component';
 import { DialogDetailComponent } from './dialog-detail/dialog-detail.component';
 import { IRoutine } from './iroutine';
 import { RoutinesService } from './routines.service';
@@ -46,7 +45,6 @@ const PRIME_MODULES = [
     ReactiveFormsModule,
     PRIME_MODULES,
     BreadcrumbComponent,
-    DetailEditRoutineComponent,
     CardsRoutinesComponent,
     DialogDetailComponent,
   ],
