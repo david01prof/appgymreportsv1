@@ -3,6 +3,7 @@
     --displayShadowInputnumber: 0 0 #0000,
     0 0 #0000,
     0 1px 2px 0 rgba(18, 18, 23, 0.05);
+    --displayTextAlignTitle: 'left'
 }
 
 ::ng-deep .p-dialog-draggable .p-dialog-header{
@@ -42,7 +43,7 @@
 }
 
 ::ng-deep .inputAccordion{
-    margin-top: -10px;
+    margin-top: -8px;
     margin-bottom: 10px;
 }
 
@@ -60,4 +61,16 @@
 
 ::ng-deep .p-inputtext {
     box-shadow: var(--displayShadowInputnumber);
+}
+
+::ng-deep .classDropdown{
+    margin-top: 0.5rem;
+}
+
+.input-stylingTitleTag {
+    width: 145px !important;
+}
+
+.styleText{
+    text-align: var(--displayTextAlignTitle);
 }

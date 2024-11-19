@@ -13,11 +13,10 @@ import {
   query,
   updateDoc,
 } from '@angular/fire/firestore';
-import { APP_CONSTANTS } from '../../../shared/constants';
-import { Observable } from 'rxjs';
-import { IRoutine, ITag } from '../interfaces/iroutine';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { log } from 'console';
+import { Observable } from 'rxjs';
+import { APP_CONSTANTS } from '../../../shared/constants';
+import { IRoutine, ITag } from '../interfaces/iroutine';
 
 @Injectable({
   providedIn: 'root',
@@ -90,8 +89,6 @@ export class RoutinesService {
   }
 
   public generateFormRoutines(routine: IRoutine) {
-    console.log(routine);
-    
     this.form = new FormGroup({
       id: new FormControl(routine.id),
       titleRoutine: new FormControl(routine.titleRoutine),
@@ -100,7 +97,7 @@ export class RoutinesService {
       date: new FormControl(routine.date),
       comments: new FormControl(routine.comments),
       tag: new FormControl(routine.tag),
-      severityTag: new FormControl(routine.severityTag.code),
+      severityTag: new FormControl(routine.severityTag),
       favourite: new FormControl(routine.favourite),
     });
 

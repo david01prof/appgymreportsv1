@@ -7,141 +7,197 @@
 >
   @if (forms != undefined) {
 
-      <!-- Favourite Item -->
-      <i class="pi pi-bookmark-fill favouriteItem" [ngClass]="{'block': forms.value.favourite, 'hidden': !forms.value.favourite}">
-        <i class="pi pi-star-fill"></i
+  <!-- Favourite Item -->
+  <i
+    class="pi pi-bookmark-fill favouriteItem"
+    [ngClass]="{ block: forms.value.favourite, hidden: !forms.value.favourite }"
+  >
+    <i class="pi pi-star-fill"></i
+  ></i>
+
+  <ng-template pTemplate="header" class="cabecera">
+    <span>{{date | date : "longDate"}}</span>
+
+    <div class="flex justify-content-around w-4rem ml-6">
+      <app-delete-routine-dialog
+        [forms]="forms"
+        (isVisible)="getVisible($event)"
+      ></app-delete-routine-dialog>
+
+      <i
+        class="pi pi-pencil text-yellow-400 text-md mr-2"
+        (click)="editRoutine()"
       ></i>
-  
+    </div>
+  </ng-template>
 
-      <ng-template pTemplate="header" class="cabecera">
-        <input
-          id="disabled-input"
-          type="text"
-          pInputText
-          [formControl]="titleRoutine"
-        />
-  
-        <div class="flex justify-content-around w-4rem ml-2">
-          
-          <app-confirmation-dialog [forms]="forms" (isVisible)="getVisible($event)"></app-confirmation-dialog>  
-          
-          <i
-            class="pi pi-pencil text-yellow-400 text-md mr-2"
-            (click)="editRoutine()"
-          ></i>
-        </div>
-      </ng-template>
-    
-    <form [formGroup]="forms"  (ngSubmit)="onSubmit()">
+  <form [formGroup]="forms" (ngSubmit)="onSubmit()">
+  <!-- <span>{{date | date : "mediumDate" | uppercase}}</span> -->
+    <div class="flex justify-content-center">
+      <input
+      id="disabled-input"
+      type="text"
+      pInputText
+      formControlName="titleRoutine"
+      class="styleText"
+    />
+    </div>
 
-      @if (isDisabledEditAction) {
-        <div class="flex flex-column gap-2 mt-2 mb-5 overflow-hidden">
-          <label for="username">N de ejercicios: </label>
-          <p-inputNumber
-          inputId="integeronly"
-          formControlName="numExercises"
-          (onKeyDown)="generateControlsExercises()"
-          [showButtons]="true"
-          (onInput)="generateControlsExercises()"
-          />
-        </div>
-      }
+  <p-divider></p-divider>
 
-      @if (forms.value.numExercises > 0) {
+    @if (isDisabledEditAction) {
+    <div class="flex flex-column gap-2 mt-2 mb-5 overflow-hidden">
+      <label for="username">N de ejercicios: </label>
+      <p-inputNumber
+        inputId="integeronly"
+        formControlName="numExercises"
+        (onKeyDown)="generateControlsExercises()"
+        [showButtons]="true"
+        (onInput)="generateControlsExercises()"
+      />
+    </div>
+    } @if (forms.value.numExercises > 0) {
 
-        <div formArrayName="exercises">
-          <div *ngFor="let exercise of exercises.controls; let i = index" [formGroupName]="i" ngClass="{'mt-2' : isDisabledEditAction }">
-         
-  
-            <ul for="username" class="p-0 pl-3 mb-2">
-              <li>
-                <div class="flex">
-                  <div>Ejercicio {{ i + 1 }}:</div> <input type="text" pInputText formControlName="titleExercise" class="inputAccordion"/>
-                </div>
-              </li>
-
-              @if (isDisabledEditAction) {
-                <div class="flex mt-1">
-                  <div>N de series:</div>                   <p-inputNumber
-                  inputId="integeronly"
-                  formControlName="numSeries"
-               
-                  [showButtons]="true"
-                  (onInput)="generateControlsSeries(i)"
-                  class="inputAccordion"
-                  />
-                </div>
-                <p-divider></p-divider>
-              } 
-            </ul>
-            
-            <div formArrayName="series" class="pr-1">
-              <p-accordion>
-                <div *ngFor="let member of _routineSvc.getSeries(i,exercises).controls;let memberIndex = index"[formGroupName]="memberIndex" >
-                    <p-accordionTab header="Serie: {{ memberIndex + 1 }}">
-                      <div class="flex flex-column gap-2 mt-2">
-                        <div class="text-gray-400 flex">
-                          <span>Repeticiones:</span>
-                          <p-inputNumber
-                          inputId="integeronly"
-                          formControlName="replays"
-                          [showButtons]="true"
-                          class="inputSeriesAccordion"
-                          />
-                        </div>
-                        <div class="text-gray-400 mt-2">
-                          <span>Peso:</span>
-                          <p-inputNumber
-                          inputId="integeronly"
-                          formControlName="weight"
-                          [showButtons]="true"
-                          class="inputSeriesAccordion"
-                          />
-                        </div>
-                      </div>
-                    </p-accordionTab>
-                    <br />
-                </div>
-              </p-accordion>
+    <div formArrayName="exercises">
+      <div
+        *ngFor="let exercise of exercises.controls; let i = index"
+        [formGroupName]="i"
+        ngClass="{'mt-2' : isDisabledEditAction }"
+      >
+        <ul for="username" class="p-0 pl-3 mb-2">
+          <li>
+            <div class="flex">
+              <div>Ejercicio {{ i + 1 }}:</div>
+              <input
+                type="text"
+                pInputText
+                formControlName="titleExercise"
+                class="inputAccordion"
+              />
             </div>
+          </li>
+
+          @if (isDisabledEditAction) {
+          <div class="flex mt-1">
+            <div>N de series:</div>
+            <p-inputNumber
+              inputId="integeronly"
+              formControlName="numSeries"
+              [showButtons]="true"
+              (onInput)="generateControlsSeries(i)"
+              class="inputAccordion"
+            />
           </div>
+          <p-divider></p-divider>
+          }
+        </ul>
+
+        <div formArrayName="series" class="pr-1">
+          <p-accordion>
+            <div
+              *ngFor="
+                let member of _routineSvc.getSeries(i, exercises).controls;
+                let memberIndex = index
+              "
+              [formGroupName]="memberIndex"
+            >
+              <p-accordionTab header="Serie: {{ memberIndex + 1 }}">
+                <div class="flex flex-column gap-2 mt-2">
+                  <div class="text-gray-400 flex">
+                    <span>Repeticiones:</span>
+                    <p-inputNumber
+                      inputId="integeronly"
+                      formControlName="replays"
+                      [showButtons]="true"
+                      class="inputSeriesAccordion"
+                    />
+                  </div>
+                  <div class="text-gray-400 mt-2">
+                    <span>Peso:</span>
+                    <p-inputNumber
+                      inputId="integeronly"
+                      formControlName="weight"
+                      [showButtons]="true"
+                      class="inputSeriesAccordion"
+                    />
+                  </div>
+                </div>
+              </p-accordionTab>
+              <br />
+            </div>
+          </p-accordion>
         </div>
+      </div>
+    </div>
 
-      }
+    }
 
-      @if (forms.value.comments != '') {
-        <p-divider></p-divider>
-        <label for="comments">Comentarios:</label>
+    @if (isDisabledEditAction) {
 
-
-        @if(isDisabledEditAction) {
-          <textarea
-          pInputTextarea
-          aria-labelledby="comments"
-          formControlName="comments"
-          rows="5"
-          cols="30"
-          pInputTextarea
-          [autoResize]="true"
-          class="mt-2"
-          ></textarea>
-        }
-        @else {
-          <p id="comments">{{forms.value.comments}}</p>
-        }
-      }
-
-      @if (isDisabledEditAction) {
-        <div class="flex justify-content-center mt-4">
-          <p-button
-          type="submit"
-          label="Editar"
-          [disabled]="forms.invalid"
-          />
+      <p-divider></p-divider>
+      <div class="flex justify-content-between">
+        <div class="card flex justify-content-left">
+            <div class="flex flex-column gap-2">
+                <label for="tag">Tag</label>
+                <input 
+                    pInputText
+                    id="tag" 
+                    aria-describedby="username-help" 
+                    formControlName="tag"
+                    class="input-stylingTitleTag" />
+            </div>
         </div>
-      }
+        <div class="card flex justify-content-left mr-1">
+            <div class="flex flex-column">
+                <label for="tag">Color</label>
+                <p-dropdown 
+                    [options]="colorsTag" 
+                    formControlName="severityTag"
+                    optionLabel="name"
+                    placeholder="Color Tag"
+                    [(ngModel)]="selectedOption" 
+                    styleClass="w-8rem classDropdown"/>
+            </div>
+          
+        </div>
+      
+    </div>
+    <div class="flex justify-content-left mt-1">
+      <p-tag value="{{forms.value.tag}}" [severity]="forms.value.severityTag.code"></p-tag>
+    </div>
 
-    </form>
+    }
+     
+                
+
+
+    <p-divider></p-divider>
+    @if(forms.value.comments == '' && !isDisabledEditAction){
+      
+      <span class="mt-2 font-bold pt-3">No hay comentarios</span>
+    }
+    @else{
+      <label for="comments">Comentarios:</label>
+    }
+
+    @if(isDisabledEditAction) {
+    <textarea
+      pInputTextarea
+      aria-labelledby="comments"
+      formControlName="comments"
+      rows="5"
+      cols="30"
+      pInputTextarea
+      [autoResize]="true"
+      class="mt-2"
+    ></textarea>
+    } @else {
+    <p id="comments">{{ forms.value.comments }}</p>
+    } @if (isDisabledEditAction) {
+    <div class="flex justify-content-center mt-4">
+      <p-button type="submit" label="Editar" [disabled]="forms.invalid" />
+    </div>
+    }
+  </form>
   }
-
 </p-dialog>

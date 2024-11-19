@@ -8,16 +8,18 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { AccordionModule } from 'primeng/accordion';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { ConfirmationDialogComponent } from '../../../components/confirmation-dialog/confirmation-dialog.component';
-import { IRoutine } from '../interfaces/iroutine';
+import { DeleteRoutineDialog } from '../cards-routines/delete-routine/delete-routine-dialog';
+import { IRoutine, ITag } from '../interfaces/iroutine';
 import { RoutinesService } from '../services/routines.service';
-import { ConfirmationService } from 'primeng/api';
+import { DropdownModule } from 'primeng/dropdown';
+import { TagModule } from 'primeng/tag';
 
 const PRIME_MODULES = [
   DialogModule,
@@ -26,13 +28,15 @@ const PRIME_MODULES = [
   AccordionModule,
   InputNumberModule,
   DividerModule,
-  InputTextareaModule
+  InputTextareaModule,
+  DropdownModule,
+  TagModule
 ];
 
 @Component({
   selector: 'app-dialog-detail',
   standalone: true,
-  imports: [PRIME_MODULES, CommonModule, ReactiveFormsModule,ConfirmationDialogComponent],
+  imports: [PRIME_MODULES, CommonModule, ReactiveFormsModule,DeleteRoutineDialog],
   templateUrl: './dialog-detail.component.html',
   styleUrl: './dialog-detail.component.scss',
   providers: [ConfirmationService]
@@ -40,8 +44,10 @@ const PRIME_MODULES = [
 export class DialogDetailComponent {
   public routine = input.required<IRoutine>();
   public sendDialogHide = output();
-  public titleRoutine = new FormControl({ value: '', disabled: false });
   public showDialog = false;
+  public colorsTag: any[] = []
+  public selectedOption: ITag = { name: 'verde', code: 'success' };
+  public date = new Date()
 
   public isDisabledEditAction = true;
   public forms!: FormGroup;
@@ -51,16 +57,17 @@ export class DialogDetailComponent {
 
   constructor(
     private fb: FormBuilder
-  ) {}
+  ) {  this.colorsTag =  this._routineSvc.getColorsTag();}
 
   ngOnChanges(): void {
     if (this.routine() != undefined) {
 
-      this.titleRoutine.setValue(this.routine().titleRoutine);
+      let actualColor : ITag = this.colorsTag.find( (x: ITag) => x.code.includes(this.routine().severityTag.code));
+      this.selectedOption = { name: actualColor.name, code: actualColor.code};
 
       this.forms = this.fb.group({
         id: new FormControl(this.routine().id),
-        titleRoutine: new FormControl(this.titleRoutine.value),
+        titleRoutine: new FormControl(this.routine().titleRoutine),
         numExercises: new FormControl(this.routine().numExercises),
         exercises: this.fb.array([]),
         date: new FormControl(this.routine().date),
@@ -161,17 +168,9 @@ export class DialogDetailComponent {
     }
   }
 
-  deleteRoutine(id: any) {
-    if (id != undefined) {
-      this._routineSvc.deleteRoutine(id);
-    }
-    this.visible = false;
-  }
-
   editRoutine() {
     if (this.isDisabledEditAction) {
       this.isDisabledEditAction = false;
-      this.titleRoutine.disable();
       this.disabledEvent(this.isDisabledEditAction);
       document.documentElement.style.setProperty(
         '--displayRowInputNumber',
@@ -179,7 +178,6 @@ export class DialogDetailComponent {
       );
     } else {
       this.isDisabledEditAction = true;
-      this.titleRoutine.enable();
       this.disabledEvent(this.isDisabledEditAction);
       document.documentElement.style.setProperty(
         '--displayRowInputNumber',
@@ -188,19 +186,17 @@ export class DialogDetailComponent {
     }
   }
 
-  getVisible(e:boolean){
-    this.visible = e
-  }
+  getVisible(e:boolean){ this.visible = e }
 
   get exercises(): FormArray {
     return this.forms.get('exercises') as FormArray;
   }
 
   public async onSubmit() {
-    let _refForm = this.forms.value;
-
     if (this.forms.valid) {
-      await this._routineSvc.updateRoutine(this.forms.value.id, _refForm);
+      console.log( this.forms.value);
+      
+      await this._routineSvc.updateRoutine(this.forms.value.id,  this.forms.value);
       this.visible = false;
     } else {
       console.log('Formulario inválido');
@@ -209,6 +205,12 @@ export class DialogDetailComponent {
 
   private disabledEvent(isDisabledEditAction: boolean) {
     if (isDisabledEditAction) {
+      this.forms.controls['titleRoutine'].enable();
+      document.documentElement.style.setProperty(
+        '--displayTextAlignTitle',
+        'left'
+      );
+
       let exercise: any = this.forms.controls['exercises'];
       for (let i in this.forms.controls['exercises'].value) {
         exercise.controls[i].controls['titleExercise'].enable();
@@ -226,6 +228,11 @@ export class DialogDetailComponent {
       }
       this.forms.controls['exercises'] = exercise;
     } else {
+      this.forms.controls['titleRoutine'].disable();
+      document.documentElement.style.setProperty(
+        '--displayTextAlignTitle',
+        'center'
+      );
       let exercise: any = this.forms.controls['exercises'];
       for (let i in this.forms.controls['exercises'].value) {
         exercise.controls[i].controls['titleExercise'].disable();

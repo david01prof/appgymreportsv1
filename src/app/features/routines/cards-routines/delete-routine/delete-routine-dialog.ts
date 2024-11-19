@@ -1,10 +1,10 @@
 import { Component, inject, input, output } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { RoutinesService } from '../../features/routines/services/routines.service';
+import { RoutinesService } from '../../services/routines.service';
 
 @Component({
-  selector: 'app-confirmation-dialog',
+  selector: 'app-delete-routine-dialog',
   standalone: true,
   imports: [ConfirmDialogModule],
   providers: [ConfirmationService],
@@ -48,12 +48,9 @@ import { RoutinesService } from '../../features/routines/services/routines.servi
           ></i>
   `,
   styles: `
-    .alignMargin {
-      margin-top: -45%
-    } 
   `
 })
-export class ConfirmationDialogComponent {
+export class DeleteRoutineDialog {
 
   forms = input.required<any>();
   isVisible = output<boolean>()
