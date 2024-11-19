@@ -15,8 +15,8 @@ const PRIME_MODULES = [CardModule, TagModule];
   imports: [CommonModule,PRIME_MODULES,NewCardRoutineComponent],
   template: `
     <div class="card flex justify-content-between flex-wrap">
-
-      <app-new-card-routine ></app-new-card-routine>
+      
+      <app-new-card-routine class="specialWidth"></app-new-card-routine>
 
       @for (item of data(); track $index) {
 
@@ -41,6 +41,10 @@ const PRIME_MODULES = [CardModule, TagModule];
     </div>
   `,
   styles: `
+
+    .specialWidth{
+      width: 168px;
+    }
     .icon-marker{
       position: absolute;
       top: -0.1rem;
@@ -87,6 +91,10 @@ const PRIME_MODULES = [CardModule, TagModule];
             right: 0.6rem;
             color: white;
         }
+    }
+
+    ::ng-deep .p-tag{
+      font-size: 0.85rem
     }
   `,
 })

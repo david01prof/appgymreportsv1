@@ -26,6 +26,7 @@ export class NewCardRoutineComponent {
   public item!: IRoutine;
   public date: Date = new Date();
   public titleRoutine = new FormControl('Nueva rutina');
+  aplicarEstilo = true;
 
   showDialog() {
     this.visible = true;
