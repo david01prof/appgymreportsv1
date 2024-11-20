@@ -64,7 +64,6 @@ export default class RoutinesComponent implements OnInit {
   private readonly _routineSvc = inject(RoutinesService);
   private readonly _destroyRef = inject(DestroyRef);
 
-  form!: FormGroup;
   ngOnInit(): void {
     this.getAllRoutines();
     this.itemsLabels = this._routineSvc.getBreadcrumbLabels();
@@ -88,7 +87,6 @@ export default class RoutinesComponent implements OnInit {
     this.chargeComponent = true;
     this.visible = true;
     this.item = e;
-    this.activeForm = this._routineSvc.generateFormRoutines(e);
   }
 
   public getValueHideDialog() {

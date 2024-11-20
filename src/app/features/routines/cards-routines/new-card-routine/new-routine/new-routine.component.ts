@@ -25,6 +25,7 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { IRoutine, ITag } from '../../../interfaces/iroutine';
 import { RoutinesService } from '../../../services/routines.service';
+import { Timestamp } from 'firebase/firestore';
 
 const PRIME_MODULES = [
   CardModule,
@@ -67,13 +68,13 @@ export class NewRoutineComponent {
   ngOnInit(): void {
 
     this.colorsTag =  this._routineSvc.getColorsTag();
-
+    
     if (this.routine() == undefined) {
       this.forms = new FormGroup({
         titleRoutine: new FormControl('Nueva rutina'),
         numExercises: new FormControl(0),
         exercises: this.fb.array([]),
-        date: new FormControl(new Date()),
+        date: new FormControl(Timestamp.now()),
         comments: new FormControl(''),
         tag: new FormControl('nuevo'),
         severityTag: new FormControl(this.selectedOption.code),

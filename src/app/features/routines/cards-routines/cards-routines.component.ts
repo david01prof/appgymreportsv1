@@ -3,9 +3,8 @@ import { Component, inject, input, output } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { TagModule } from 'primeng/tag';
 import { IRoutine } from '../interfaces/iroutine';
-import { NewCardRoutineComponent } from './new-card-routine/new-card-routine.component';
-import { log } from 'console';
 import { RoutinesService } from '../services/routines.service';
+import { NewCardRoutineComponent } from './new-card-routine/new-card-routine.component';
 
 const PRIME_MODULES = [CardModule, TagModule];
 
@@ -108,11 +107,7 @@ export class CardsRoutinesComponent {
 
   checkActiveCard(item: IRoutine) {
     this.sidebarVisible.emit(true);
-    console.log(item);
-    
-    item.updated =  this._routineSvc.convertTimeStamptoDate(item.updated)
-    this.activeItem.emit(item);
-    console.log(item);
-    
+    item.date =  this._routineSvc.convertTimeStamptoDate(item.date.seconds)
+    this.activeItem.emit(item);    
   }
 }

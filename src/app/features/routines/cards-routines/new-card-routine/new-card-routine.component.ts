@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { IRoutine } from '../../interfaces/iroutine';
 import { NewRoutineComponent } from './new-routine/new-routine.component';
+import { RoutinesService } from '../../services/routines.service';
 
 const PRIME_MODULES = [CardModule, DialogModule, InputTextModule];
 @Component({
@@ -20,13 +21,19 @@ const PRIME_MODULES = [CardModule, DialogModule, InputTextModule];
   templateUrl: './new-card-routine.component.html',
   styleUrl: './new-card-routine.component.scss'
 })
-export class NewCardRoutineComponent {
+export class NewCardRoutineComponent implements OnInit {
   public visible: boolean = false;
   public chargeComponent: boolean = false;
   public item!: IRoutine;
-  public date: Date = new Date();
+  public date: string = '';
   public titleRoutine = new FormControl('Nueva rutina');
-  aplicarEstilo = true;
+  public aplicarEstilo = true;
+
+  private readonly _routineSvc = inject(RoutinesService);
+
+  ngOnInit(): void {
+    this.date = this._routineSvc.getTranslateDate(new Date());
+  }
 
   showDialog() {
     this.visible = true;

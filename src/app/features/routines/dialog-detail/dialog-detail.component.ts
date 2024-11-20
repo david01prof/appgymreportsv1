@@ -21,6 +21,7 @@ import { RoutinesService } from '../services/routines.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { TagModule } from 'primeng/tag';
 import { CheckboxModule } from 'primeng/checkbox';
+import { Timestamp } from '@angular/fire/firestore';
 
 const PRIME_MODULES = [
   DialogModule,
@@ -55,7 +56,7 @@ export class DialogDetailComponent {
   public showDialog = false;
   public colorsTag: any[] = [];
   public selectedOption: ITag = { name: 'verde', code: 'success' };
-  public date: Date = new Date();
+  public date: string = '';
 
   public isDisabledEditAction = true;
   public forms!: FormGroup;
@@ -73,16 +74,14 @@ export class DialogDetailComponent {
         x.code.includes(this.routine().severityTag.code)
       );
       this.selectedOption = { name: actualColor.name, code: actualColor.code };
-      console.log(this.routine());
-
-      this.date = this.routine().updated;
+      this.date = this._routineSvc.getTranslateDate(this.routine().date);     
 
       this.forms = this.fb.group({
         id: new FormControl(this.routine().id),
         titleRoutine: new FormControl(this.routine().titleRoutine),
         numExercises: new FormControl(this.routine().numExercises),
         exercises: this.fb.array([]),
-        date: new FormControl(this.routine().updated),
+        date: new FormControl(Timestamp.now()),
         comments: new FormControl(this.routine().comments),
         tag: new FormControl(this.routine().tag),
         severityTag: new FormControl(this.routine().severityTag),
@@ -94,6 +93,8 @@ export class DialogDetailComponent {
       this.editRoutine();
 
       this.show();
+
+      console.log(this.routine());
     }
   }
 

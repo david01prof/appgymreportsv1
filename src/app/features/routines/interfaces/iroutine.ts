@@ -3,11 +3,13 @@ export interface IRoutine {
   titleRoutine: string;
   numExercises: number;
   exercises: IExercise[];
-  updated: any;
+  date: any;
   favourite: boolean;
   severityTag: ITag;
   tag:string;
   comments: string;
+  created?: number;
+  updated?: number;
 }
 
 export interface IExercise {

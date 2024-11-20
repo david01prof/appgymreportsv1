@@ -11,12 +11,14 @@ import {
   getDoc,
   orderBy,
   query,
+  Timestamp,
   updateDoc,
 } from '@angular/fire/firestore';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { APP_CONSTANTS } from '../../../shared/constants';
 import { IRoutine, ITag } from '../interfaces/iroutine';
+import { time } from 'console';
 
 @Injectable({
   providedIn: 'root',
@@ -88,28 +90,22 @@ export class RoutinesService {
     return [{ label: 'Rutinas' }];
   }
 
-  public generateFormRoutines(routine: IRoutine) {
-    this.form = new FormGroup({
-      id: new FormControl(routine.id),
-      titleRoutine: new FormControl(routine.titleRoutine),
-      numExercises: new FormControl(routine.numExercises),
-      exercises: this.fb.array(routine.exercises),
-      updated: new FormControl(routine.updated),
-      comments: new FormControl(routine.comments),
-      tag: new FormControl(routine.tag),
-      severityTag: new FormControl(routine.severityTag),
-      favourite: new FormControl(routine.favourite),
-    });
-
-    return this.form;
-  }
-
   public getSeries(id: number,exercises:any): FormArray {
     return exercises.at(id).get('series') as FormArray;
   }
 
-  public convertTimeStamptoDate(timestamp: any) {
-    return new Date(1732047698633);
+  public convertTimeStamptoDate(timestamp: Timestamp) {
+    let dt = timestamp.toDate;
+    return dt;
   }
-  
+
+  public getTranslateDate(date: any) {
+    const opciones: Intl.DateTimeFormatOptions = {
+      year: 'numeric', // Año
+      month: 'long',   // Mes completo
+      day: 'numeric'   // Día del mes
+    };
+    
+    return new Intl.DateTimeFormat('es-ES', opciones).format(date);
+  }
 }
