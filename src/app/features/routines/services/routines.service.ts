@@ -14,17 +14,18 @@ import {
   Timestamp,
   updateDoc,
 } from '@angular/fire/firestore';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { APP_CONSTANTS } from '../../../shared/constants';
 import { IRoutine, ITag } from '../interfaces/iroutine';
-import { time } from 'console';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RoutinesService {
   // FIREBASE CONFIGURATION
+
+  public data: IRoutine[] = [];
 
   private readonly _firestore = inject(Firestore);
   private readonly _routineCollection = collection(
@@ -70,6 +71,14 @@ export class RoutinesService {
     return doc(this._firestore, APP_CONSTANTS.COLLECTION_NAME, id);
   }
 
+  public safeData(data: IRoutine[]){
+    this.data = data;
+  }
+
+  public getSafeData(){
+    return this.data;
+  }
+
   // OTHERS METHODS
 
   private form!: FormGroup;
@@ -95,8 +104,7 @@ export class RoutinesService {
   }
 
   public convertTimeStamptoDate(timestamp: Timestamp) {
-    let dt = timestamp.toDate;
-    return dt;
+    return timestamp.toDate;
   }
 
   public getTranslateDate(date: any) {
@@ -107,5 +115,15 @@ export class RoutinesService {
     };
     
     return new Intl.DateTimeFormat('es-ES', opciones).format(date);
+  }
+
+  public getItemsFilter(){
+    return [
+      { name: 'Titulo', code: 'title' },
+      { name: 'Favoritos', code: 'favorites' },
+      { name: 'No favoritos', code: 'nofavorites' },
+      { name: 'Tag', code: 'tag' },
+      { name: 'Fecha', code: 'date' }
+    ]
   }
 }

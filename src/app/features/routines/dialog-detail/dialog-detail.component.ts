@@ -93,8 +93,6 @@ export class DialogDetailComponent {
       this.editRoutine();
 
       this.show();
-
-      console.log(this.routine());
     }
   }
 
