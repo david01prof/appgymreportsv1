@@ -15,22 +15,21 @@ import {
 import { MenuItem } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
+import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { SidebarModule } from 'primeng/sidebar';
 import { TagModule } from 'primeng/tag';
 import { tap } from 'rxjs';
 import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
-import { CardsRoutinesComponent } from './cards-routines/cards-routines.component';
-import { DialogDetailComponent } from './dialog-detail/dialog-detail.component';
+import { DialogDetailComponent } from './cards-routines/dialog-detail/dialog-detail.component';
+import { IFilter } from './interfaces/ifilter';
 import { IRoutine } from './interfaces/iroutine';
 import { RoutinesService } from './services/routines.service';
-import { DropdownModule } from 'primeng/dropdown';
-import { IFilter } from './interfaces/ifilter';
-import { CalendarModule } from 'primeng/calendar';
-import { parse } from 'path';
+import { CardsRoutinesComponent } from './cards-routines/cards-routines.component';
 
 const PRIME_MODULES = [
   ButtonModule,

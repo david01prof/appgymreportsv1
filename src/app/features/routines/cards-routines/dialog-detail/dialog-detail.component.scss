@@ -6,13 +6,14 @@
     --displayTextAlignTitle: 'left'
 }
 
-::ng-deep .p-dialog-draggable .p-dialog-header{
-    background: white;
-    margin-bottom: 0;
-    span {
-        font-weight: lighter;
-    }
+.input-stylingTitleTag {
+    width: 90% !important;
 }
+
+.styleText{
+    text-align: var(--displayTextAlignTitle);
+}
+
 
 .favouriteItem {
     position: absolute;
@@ -41,10 +42,24 @@
 ::ng-deep .inputAccordion{
     margin-top: -8px;
     margin-bottom: 10px;
+    width: 65%;
+}
+
+::ng-deep .inputAccordionNumber{
+    margin-top: -8px;
+    margin-bottom: 10px;
+
+    span input{
+        width: 145px;
+    }
 }
 
 ::ng-deep .inputSeriesAccordion{
     margin-top: -8px;
+
+    span input{
+        width: 145px;
+    }
 }
 
 ::ng-deep .p-accordion .p-accordion-tab-active>.p-toggleable-content:not(.ng-animating) {
@@ -63,12 +78,12 @@
     margin-top: 0.5rem;
 }
 
-.input-stylingTitleTag {
-    width: 145px !important;
-}
-
-.styleText{
-    text-align: var(--displayTextAlignTitle);
+::ng-deep .p-dialog-draggable .p-dialog-header{
+    background: white;
+    margin-bottom: 0;
+    span {
+        font-weight: lighter;
+    }
 }
 
 ::ng-deep .p-dialog .p-dialog-header-icons {

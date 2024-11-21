@@ -22,7 +22,7 @@
 }
 
 .input-stylingTitleTag {
-    width: 145px !important;
+    width: 85% !important;
 }
 
 ::ng-deep .classDropdown{
@@ -38,7 +38,10 @@ li{
     font-weight: normal;
 }
 
-::ng-deep textarea{height: 68px !important;}
+::ng-deep textarea{
+    height: 68px !important;
+    width: 90% !important;
+}
 
 ::ng-deep .p-dialog-draggable .p-dialog-header{
     background: aliceblue;

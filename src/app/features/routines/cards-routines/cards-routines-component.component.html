@@ -1,0 +1,26 @@
+<div class="card flex justify-content-between flex-wrap alignItems">
+    <app-new-card-routine class="specialWidth"></app-new-card-routine>
+
+    @for (item of data(); track $index) {
+
+    <p-card class="mb-3 custom-card" (click)="checkActiveCard(item)">
+      @if (item.favourite) {
+      <i class="pi pi-bookmark-fill favouriteItem">
+        <i class="pi pi-star-fill"></i
+      ></i>
+      }
+
+      <div class="flex justify-content-center">
+        <img src=".../../assets/images/serio.png" alt="" width="90" />
+      </div>
+
+      <pre class="text-center text-base text-color-secondary">{{
+        item.titleRoutine
+      }}</pre>
+
+      <div class="card flex justify-content-center">
+        <p-tag [value]="item.tag" [severity]="item.severityTag.code" />
+      </div>
+    </p-card>
+    }
+  </div>

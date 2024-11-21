@@ -44,7 +44,7 @@ export class RoutinesService {
   }
 
   public getAllRoutines(): Observable<IRoutine[]> {
-    const queryFn = query(this._routineCollection, orderBy('created', 'asc'));
+    const queryFn = query(this._routineCollection, orderBy('created', 'desc'));
     return collectionData(queryFn, { idField: 'id' }) as Observable<IRoutine[]>;
   }
 
