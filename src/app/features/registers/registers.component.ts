@@ -11,7 +11,7 @@ import { ToastModule } from 'primeng/toast';
 import { tap } from 'rxjs';
 import { SpeedDialComponent } from "../../components/speed-dial/speed-dial.component";
 import { StepsRegistersComponent } from '../../components/steps-registers/steps-registers.component';
-import { TableComponent } from '../../components/table/table.component';
+import { TableComponent } from './table/table.component';
 import { IRegister } from './interfaces/iregister';
 import { RegistersService } from './registers.service';
 import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
@@ -30,7 +30,7 @@ const PRIME_MODULES = [InputNumberModule,ButtonModule,ToastModule,CardModule,Tab
 export default class RegistersComponent {
 
   public forms!: FormGroup;
-  public columns : string[] = ['id', 'totaligc','photos'];
+  public columns : string[] = ['registro', 'fecha','detalle'];
 
   public totaligc: string | undefined;
   public data: IRegister[] = [];

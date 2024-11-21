@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
-import { TableComponent } from '../table/table.component';
+import { TableComponent } from '../../features/registers/table/table.component';
 
 @Component({
   selector: 'app-toolbar',

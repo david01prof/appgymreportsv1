@@ -4,14 +4,14 @@
 <div class="separator"></div>
 
 <p-button (onClick)="showDialog()" label="Nuevo registro" />
-<p-dialog header="Nuevo registro" [modal]="true" [(visible)]="visible">
+<p-dialog header="Nuevo registro" [modal]="true" [(visible)]="visible" [style]="{ width: '335px' }">
   <app-steps-registers></app-steps-registers>
 </p-dialog>
 
 <div class="separator"></div>
 
 <p-card>
-  <!-- <app-table [data]="data" [columns]="columns"></app-table> -->
+   <app-table [data]="data" [columns]="columns"></app-table>
 
-  <app-tree-table [data]="data"></app-tree-table>
+  <!-- <app-tree-table [data]="data"></app-tree-table> -->
 </p-card>

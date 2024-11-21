@@ -6,7 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ToastModule } from 'primeng/toast';
-import { TableComponent } from '../../../components/table/table.component';
+import { TableComponent } from '../table/table.component';
 import { RegistersService } from '../registers.service';
 import { CalculatorService } from './calculator.service';
 
