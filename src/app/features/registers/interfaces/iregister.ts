@@ -1,7 +1,7 @@
 import { IMeasurement } from "./imeasurement";
 
 export interface IRegister {
-    id: string;
+    id?: string;
     calculator: IMeasurement;
     photos: IPhotos[];
 }

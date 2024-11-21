@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ToastModule } from 'primeng/toast';
-import { RegistersService } from '../registers.service';
-import { IPhotos } from '../interfaces/iregister';
+import { IPhotos } from '../../interfaces/iregister';
+import { RegistersService } from '../../services/registers.service';
 
 const PRIME_MODULES = [
   FileUploadModule,
@@ -26,31 +26,28 @@ const PRIME_MODULES = [
   providers: [MessageService],
 })
 export class PhotosComponent {
-  files = [];
-  base64Images: IPhotos[] = [];
-  totalSize: number = 0;
+  
+  public dataPhotos = output<IPhotos[]>();
+  public files = [];
+  public  base64Images: IPhotos[] = [];
 
-  totalSizePercent: number = 0;
+  private totalSize: number = 0;
+  private totalSizePercent: number = 0;
 
-  private readonly _registerSvc = inject(RegistersService);
+  public readonly _registerSvc = inject(RegistersService);
 
   constructor(
     private config: PrimeNGConfig,
     private messageService: MessageService
   ) {}
 
-  choose(event: any, callback: any) {
+  choose(callback: any) {
     callback();
   }
 
-  onRemoveTemplatingFile(
-    event: any,
-    file: any,
-    removeFileCallback: any,
-    index: any
-  ) {
+  onRemoveTemplatingFile( event: any, file: any,removeFileCallback: any, index: any ) {
     removeFileCallback(event, index);
-    this.totalSize -= parseInt(this.formatSize(file.size));
+    this.totalSize -= parseInt(this. _registerSvc.formatSize(file.size));
     this.totalSizePercent = this.totalSize / 10;
     this.base64Images.splice(index, 1);
   }
@@ -61,6 +58,7 @@ export class PhotosComponent {
     this.totalSizePercent = 0;
   }
 
+  //TODO TEMPORAL
   onTemplatedUpload() {
     this.messageService.add({
       severity: 'info',
@@ -73,7 +71,7 @@ export class PhotosComponent {
   onSelectedFiles(event: any) {
     this.files = event.currentFiles;
     this.files.forEach((file: any) => {
-      this.totalSize += parseInt(this.formatSize(file.size));
+      this.totalSize += parseInt(this._registerSvc.formatSize(file.size));
     });
     this.totalSizePercent = this.totalSize / 10;
 
@@ -95,26 +93,9 @@ export class PhotosComponent {
       };
     }
   }
-  clearAll() {
-    this.base64Images = [];
-  }
 
   uploadEvent(callback: any) {
     callback();
-    this._registerSvc.pushPhotosInRegister(this.base64Images);
-  }
-
-  formatSize(bytes: any) {
-    const k = 1024;
-    const dm = 3;
-    const sizes = this.config.translation.fileSizeTypes;
-    if (bytes === 0) {
-      return `0 ${sizes![0]}`;
-    }
-
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    const formattedSize = parseFloat((bytes / Math.pow(k, i)).toFixed(dm));
-
-    return `${formattedSize} ${sizes![i]}`;
+    this.dataPhotos.emit(this.base64Images);
   }
 }

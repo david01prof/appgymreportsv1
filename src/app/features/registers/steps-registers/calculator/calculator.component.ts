@@ -1,14 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ToastModule } from 'primeng/toast';
-import { TableComponent } from '../table/table.component';
-import { RegistersService } from '../registers.service';
-import { CalculatorService } from './calculator.service';
+import { CalculatorService } from '../../services/calculator.service';
+import { RegistersService } from '../../services/registers.service';
+import { TableComponent } from '../../table/table.component';
+import { IMeasurement } from '../../interfaces/imeasurement';
 
 const PRIME_MODULES = [InputNumberModule,ButtonModule,ToastModule,CardModule,TableComponent];
 
@@ -23,6 +24,7 @@ const PRIME_MODULES = [InputNumberModule,ButtonModule,ToastModule,CardModule,Tab
 export class CalculatorComponent {
 
   public forms!: FormGroup;
+  public dataCalculator = output<IMeasurement>();
 
   private readonly _calculatorSvc = inject(CalculatorService);
   private readonly _registerSvc = inject(RegistersService);
@@ -52,7 +54,8 @@ export class CalculatorComponent {
     this.forms.value.totaligc = this._calculatorSvc.calculateMeasurement(measurement);
 
     this._calculatorSvc.newMeasurement(this.forms.value);
-    this._registerSvc.pushCalculatorInRegister(this.forms.value);
+    console.log(this.forms.value);
+    this.dataCalculator.emit(this.forms.value);
 
     this.messageService.add({
       severity: 'success',
