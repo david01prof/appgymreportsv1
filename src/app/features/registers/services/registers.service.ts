@@ -42,7 +42,7 @@ export class RegistersService {
   }
 
   public getBreadcrumbLabels() {
-    return [{ label: 'Registros' }];
+    return [{ label: 'Reportes' }];
   }
 
   public safeRegisters(registers: IRegister[]) {

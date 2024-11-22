@@ -5,7 +5,7 @@
   </div>
 
   <pre
-    class="text-center text-base text-color-secondary">Registro {{id() + 1}}</pre>
+    class="text-center text-base text-color-secondary">Reporte {{id() + 1}}</pre>
 
   <div class="card flex justify-content-center">
     {{getCurrentDate(register().created!) | date: 'dd/MM/yyyy'}}
@@ -19,7 +19,7 @@
   [style]="{ width: '335px' }"
   (onHide)="visible = false">
   <ng-template pTemplate="header" class="cabecera">
-    <span>Detalle del registro {{ id() + 1 }}</span>
+    <span>Detalle del reporte {{ id() + 1 }}</span>
     <div class="flex justify-content-end widthSpecial">
       <i class="pi pi-trash text-red-400" (click)="confirm1($event)"></i>
     </div>
@@ -60,6 +60,10 @@
       </div>
     </ng-template>
   </p-confirmDialog>
+  
+  <div class="flex justify-content-center">
+    <div class="line"></div>
+  </div>
 
-  <app-resumen [register]="register()" *ngIf="visible"></app-resumen>
+  <app-resumen [register]="register()" *ngIf="visible" [isDetail]="true"></app-resumen>
 </p-dialog>

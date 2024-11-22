@@ -7,11 +7,12 @@ import { ResumenComponent } from '../../steps-registers/resumen/resumen.componen
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { RegistersService } from '../../services/registers.service';
+import { DividerModule } from 'primeng/divider';
 
 @Component({
   selector: 'app-detail-cards',
   standalone: true,
-  imports: [CommonModule,CardModule,DialogModule,ResumenComponent,ConfirmDialogModule],
+  imports: [CommonModule,CardModule,DialogModule,ResumenComponent,ConfirmDialogModule,DividerModule],
   templateUrl: './detail-cards.component.html',
   styleUrl: './detail-cards.component.scss',
   providers: [ConfirmationService],
@@ -38,7 +39,7 @@ export class DetailCardsComponent {
   confirm1(event: Event) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
-      message: 'Quieres eliminar esta rutina?',
+      message: 'Quieres eliminar este reporte?',
       header: 'Confirmacion',
       accept: () => {
         this._registerSvc.deleteRegister(this.register().id!)

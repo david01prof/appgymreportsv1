@@ -1,8 +1,6 @@
-<!-- @if (register() != undefined) { -->
+<h4 *ngIf="!isDetail()">Detalle del reporte:</h4>
 
-<h4>Detalle del registro:</h4>
-
-<p-divider></p-divider>
+<p-divider  *ngIf="!isDetail()"></p-divider>
 
 <div class="grid">
   <div class="col-6">
