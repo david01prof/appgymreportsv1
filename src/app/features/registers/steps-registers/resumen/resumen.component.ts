@@ -1,5 +1,4 @@
-import { Component, inject, input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, inject, input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { ImageModule } from 'primeng/image';
@@ -20,9 +19,9 @@ export class ResumenComponent {
   private readonly _registerSvc = inject(RegistersService);
 
   constructor() {}
-  ngOnInit(): void {console.log(this.register());}
+
   ngOnChanges(): void {
-    // console.log(this.register());
+    console.log(this.register());
     
   }
 }

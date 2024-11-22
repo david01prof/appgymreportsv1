@@ -10,6 +10,8 @@ import { IRegister } from '../interfaces/iregister';
 })
 export class RegistersService {
 
+  public dataRegisters: IRegister[] = [];
+
   private readonly _firestore = inject(Firestore);
   private readonly _registerCollection = collection(this._firestore, APP_CONSTANTS.COLLECTION_NAME_REGISTERS);
   
@@ -41,6 +43,13 @@ export class RegistersService {
 
   public getBreadcrumbLabels() {
     return [{ label: 'Registros' }];
+  }
+
+  public safeRegisters(registers: IRegister[]) {
+    this.dataRegisters = registers;
+  }
+  public getSafeData() {
+    return this.dataRegisters;
   }
 
   formatSize(bytes: any) {

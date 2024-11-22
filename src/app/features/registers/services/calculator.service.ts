@@ -62,7 +62,13 @@ export class CalculatorService {
       0.54 * (measurement.waist / measurement.hip) -
       16.2;
 
-    return pgc.toFixed(2);
+    console.log(pgc);
+
+    if(isNaN(pgc)){
+      return 'Error al realizar esta operacion'
+    }else{
+      return pgc.toFixed(2);
+    }
   }
 
   public get allPGCS() {

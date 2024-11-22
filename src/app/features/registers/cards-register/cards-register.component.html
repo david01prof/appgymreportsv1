@@ -1,0 +1,7 @@
+<div class="card flex justify-content-between flex-wrap alignItems">
+    <app-new-card-register></app-new-card-register>
+
+    @for (register of registers(); track $index) {
+    <app-detail-cards [register]="register" [id]="$index"></app-detail-cards>
+    }
+</div>

@@ -1,0 +1,7 @@
+::host {
+    --alignFilterCalendar: -60px;
+}
+
+::ng-deep .p-calendar .p-datepicker {
+    left: var(--alignFilterCalendar) !important;
+}

@@ -37,9 +37,13 @@
       <p-button label="Calcular" class="pl-7 pt-4" type="submit" />
     </div>
 
-    @if(forms.value.totaligc != ''){
+    @if(forms.value.totaligc != '' && forms.value.totaligc != 'Error al realizar esta operacion'){
     <h4>Indice de grasa corporal : {{ forms.value.totaligc }}%</h4>
     }
+    @else if (forms.value.totaligc == 'Error al realizar esta operacion') {
+      <h4 class="text-center"> {{ forms.value.totaligc }} </h4>
+    }
+
 
     <p-toast
       [breakpoints]="{ '100px': { width: '100%', right: '0', left: '0' } }"

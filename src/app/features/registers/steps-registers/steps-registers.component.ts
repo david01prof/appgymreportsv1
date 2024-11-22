@@ -1,17 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, input, OnChanges, OnInit, output } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { StepperModule } from 'primeng/stepper';
+import { IMeasurement } from '../interfaces/imeasurement';
+import { IPhotos, IRegister } from '../interfaces/iregister';
 import { RegistersService } from '../services/registers.service';
 import { CalculatorComponent } from './calculator/calculator.component';
 import { PhotosComponent } from './photos/photos.component';
 import { ResumenComponent } from './resumen/resumen.component';
-import { IMeasurement } from '../interfaces/imeasurement';
-import { log } from 'console';
-import { IPhotos, IRegister } from '../interfaces/iregister';
 
 const PRIME_MODULES = [
   IconFieldModule,
@@ -33,11 +32,13 @@ const PRIME_MODULES = [
   styleUrl: './steps-registers.component.scss',
   providers: [MessageService],
 })
-export class StepsRegistersComponent implements OnInit {
+export class StepsRegistersComponent implements OnInit,OnChanges {
 
-  public active: number = 0;
+  public activeInputExit = input.required<number | undefined>();
+  public active = 0
   public resumenMeasurement !: IRegister; 
   public chargeComponent: boolean = false;
+  public showDialog = output<boolean>();
 
   private dataCalculator : IMeasurement = {
     height: 0,
@@ -48,7 +49,6 @@ export class StepsRegistersComponent implements OnInit {
     totaligc: "",
     genre: false
   };
-  private dataPhotos : IPhotos[] = [];
 
   private readonly _registerSvc = inject(RegistersService);
 
@@ -56,22 +56,35 @@ export class StepsRegistersComponent implements OnInit {
     this.resumenMeasurement  = { calculator: this.dataCalculator, photos: [] }
   }
 
-  saveRegister(){
-    this._registerSvc.newRegister(this.resumenMeasurement);
+  ngOnChanges(){
+    if(this.activeInputExit() != undefined){
+      console.log('entra?');
+      
+      console.log(this.activeInputExit());
+      
+      this.active = this.activeInputExit()!
+    }
   }
 
-  createRegister(){
-    console.log(this.dataCalculator);
-    console.log(this.dataPhotos);
-
+  saveRegister(){
+    this._registerSvc.newRegister(this.resumenMeasurement);
+    this.showDialog.emit(false);
+    this.resumenMeasurement  = { calculator: this.dataCalculator, photos: [] }
   }
 
   getValueCalculator(e:IMeasurement){
-    this.resumenMeasurement.calculator;
+    this.resumenMeasurement.calculator = e;    
+    console.log(e);
+    
+  }
+
+  clearMeasurement(){
+    this.resumenMeasurement  = { calculator: this.dataCalculator, photos: [] }
   }
 
   getValuePhotos(e:IPhotos[]){
-    this.resumenMeasurement.calculator = this.dataCalculator;
     this.resumenMeasurement.photos = e;
+    console.log(this.resumenMeasurement);
+    
   }
 }

@@ -4,6 +4,7 @@ export interface IRegister {
     id?: string;
     calculator: IMeasurement;
     photos: IPhotos[];
+    created?: number;
 }
 
 export interface IPhotos {

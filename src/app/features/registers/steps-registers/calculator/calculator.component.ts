@@ -6,12 +6,11 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ToastModule } from 'primeng/toast';
+import { IMeasurement } from '../../interfaces/imeasurement';
 import { CalculatorService } from '../../services/calculator.service';
 import { RegistersService } from '../../services/registers.service';
-import { TableComponent } from '../../table/table.component';
-import { IMeasurement } from '../../interfaces/imeasurement';
 
-const PRIME_MODULES = [InputNumberModule,ButtonModule,ToastModule,CardModule,TableComponent];
+const PRIME_MODULES = [InputNumberModule,ButtonModule,ToastModule,CardModule];
 
 @Component({
   selector: 'app-calculator',
@@ -27,15 +26,14 @@ export class CalculatorComponent {
   public dataCalculator = output<IMeasurement>();
 
   private readonly _calculatorSvc = inject(CalculatorService);
-  private readonly _registerSvc = inject(RegistersService);
-
+  
   constructor(private messageService: MessageService) {
     this.forms = new FormGroup({
-      height: new FormControl(''),
-      age: new FormControl(''),
-      waist: new FormControl(''), // cintura
-      hip: new FormControl(''), // cadera
-      weight: new FormControl(''),
+      height: new FormControl(0),
+      age: new FormControl(0),
+      waist: new FormControl(0), // cintura
+      hip: new FormControl(0), // cadera
+      weight: new FormControl(0),
       totaligc: new FormControl(''),
     });
   }
@@ -54,8 +52,9 @@ export class CalculatorComponent {
     this.forms.value.totaligc = this._calculatorSvc.calculateMeasurement(measurement);
 
     this._calculatorSvc.newMeasurement(this.forms.value);
-    console.log(this.forms.value);
+
     this.dataCalculator.emit(this.forms.value);
+    
 
     this.messageService.add({
       severity: 'success',

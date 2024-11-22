@@ -1,18 +1,22 @@
-
-<!-- <h3 class="text-center">Bienvenido a la calculadora de PGC</h3> -->
 <app-breadcrumb
   [itemsLabels]="itemsLabels"
-  [urlActive]="'registers'"
-></app-breadcrumb>
+  [urlActive]="'registers'"></app-breadcrumb>
 
-<p-button (onClick)="showDialog()" label="Nuevo registro" />
+<div class="flex justify-content-center mb-3">
+  <p-calendar
+    [(ngModel)]="date"
+    [iconDisplay]="'input'"
+    [showIcon]="true"
+    inputId="icondisplay"
+    selectionMode="range"
+    [readonlyInput]="true"
+    (ngModelChange)="getValueFilter()" />
+  <p-button
+    icon="pi pi-filter-slash"
+    severity="info"
+    *ngIf="date && date.length > 0"
+    class="ml-2"
+    (onClick)="clearFilter()"></p-button>
+</div>
 
-<p-dialog header="Nuevo registro" [modal]="true" [(visible)]="visible" [style]="{ width: '335px' }">
-  <app-steps-registers></app-steps-registers>
-</p-dialog>
-
-<div class="separator"></div>
-
-<p-card>
-   <app-table [data]="data"></app-table>
-</p-card>
+<app-cards-register [registers]="data"></app-cards-register>
