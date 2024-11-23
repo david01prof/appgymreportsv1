@@ -7,9 +7,8 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { tap } from 'rxjs';
-import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
-import { ChartLinearComponent } from '../../components/chart/chartLinear.component';
-import { TableComponent } from '../registers/table/table.component';
+import { ApexChartLineGradientComponent } from "../../components/apex-chart-line-gradient/apex-chart-line-gradient.component";
+import { SparkboxsComponent } from "../../components/sparkboxs/sparkboxs.component";
 import { IRoutine } from '../routines/interfaces/iroutine';
 import { RoutinesService } from '../routines/services/routines.service';
 
@@ -18,7 +17,7 @@ const PRIME_MODULES = [DialogModule, ButtonModule, InputTextModule,CardModule];
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [PRIME_MODULES,CommonModule,ChartLinearComponent,TableComponent,BreadcrumbComponent],
+  imports: [PRIME_MODULES, CommonModule, ApexChartLineGradientComponent, SparkboxsComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })

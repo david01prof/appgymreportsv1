@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
-import { TableComponent } from '../../features/registers/table/table.component';
 
 @Component({
   selector: 'app-toolbar',
   standalone: true,
-  imports: [MenubarModule,TableComponent],
+  imports: [MenubarModule],
   template: `
     <div class="card">
       <p-menubar [model]="items" />

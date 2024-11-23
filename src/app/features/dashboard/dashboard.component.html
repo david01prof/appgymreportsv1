@@ -12,11 +12,15 @@
     <br>
 </div>
 
-<app-chart-linear [objetiveWeight]="objetiveWeight"></app-chart-linear>
+<div class="flex justify-content-center mb-8">
+    <app-sparkboxs></app-sparkboxs>
+</div>
 
-<p-card>
-    <app-table [data]="data"></app-table>
-</p-card>
+
+<!-- <app-chart-linear [objetiveWeight]="objetiveWeight"></app-chart-linear> -->
+
+<app-apex-chart-line-gradient></app-apex-chart-line-gradient>
+
 
 
 <!-- <p-button (onClick)="showDialog()" label="Show" /> -->
