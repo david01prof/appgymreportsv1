@@ -1,42 +1,37 @@
-import { Component, ViewChild } from '@angular/core';
-import {
-  ChartComponent,
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexXAxis,
-  ApexDataLabels,
-  ApexTitleSubtitle,
-  ApexStroke,
-  ApexGrid,
-  ApexFill,
-  ApexMarkers,
-  ApexYAxis,
-  NgApexchartsModule
-} from "ng-apexcharts";
-
-
-export type ChartOptions = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  xaxis: ApexXAxis;
-  dataLabels: ApexDataLabels;
-  grid: ApexGrid;
-  fill: ApexFill;
-  markers: ApexMarkers;
-  yaxis: ApexYAxis;
-  stroke: ApexStroke;
-  title: ApexTitleSubtitle;
-};
+import { Component } from '@angular/core';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { CardModule } from 'primeng/card';
 
 @Component({
-  selector: 'app-apex-chart-line-gradient',
+  selector: 'app-graphic-line-gradient',
   standalone: true,
-  imports: [NgApexchartsModule],
-  templateUrl: './apex-chart-line-gradient.component.html',
-  styleUrl: './apex-chart-line-gradient.component.scss'
-})
-export class ApexChartLineGradientComponent {
+  imports: [CardModule, NgApexchartsModule],
+  template: `
+    <p-card header="Objetivo de peso" class="p-card-h-image">
+        <apx-chart
+          [series]="chartOptions.series"
+          [chart]="chartOptions.chart"
+          [stroke]="chartOptions.stroke"
+          [colors]="chartOptions.colors"
+          [fill]="chartOptions.fill"
+          [title]="chartOptions.title"
+          [xaxis]="chartOptions.xaxis"
+          [yaxis]="chartOptions.yaxis"
+        >
+        </apx-chart>
+    </p-card>
+  `,
+  styles: `
+    ::ng-deep .apexcharts-canvas {
+      border-radius: 6px;
+    }
 
+    ::ng-deep .p-card-h-image{
+      width: 99%;
+    }
+  `,
+})
+export class GraphicLineGradientComponent {
   chartOptions: any;
 
   constructor() {

@@ -12,10 +12,11 @@ span{
     font-size: 14px;
 }
 
-::ng-deep .p-card-body{
-    position: relative;
-}
-::ng-deep .specialMargin{
+.specialMargin{
     position: absolute;
     bottom: 25px;
+}
+
+::ng-deep .styleCard .p-card-body{
+    height: 147px;
 }

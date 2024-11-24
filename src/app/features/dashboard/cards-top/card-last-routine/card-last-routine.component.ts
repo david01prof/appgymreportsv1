@@ -1,33 +1,33 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { CardModule } from 'primeng/card';
-import { APP_CONSTANTS } from '../../../../shared/constants';
-import { DashboardService } from '../../../dashboard/services/dashboard.service';
-import { IRegister } from '../../../registers/interfaces/iregister';
 import { ButtonModule } from 'primeng/button';
+import { APP_CONSTANTS } from '../../../../shared/constants';
+import { IRoutine } from '../../../routines/interfaces/iroutine';
+import { DashboardService } from '../../services/dashboard.service';
 
 @Component({
-  selector: 'app-card-last-reportes',
+  selector: 'app-card-last-routine',
   standalone: true,
   imports: [CommonModule,CardModule,ButtonModule],
-  templateUrl: './card-last-reportes.component.html',
-  styleUrl: './card-last-reportes.component.scss'
+  templateUrl: './card-last-routine.component.html',
+  styleUrl: './card-last-routine.component.scss'
 })
-export class CardLastReportesComponent {
+export class CardLastRoutineComponent {
 
   private readonly _dashboardSvc = inject(DashboardService);
 
-  public document : IRegister | undefined;
+  public document : IRoutine | undefined;
 
   ngOnInit() {
-    this.getFirstItem();
+    this.getFirstItem();    
   }
 
   async getFirstItem() {
     try {
-      const firstDoc = await this._dashboardSvc.getFirstDocument(APP_CONSTANTS.COLLECTION_NAME_REGISTERS);
+      const firstDoc = await this._dashboardSvc.getFirstDocument(APP_CONSTANTS.COLLECTION_NAME_ROUTINES);
       if (firstDoc) {
-        this.document = firstDoc as IRegister;
+        this.document = firstDoc as IRoutine;
       } else {
         console.log('La colección está vacía.');
       }
@@ -35,7 +35,6 @@ export class CardLastReportesComponent {
       console.error('Error:', error);
     }
   }
-
 
   public getDate(timestamp: number) {
     return new Date(timestamp);
