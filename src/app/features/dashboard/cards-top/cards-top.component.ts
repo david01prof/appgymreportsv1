@@ -3,7 +3,6 @@ import { CardLastReportesComponent } from './card-last-reportes/card-last-report
 import { CardLastRoutineComponent } from './card-last-routine/card-last-routine.component';
 import { CardObjetiveWeightComponent } from './card-objetive-weight/card-objetive-weight.component';
 
-
 @Component({
   selector: 'app-cards-top',
   standalone: true,
@@ -13,14 +12,27 @@ import { CardObjetiveWeightComponent } from './card-objetive-weight/card-objetiv
     CardObjetiveWeightComponent,
   ],
   template: `
-    <div class="flex justify-content-center mb-8">
-      <div class="flex justify-content-between flex-column gap-4">
-        <app-card-objetive-weight></app-card-objetive-weight>
-        <app-card-last-routine></app-card-last-routine>
-        <app-card-last-reportes></app-card-last-reportes>
-      </div>
+    <div class="styleCard">
+      <app-card-objetive-weight></app-card-objetive-weight>
+      <app-card-last-routine></app-card-last-routine>
+      <app-card-last-reportes></app-card-last-reportes>
     </div>
   `,
-  styles: ``,
+  styles: `
+    .styleCard {
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+      gap: 2rem;
+    }
+
+    @media (min-width: 767px) {
+      .styleCard {
+        display: flex;
+        flex-direction: row;
+        margin: 0;
+      }
+    }
+  `,
 })
 export class CardsTopComponent {}

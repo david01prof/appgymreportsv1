@@ -10,7 +10,9 @@ span{
     margin-top: 35px;
 }
 
-::ng-deep .stylesCard .p-card-body{
+::ng-deep .stylesCard{
+    display: inline-block  ;
+    width: 330px;
     height: 147px;
 }
 

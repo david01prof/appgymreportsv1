@@ -6,21 +6,26 @@ import { GraphicCirculeTagRoutinesComponent } from './graphic-line-gradient/grap
 @Component({
   selector: 'app-cards-middel',
   standalone: true,
-  imports: [CardModule,GraphicLineGradientComponent,GraphicCirculeTagRoutinesComponent],
+  imports: [
+    CardModule,
+    GraphicLineGradientComponent,
+    GraphicCirculeTagRoutinesComponent,
+  ],
   template: `
-    <div class="flex justify-content-around flex-wrap gap-2 styleWidth">
-      <!-- <div class="flex justify-content-start styleContainerA"> -->
-        <app-graphic-line-gradient class="flex justify-content-start styleContainerA"></app-graphic-line-gradient>
-      <!-- </div> -->
+    <div class="flex justify-content-around gap-2 styleCard">
+      <app-graphic-line-gradient
+        class="flex justify-content-start styleContainerA"
+      ></app-graphic-line-gradient>
 
-      <!-- <div class="flex justify-content-start styleContainerB"> -->
-        <app-graphic-circule-tag-routines  class="flex justify-content-end styleContainerB"></app-graphic-circule-tag-routines>
-      <!-- </div> -->
+      <app-graphic-circule-tag-routines
+        class="flex justify-content-end styleContainerB"
+      ></app-graphic-circule-tag-routines>
     </div>
   `,
   styles: `
-    .styleWidth{
+    .styleCard{
       width: 100%;
+      display: flex-column
     }
 
     .styleContainerA{
@@ -29,6 +34,12 @@ import { GraphicCirculeTagRoutinesComponent } from './graphic-line-gradient/grap
 
     .styleContainerB{
       width: 40%;
+    }
+
+    @media (min-width: 320px) {
+      .styleCard{
+        display: flex-wrap;
+      }
     }
   `,
 })

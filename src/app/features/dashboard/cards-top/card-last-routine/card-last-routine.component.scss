@@ -17,6 +17,8 @@ span{
     bottom: 25px;
 }
 
-::ng-deep .styleCard .p-card-body{
+::ng-deep .styleCard{
+    display: inline-block;
+    width: 330px;
     height: 147px;
 }
