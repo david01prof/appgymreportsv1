@@ -7,17 +7,20 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { tap } from 'rxjs';
-import { ApexChartLineGradientComponent } from "../../components/apex-chart-line-gradient/apex-chart-line-gradient.component";
-import { SparkboxsComponent } from "../../components/sparkboxs/sparkboxs.component";
+import { ApexChartLineGradientComponent } from "../components/apex-chart-line-gradient/apex-chart-line-gradient.component";
 import { IRoutine } from '../routines/interfaces/iroutine';
 import { RoutinesService } from '../routines/services/routines.service';
+import { SparkboxsComponent } from '../components/sparkboxs/sparkboxs.component';
+import { MenuItem } from 'primeng/api';
+import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
+import { DashboardService } from './services/dashboard.service';
 
 const PRIME_MODULES = [DialogModule, ButtonModule, InputTextModule,CardModule];
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [PRIME_MODULES, CommonModule, ApexChartLineGradientComponent, SparkboxsComponent],
+  imports: [PRIME_MODULES, CommonModule, ApexChartLineGradientComponent, SparkboxsComponent,BreadcrumbComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
@@ -28,33 +31,19 @@ export default class DashboardComponent {
   public currentUrl: string = '';
   public visible: boolean = false;
   public data: IRoutine[] = [];
-  public items = [
-    { icon: 'pi pi-home', route: '/dashboard' },
-    { label: 'Dashboard'  }
-  ];
+  public itemsLabels: MenuItem[] = [];
 
+  private readonly _dashboardSvc = inject(DashboardService);
   private _routineSvc = inject(RoutinesService);
   private readonly _destroyRef = inject(DestroyRef);
 
   constructor(private route: Router) {}
 
   ngOnInit(): void {
-    this.getAllRoutines()
+    this.getAllRoutines();
+    this.itemsLabels = this._dashboardSvc.getBreadcrumbLabels();
   }
 
-  ngAfterViewInit(): void {
-    // this.visible = true;
-    console.log(this.visible);
-    this.currentUrl = this.route.url;
-    console.log(this.currentUrl);
-  }
-
-
-
-  showDialog() {
-    this.visible = true;
-  }
-  
   getAllRoutines() {
     this._routineSvc
       .getAllRoutines()

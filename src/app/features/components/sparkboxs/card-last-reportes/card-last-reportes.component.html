@@ -1,0 +1,13 @@
+@if (document != undefined) {
+    <p-card>
+        <h3>Ultima reporte registrado</h3>
+
+        <div class="flex justify-content-between">
+
+            <span>{{ getDate(document.created!) | date: 'dd/MM/yyyy' }}</span>
+
+            <p-button icon="pi pi-eye" label="Ver mas" severity="info" class="specialWidth"></p-button>
+        </div>
+    </p-card>
+}
+

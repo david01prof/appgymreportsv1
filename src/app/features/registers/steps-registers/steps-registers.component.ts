@@ -58,10 +58,6 @@ export class StepsRegistersComponent implements OnInit,OnChanges {
 
   ngOnChanges(){
     if(this.activeInputExit() != undefined){
-      console.log('entra?');
-      
-      console.log(this.activeInputExit());
-      
       this.active = this.activeInputExit()!
     }
   }
@@ -73,9 +69,7 @@ export class StepsRegistersComponent implements OnInit,OnChanges {
   }
 
   getValueCalculator(e:IMeasurement){
-    this.resumenMeasurement.calculator = e;    
-    console.log(e);
-    
+    this.resumenMeasurement.calculator = e;        
   }
 
   clearMeasurement(){
@@ -84,7 +78,5 @@ export class StepsRegistersComponent implements OnInit,OnChanges {
 
   getValuePhotos(e:IPhotos[]){
     this.resumenMeasurement.photos = e;
-    console.log(this.resumenMeasurement);
-    
   }
 }

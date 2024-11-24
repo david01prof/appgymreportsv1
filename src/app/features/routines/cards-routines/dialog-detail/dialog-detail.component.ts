@@ -222,8 +222,6 @@ export class DialogDetailComponent {
 
   public async onSubmit() {
     if (this.forms.valid) {
-      console.log(this.forms.value);
-
       await this._routineSvc.updateRoutine(
         this.forms.value.id,
         this.forms.value

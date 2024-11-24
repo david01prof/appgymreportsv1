@@ -15,7 +15,7 @@ export class ApexCharLineLabelsComponent {
     this.chartOptions = {
       series: [
         {
-          name: "Ventas",
+          name: "",
           data: [10, 30, 45, 20, 65, 50]
         }
       ],
@@ -30,6 +30,7 @@ export class ApexCharLineLabelsComponent {
           enabled: false  // Deshabilita el zoom para evitar el evento pasivo
         },
       },
+      colors: ['#FF5733'],
       stroke: {
         curve: 'smooth',
         width: 2
@@ -39,12 +40,49 @@ export class ApexCharLineLabelsComponent {
         axisBorder: { show: false },
         axisTicks: {
           show: false  // Oculta las marcas de los ticks del eje X
+        },  lines: {
+          show: false  // Oculta la línea del eje X
+        },
+        tooltip: {
+          enabled: false
         }
       },
-      yaxis: { labels: { show: false } },
+      yaxis: {
+        labels: {
+          show: false  // Oculta las etiquetas del eje Y
+        },
+        axisBorder: {
+          show: false  // Oculta la línea del borde del eje Y
+        },
+        axisTicks: {
+          show: false  // Oculta las marcas de los ticks del eje Y
+        }
+      },
       grid: { show: false },
       dataLabels: { enabled: false },
-      toolbar: { show: false }
+      toolbar: { show: false },
+      tooltip: {
+        enabled: true,
+        theme: 'dark',  // Color del tema del tooltip
+        shared: true,  // Muestra la información de todos los puntos sobre el gráfico
+        intersect: false,  // La etiqueta del tooltip solo aparece cuando se hace hover sobre el punto
+        x: {
+          show: false,
+        },
+        y: {
+          formatter: function (value: number) {
+            return `Peso: ${value}`;  // Personaliza la etiqueta que muestra el tooltip
+          }
+        }
+      }
     };
+  }
+
+  ngOnInit(){
+    // this.chartOptions.colors = this.getGradientColors();
+  }
+
+  getGradientColors(): string {
+    return '#dc3545'  // Verde si es mayor, rojo si es menor
   }
 }

@@ -12,9 +12,9 @@ import {
   orderBy,
   query,
   Timestamp,
-  updateDoc,
+  updateDoc
 } from '@angular/fire/firestore';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { APP_CONSTANTS } from '../../../shared/constants';
 import { IRoutine, ITag } from '../interfaces/iroutine';
@@ -30,7 +30,7 @@ export class RoutinesService {
   private readonly _firestore = inject(Firestore);
   private readonly _routineCollection = collection(
     this._firestore,
-    APP_CONSTANTS.COLLECTION_NAME
+    APP_CONSTANTS.COLLECTION_NAME_ROUTINES
   );
 
   public newRoutine(
@@ -68,20 +68,18 @@ export class RoutinesService {
   }
 
   private _getDocRef(id: string) {
-    return doc(this._firestore, APP_CONSTANTS.COLLECTION_NAME, id);
+    return doc(this._firestore, APP_CONSTANTS.COLLECTION_NAME_ROUTINES, id);
   }
 
-  public safeData(data: IRoutine[]){
+  public safeData(data: IRoutine[]) {
     this.data = data;
   }
 
-  public getSafeData(){
+  public getSafeData() {
     return this.data;
   }
 
   // OTHERS METHODS
-
-  private form!: FormGroup;
 
   constructor(private fb: FormBuilder) {}
 
@@ -99,7 +97,7 @@ export class RoutinesService {
     return [{ label: 'Rutinas' }];
   }
 
-  public getSeries(id: number,exercises:any): FormArray {
+  public getSeries(id: number, exercises: any): FormArray {
     return exercises.at(id).get('series') as FormArray;
   }
 
@@ -110,20 +108,20 @@ export class RoutinesService {
   public getTranslateDate(date: any) {
     const opciones: Intl.DateTimeFormatOptions = {
       year: 'numeric', // Año
-      month: 'long',   // Mes completo
-      day: 'numeric'   // Día del mes
+      month: 'long', // Mes completo
+      day: 'numeric', // Día del mes
     };
-    
+
     return new Intl.DateTimeFormat('es-ES', opciones).format(date);
   }
 
-  public getItemsFilter(){
+  public getItemsFilter() {
     return [
       { name: 'Titulo', code: 'title' },
       { name: 'Favoritos', code: 'favorites' },
       { name: 'No favoritos', code: 'nofavorites' },
       { name: 'Tag', code: 'tag' },
-      { name: 'Fecha', code: 'date' }
-    ]
+      { name: 'Fecha', code: 'date' },
+    ];
   }
 }

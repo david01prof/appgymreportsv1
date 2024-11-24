@@ -67,7 +67,7 @@ export class ApexChartLineGradientComponent {
         curve: 'smooth'   // Suaviza las líneas
       },
       title: {
-        text: 'Gráfico de objetivo de peso'
+        text: ''
       },
       xaxis: {
         categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago']

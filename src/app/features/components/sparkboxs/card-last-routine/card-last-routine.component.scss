@@ -1,0 +1,21 @@
+h3{
+    margin: -5px 0;
+    font-size: 24px;
+}
+
+h4{
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+span{
+    font-size: 14px;
+}
+
+::ng-deep .p-card-body{
+    position: relative;
+}
+::ng-deep .specialMargin{
+    position: absolute;
+    bottom: 25px;
+}
