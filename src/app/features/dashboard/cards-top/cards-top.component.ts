@@ -12,25 +12,30 @@ import { CardObjetiveWeightComponent } from './card-objetive-weight/card-objetiv
     CardObjetiveWeightComponent,
   ],
   template: `
-    <div class="styleCard">
+    <div class="cardsStyles">
       <app-card-objetive-weight></app-card-objetive-weight>
       <app-card-last-routine></app-card-last-routine>
       <app-card-last-reportes></app-card-last-reportes>
     </div>
   `,
   styles: `
-    .styleCard {
+    .cardsStyles {
       display: flex;
       flex-direction: column;
       margin: 0 auto;
       gap: 2rem;
     }
 
+    h3 {
+      font-size: 24px;
+    }
+
     @media (min-width: 767px) {
-      .styleCard {
+      .cardsStyles {
         display: flex;
         flex-direction: row;
         margin: 0;
+        margin-left: 10px
       }
     }
   `,

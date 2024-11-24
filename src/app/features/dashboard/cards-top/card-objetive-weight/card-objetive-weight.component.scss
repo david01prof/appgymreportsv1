@@ -1,29 +1,26 @@
-.stylesCard {
-    display: flex;
-    width: 330px;
-    height: 147px;
+::ng-deep .stylesCard {
+  display: flex;
+  width: 330px;
+  height: 147px;
+
+  .p-card-body {
+    height: 135px;
+    padding: 18px;
+  }
+}
+
+h3 {
+  font-size: 24px;
+}
+
+
+@media (min-width: 767px) {
+  .stylesCard {
+    width: 225px;
+  }
+
+  h3 {
+    font-size: 18px;
   }
   
-  
-  .card-header {
-    text-align: left;
-    width: 30%;
-    position: relative;
-  
-    h3 {
-      position: absolute;
-      top: 6%;
-      left: 77%;
-      transform: translate(-50%, -50%);
-      z-index: 10;
-      color: black;
-      font-size: 24px;
-      width: 135px;
-    }
-  }
-  
-  .card-content {
-    display: flex;
-    justify-content: center;
-    width: 70%;
-  }
+}

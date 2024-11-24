@@ -1,24 +1,40 @@
-h3{
+::ng-deep .styleCard {
+    display: inline-block;
+    width: 330px;
+    // height: 147px;
+
+    .p-card-body {
+        height: 135px;
+        padding: 18px;
+      }
+}
+
+h3 {
     margin: -5px 0;
     font-size: 24px;
 }
 
-h4{
+h4 {
     margin-top: 20px;
     font-size: 18px;
 }
 
-span{
+span {
     font-size: 14px;
 }
 
-.specialMargin{
-    position: absolute;
-    bottom: 25px;
-}
 
-::ng-deep .styleCard{
-    display: inline-block;
-    width: 330px;
-    height: 147px;
+
+@media (min-width: 767px) {
+    .styleCard {
+        width: 225px;
+    }
+
+    h3 {
+        font-size: 18px;
+    }
+
+    h4{
+        font-size: 15px;
+    }
 }

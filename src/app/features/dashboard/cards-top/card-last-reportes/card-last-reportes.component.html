@@ -1,13 +1,16 @@
 @if (document != undefined) {
-    <p-card class="stylesCard">
-        <h3>Ultima reporte registrado</h3>
+    <p-card class="stylesCard relative">
+        <h3 class="m-0">Ultimo reporte registrado:</h3>
 
-        <div class="flex justify-content-between">
-
-            <span>{{ getDate(document.created!) | date: 'dd/MM/yyyy' }}</span>
-
-            <p-button icon="pi pi-eye" label="Ver mas" severity="info" class="specialWidth"></p-button>
+        <div class="flex justify-content-between relative">
+            <div class="flex flex-column justify-content-start">
+                <h4 class="mt-2">Registro 1</h4>
+                <span>{{ getDate(document.created!) | date: 'dd/MM/yyyy' }}</span>
+            </div>
+            <p-button icon="pi pi-eye" label="" severity="info" class="absolute bottom-0 right-0"></p-button>
         </div>
     </p-card>
 }
+
+
 

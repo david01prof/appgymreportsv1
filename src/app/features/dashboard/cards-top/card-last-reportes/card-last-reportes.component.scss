@@ -1,21 +1,40 @@
-h3{
-    margin: -5px 0 0;
+::ng-deep .stylesCard {
+    display: inline-block;
+    width: 330px;
+    // height: 147px;
+
+    .p-card-body {
+        height: 135px;
+        padding: 18px;
+      }
+}
+
+h3 {
+    margin: -5px 0;
     font-size: 24px;
 }
 
+h4 {
+    margin-top: 20px;
+    font-size: 18px;
+}
 
-span{
+span {
     font-size: 14px;
-    height: 30px;
-    margin-top: 35px;
 }
 
-::ng-deep .stylesCard{
-    display: inline-block  ;
-    width: 330px;
-    height: 147px;
-}
 
-.specialWidth {
-    margin-top: 30px;
+
+@media (min-width: 767px) {
+    .stylesCard {
+        width: 225px;
+    }
+
+    h3 {
+        font-size: 18px;
+    }
+
+    h4{
+        font-size: 15px;
+    }
 }

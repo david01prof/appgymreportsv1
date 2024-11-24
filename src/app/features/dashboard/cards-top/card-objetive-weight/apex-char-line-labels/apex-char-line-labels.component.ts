@@ -21,7 +21,7 @@ export class ApexCharLineLabelsComponent {
       ],
       chart: {
         type: 'line',
-        height: 100,  // Altura del gráfico dentro de la tarjeta
+        height: 79,  // Altura del gráfico dentro de la tarjeta
         width: 230,    // Ancho ajustado para caber dentro de la tarjeta
         toolbar: {
           show: false  // Oculta la barra de herramientas del gráfico
@@ -29,11 +29,36 @@ export class ApexCharLineLabelsComponent {
         zoom: {
           enabled: false  // Deshabilita el zoom para evitar el evento pasivo
         },
+        animations: {
+          enabled: true,
+          easing: 'linear',
+          speed: 1500,    // Velocidad de la animación
+          animateGradually: {
+            enabled: false
+          },
+          dynamicAnimation: {
+            enabled: true,
+            speed: 1000    // Velocidad del efecto dinámico
+          }
+        }
       },
       colors: ['#FF5733'],
       stroke: {
         curve: 'smooth',
         width: 2
+      },
+      fill: {
+        type: 'gradient',  // Define un degradado
+        gradient: {
+          shade: 'light',
+          type: 'horizontal',  // Gradiente de izquierda a derecha
+          shadeIntensity: 0.5,
+          gradientToColors: ['#FF4560'],  // Color final del degradado
+          inverseColors: false,
+          opacityFrom: 1,
+          opacityTo: 0.5,
+          stops: [0, 100]  // Inicio y fin del gradiente
+        }
       },
       xaxis: {
         labels: { show: false },
@@ -80,9 +105,26 @@ export class ApexCharLineLabelsComponent {
 
   ngOnInit(){
     // this.chartOptions.colors = this.getGradientColors();
+    this.chartOptions.chart.width = this.calculateWidth();
+    this.chartOptions.chart.height = this.calculateHeight();
   }
 
   getGradientColors(): string {
     return '#dc3545'  // Verde si es mayor, rojo si es menor
+  }
+
+  private calculateWidth(){
+    if(window.innerWidth > 767){
+      return 170;
+    }else{
+      return 100;
+    }
+  }
+  private calculateHeight(){
+    if(window.innerWidth > 767){
+      return 80;
+    }else{
+      return 230;
+    }
   }
 }
