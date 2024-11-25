@@ -1,12 +1,14 @@
 ::ng-deep .styleCard {
-    display: inline-block;
-    width: 330px;
-    // height: 147px;
+    display: block;
+    width: 100%;
+    min-width: 223px;
+    max-width: 433px;
+    margin: 0 auto;
 
     .p-card-body {
         height: 135px;
         padding: 18px;
-      }
+    }
 }
 
 h3 {
@@ -23,18 +25,30 @@ span {
     font-size: 14px;
 }
 
-
-
-@media (min-width: 767px) {
-    .styleCard {
-        width: 225px;
+@media (max-width: 328px) {
+    h3 {
+        font-size: 16px;
     }
+
+    h4 {
+        font-size: 15px;
+    }
+}
+
+
+@media (min-width: 329px) and (max-width: 407px) {
+    h3 {
+      font-size: 18px;
+    }
+}
+
+@media (min-width: 747px) {
 
     h3 {
         font-size: 18px;
     }
 
-    h4{
+    h4 {
         font-size: 15px;
     }
 }

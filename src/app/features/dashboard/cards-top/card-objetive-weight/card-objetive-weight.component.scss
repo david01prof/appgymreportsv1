@@ -1,8 +1,10 @@
 ::ng-deep .stylesCard {
   display: flex;
-  width: 330px;
-  height: 147px;
-
+  width: 100%;
+  min-width: 223px;
+  max-width: 433px;
+  margin: 0 auto;
+  
   .p-card-body {
     height: 135px;
     padding: 18px;
@@ -13,14 +15,21 @@ h3 {
   font-size: 24px;
 }
 
-
-@media (min-width: 767px) {
-  .stylesCard {
-    width: 225px;
+@media (max-width: 328px) {
+  h3 {
+    font-size: 16px;
   }
+}
+
+@media (min-width: 329px) and (max-width: 407px) {
+  h3 {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 747px) {
 
   h3 {
     font-size: 18px;
   }
-  
 }
