@@ -1,18 +1,27 @@
 <app-breadcrumb
-  [itemsLabels]="itemsLabels"
-  urlActive="Dashboard"></app-breadcrumb>
+    [itemsLabels]="itemsLabels"
+    urlActive="Dashboard"></app-breadcrumb>
+
+<div class="card">
+    <p-messages [(value)]="messages!"    [showTransitionOptions]="'500ms'" 
+    [hideTransitionOptions]="'500ms'"  [enableService]="false" />
+</div>
 
 <!-- Trio de cards del top del body -->
-<app-cards-top></app-cards-top>
-
+<div class="block mb-8">
+    <app-cards-top></app-cards-top>
+</div>
 
 <!-- Cards del medio del body -->
-<!-- <app-cards-middel></app-cards-middel> -->
-
+<div class="block">
+    <app-cards-middel></app-cards-middel>
+</div>
 
 <!-- <p-button (onClick)="showDialog()" label="Show" /> -->
-<p-dialog header="Bienvenido David" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
-    <span class="p-text-secondary block mb-5">Introduce tus datos y tu objetivo</span>
+<p-dialog header="Bienvenido David" [modal]="true" [(visible)]="visible"
+    [style]="{ width: '25rem' }">
+    <span class="p-text-secondary block mb-5">Introduce tus datos y tu
+        objetivo</span>
     <div class="flex align-items-center gap-3 mb-3">
         <label for="username" class="font-semibold w-6rem">Altura</label>
         <input pInputText id="username" class="flex-auto" autocomplete="off" />
@@ -22,7 +31,8 @@
         <input pInputText id="email" class="flex-auto" autocomplete="off" />
     </div>
     <div class="flex justify-content-end gap-2">
-        <p-button label="Cancelar" severity="secondary" (onClick)="visible = false" />
+        <p-button label="Cancelar" severity="secondary"
+            (onClick)="visible = false" />
         <p-button label="Guardar" (onClick)="visible = false" />
     </div>
 </p-dialog>

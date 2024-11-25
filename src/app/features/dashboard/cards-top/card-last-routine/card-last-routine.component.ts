@@ -5,11 +5,12 @@ import { ButtonModule } from 'primeng/button';
 import { APP_CONSTANTS } from '../../../../shared/constants';
 import { IRoutine } from '../../../routines/interfaces/iroutine';
 import { DashboardService } from '../../services/dashboard.service';
+import { ApexCharLineLabelsComponent } from '../card-objetive-weight/apex-char-line-labels/apex-char-line-labels.component';
 
 @Component({
   selector: 'app-card-last-routine',
   standalone: true,
-  imports: [CommonModule,CardModule,ButtonModule],
+  imports: [CommonModule,CardModule,ButtonModule,ApexCharLineLabelsComponent],
   templateUrl: './card-last-routine.component.html',
   styleUrl: './card-last-routine.component.scss'
 })

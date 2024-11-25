@@ -16,6 +16,7 @@ export class ApexCharLineLabelsComponent {
   onResize(event: Event) {
     this.chartOptions.chart.width = this.calculateWidth();
   }
+  
   public chartOptions: any;
 
   constructor() {
@@ -49,7 +50,7 @@ export class ApexCharLineLabelsComponent {
           }
         }
       },
-      colors: ['#FF5733'],
+      colors: ['#FFFFFF'],
       stroke: {
         curve: 'smooth',
         width: 2
@@ -60,7 +61,7 @@ export class ApexCharLineLabelsComponent {
           shade: 'light',
           type: 'horizontal',  // Gradiente de izquierda a derecha
           shadeIntensity: 0.5,
-          gradientToColors: ['#FF4560'],  // Color final del degradado
+          gradientToColors: ['#FFFFFF'],  // Color final del degradado
           inverseColors: false,
           opacityFrom: 1,
           opacityTo: 0.5,

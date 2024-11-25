@@ -12,33 +12,43 @@ import { GraphicCirculeTagRoutinesComponent } from './graphic-line-gradient/grap
     GraphicCirculeTagRoutinesComponent,
   ],
   template: `
-    <div class="flex justify-content-around gap-2 styleCard">
-      <app-graphic-line-gradient
-        class="flex justify-content-start styleContainerA"
+    <div class="cardsGraphicMiddels overflow-hidden">
+      <app-graphic-line-gradient class="styleContainerA"
       ></app-graphic-line-gradient>
-
-      <app-graphic-circule-tag-routines
-        class="flex justify-content-end styleContainerB"
+      <app-graphic-circule-tag-routines class="styleContainerB"
       ></app-graphic-circule-tag-routines>
     </div>
   `,
   styles: `
-    .styleCard{
+    .cardsGraphicMiddels{
+      display: flex;
+      flex-direction: column;
       width: 100%;
-      display: flex-column
+      gap: 2rem;
+
+      h1 { width: 100%; }
     }
 
     .styleContainerA{
-      width: 59%;
+      width: 100%;
     }
 
     .styleContainerB{
-      width: 40%;
+      width: 100%;
     }
 
-    @media (min-width: 320px) {
-      .styleCard{
-        display: flex-wrap;
+    @media (min-width: 784px) {
+      .cardsGraphicMiddels{
+        flex-direction: row;
+        gap:1rem
+      }
+
+      .styleContainerA{
+        width: 75%;
+      }
+
+      .styleContainerB{
+        width: 35%;
       }
     }
   `,

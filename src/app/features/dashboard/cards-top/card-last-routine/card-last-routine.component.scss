@@ -1,53 +1,41 @@
-::ng-deep .styleCard {
-    display: block;
+::ng-deep .styleCardRoutine {
     width: 100%;
-    min-width: 223px;
-    max-width: 433px;
     margin: 0 auto;
 
     .p-card-body {
+        min-width: 223px;
         height: 135px;
         padding: 18px;
+        background-image: linear-gradient(135deg, #FFD3A5 10%, #FD6585 100%);
+
+        .p-card-content {
+            display: flex;
+            position: relative;
+
+            .cardRoutine {
+                width: 30%;
+                position: relative;
+                min-width: 90px;
+                color: white;
+
+                h4 {
+                    position: absolute;
+                    bottom: 0;
+                    font-size: 1.5rem;
+                }
+            }
+        }
     }
-}
-
-h3 {
-    margin: -5px 0;
-    font-size: 24px;
-}
-
-h4 {
-    margin-top: 20px;
-    font-size: 18px;
-}
-
-span {
-    font-size: 14px;
 }
 
 @media (max-width: 328px) {
-    h3 {
-        font-size: 16px;
-    }
-
     h4 {
+        margin-top: 20px;
         font-size: 15px;
     }
 }
 
-
-@media (min-width: 329px) and (max-width: 407px) {
-    h3 {
-      font-size: 18px;
-    }
-}
-
 @media (min-width: 747px) {
-
-    h3 {
-        font-size: 18px;
-    }
-
     h4 {
         font-size: 15px;
     }

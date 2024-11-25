@@ -1,6 +1,14 @@
-::ng-deep .styleCard {
+::ng-deep .styleCardCircule {
     width: 100%;
+    display: block;
+    
     .p-card-body {
     height: auto;
+    }
+}
+
+@media (min-width: 784px) {
+    .styleCardCircule {
+        width: 90%;
     }
 }

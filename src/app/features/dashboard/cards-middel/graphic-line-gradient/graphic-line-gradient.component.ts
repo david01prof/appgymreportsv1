@@ -27,7 +27,8 @@ import { CardModule } from 'primeng/card';
     }
 
     ::ng-deep .p-card-h-image{
-      width: 99%;
+      width: 100%;
+      display:block
     }
   `,
 })

@@ -1,14 +1,10 @@
 @if (document != undefined) {
-    <p-card class="styleCard relative">
-        <h3 class="m-0">Ultima rutina registrada</h3>
-
-        <div class="flex justify-content-between relative">
-            <div class="flex flex-column justify-content-start">
-                <h4 class="mt-2">{{ document.titleRoutine}}</h4>
-                <span>{{ getDate(document.created!) | date: 'dd/MM/yyyy' }}</span>
-            </div>
-            <p-button icon="pi pi-eye" label="" severity="help" class="absolute bottom-0 right-0"></p-button>
+    <p-card class="styleCardRoutine relative">
+        <div class="flex flex-column cardRoutine">
+            <h4>20</h4>
+            <h4 class="m-0">Rutinas</h4>
         </div>
+        <app-apex-char-line-labels></app-apex-char-line-labels>
+
     </p-card>
 }
-

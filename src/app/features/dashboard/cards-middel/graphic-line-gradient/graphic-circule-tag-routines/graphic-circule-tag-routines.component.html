@@ -1,8 +1,9 @@
-<p-card class="styleCard">
+<p-card class="styleCardCircule" *ngIf="chartOptions != undefined">
     <apx-chart 
     [series]="chartOptions.series" 
     [chart]="chartOptions.chart" 
     [labels]="chartOptions.labels"
-    [responsive]="chartOptions.responsive">
+    [responsive]="chartOptions.responsive"
+    [legend]="chartOptions.legend">
     </apx-chart>
 </p-card>

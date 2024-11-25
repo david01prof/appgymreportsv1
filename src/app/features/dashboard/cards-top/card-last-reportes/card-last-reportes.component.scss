@@ -1,54 +1,42 @@
-::ng-deep .stylesCard {
-    display: block;
+::ng-deep .styleCardReport {
     width: 100%;
-    min-width: 223px;
-    max-width: 433px;
     margin: 0 auto;
-    
+
     .p-card-body {
+        min-width: 223px;
         height: 135px;
         padding: 18px;
-      }
-}
+        background-image: linear-gradient(135deg, #2afadf 10%, #4c83ff 100%);
 
-h3 {
-    margin: -5px 0;
-    font-size: 24px;
-}
+        .p-card-content {
+            display: flex;
+            position: relative;
 
-h4 {
-    margin-top: 20px;
-    font-size: 18px;
-}
+            .cardReport {
+                width: 30%;
+                position: relative;
+                min-width: 90px;
+                color: white;
 
-span {
-    font-size: 14px;
+                h4 {
+                    position: absolute;
+                    bottom: 0;
+                    font-size: 1.5rem;
+                }
+            }
+        }
+    }
 }
 
 @media (max-width: 328px) {
-    h3 {
-        font-size: 16px;
-    }
-
     h4 {
         margin-top: 20px;
         font-size: 15px;
     }
 }
 
-@media (min-width: 329px) and (max-width: 407px) {
-    h3 {
-      font-size: 18px;
-    }
-}
-
 @media (min-width: 747px) {
-
-    h3 {
-        font-size: 18px;
-    }
-
-    h4{
+    h4 {
         font-size: 15px;
     }
 }
