@@ -13,13 +13,14 @@ import { GraphicRadialBarRoutinesRegistersComponent } from './graphic-radial-bar
     GraphicCirculeTagRoutinesComponent,
     GraphicRadialBarRoutinesRegistersComponent,
   ],
+  styleUrls: ['./cards-middel.component.scss'],
   template: `
     <div class="cardsGraphicMiddels overflow-hidden">
       <app-graphic-line-gradient
         class="styleContainerA"
       ></app-graphic-line-gradient>
 
-      <div class="flex flex-column styleContainerB">
+      <div class="styleContainerB">
         <app-graphic-circule-tag-routines
         ></app-graphic-circule-tag-routines>
 
@@ -27,41 +28,6 @@ import { GraphicRadialBarRoutinesRegistersComponent } from './graphic-radial-bar
         ></app-graphic-radial-bar-routines-registers>
       </div>
     </div>
-  `,
-  styles: `
-    .cardsGraphicMiddels{
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      gap: 2rem;
-
-      h1 { width: 100%; }
-    }
-
-    .styleContainerA{
-      width: 100%;
-    }
-
-    .styleContainerB{
-      width: 100%;
-      gap: 0.5rem;
-    }
-
-    @media (min-width: 784px) {
-      .cardsGraphicMiddels{
-        flex-direction: row;
-        gap:1rem;
-        margin: 0 auto;
-      }
-
-      .styleContainerA{
-        width: 70%;
-      }
-
-      .styleContainerB{
-        width: 30%;
-      }
-    }
   `,
 })
 export class CardsMiddelComponent {}

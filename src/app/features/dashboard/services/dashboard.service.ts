@@ -11,7 +11,7 @@ export class DashboardService {
   constructor() { }
 
   public getBreadcrumbLabels() {
-    return [{ label: 'Dashboard' }];
+    return [{ label: 'Home' }];
   }
 
   public async getFirstDocument(collectionName: string): Promise<any> {

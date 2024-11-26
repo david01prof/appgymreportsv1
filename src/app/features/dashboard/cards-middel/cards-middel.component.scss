@@ -1,0 +1,87 @@
+.cardsGraphicMiddels {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 2rem;
+
+  h1 {
+    width: 100%;
+  }
+}
+
+.styleContainerA {
+  width: 100%;
+}
+
+.styleContainerB {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+@media (max-width: 687px) {
+  .styleContainerB {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    gap: 0.5rem;
+  }
+}
+@media (min-width: 686px) and ( max-width: 999px){
+  .styleContainerB {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    gap: 4rem;
+  }
+}
+
+@media (min-width: 1000px) and (max-width: 1298px){
+  .cardsGraphicMiddels {
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .styleContainerA {
+    width: 50%;
+  }
+
+  .styleContainerB {
+    width: 25%;
+  }
+}
+@media (min-width: 1299px) and (max-width: 1353px){
+  .cardsGraphicMiddels {
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .styleContainerA {
+    width: 60%;
+  }
+
+  .styleContainerB {
+    width: 25%;
+  }
+}
+
+@media (min-width: 1354px){
+
+  .cardsGraphicMiddels {
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+  }
+  .styleContainerA {
+    width: 70%;
+  }
+
+  .styleContainerB {
+    width: 25%;
+  }
+}

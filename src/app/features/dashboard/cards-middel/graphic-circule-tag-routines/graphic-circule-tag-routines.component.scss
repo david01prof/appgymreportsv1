@@ -1,14 +1,16 @@
 ::ng-deep .styleCardCircule {
     width: 100%;
     display: block;
-    
+
+    .p-card {
+        margin: 0 auto;
+        min-width: 274px;
+    }
     .p-card-body {
-    height: auto;
+        height: auto;
     }
 }
 
-@media (min-width: 784px) {
-    .styleCardCircule {
-        width: 90%;
-    }
+::ng-deep .apexcharts-canvas {
+    margin: 0 auto;
 }

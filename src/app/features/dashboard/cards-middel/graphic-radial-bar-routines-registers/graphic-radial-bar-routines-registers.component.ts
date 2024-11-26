@@ -48,9 +48,9 @@ export class GraphicRadialBarRoutinesRegistersComponent {
         show: true,
         floating: true,
         fontSize: "14px",
-        position: "left",
-        offsetX: 30,
-        offsetY: 40,
+        position: "right",
+        offsetX: this.calculateLeftLegend(),
+        offsetY: 10,
         labels: {
           useSeriesColors: true
         },
@@ -72,5 +72,21 @@ export class GraphicRadialBarRoutinesRegistersComponent {
         }
       ]
     };
+  }
+
+  private calculateLeftLegend(){
+
+    if(window.innerWidth <= 1020){
+      return 80;
+    }else if( window.innerWidth > 1020 && window.innerWidth <= 1206){
+      return 90;
+    }else if( window.innerWidth > 1206 &&  window.innerWidth <= 1368){
+      return 110;
+    }else if( window.innerWidth > 1368 &&  window.innerWidth <= 1549){
+      return 130;
+    }else if (window.innerWidth > 1549){
+      return 150;
+    }
+    return 0;
   }
 }

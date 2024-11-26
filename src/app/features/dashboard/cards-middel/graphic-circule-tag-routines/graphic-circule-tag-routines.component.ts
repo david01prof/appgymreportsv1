@@ -26,6 +26,16 @@ export class GraphicCirculeTagRoutinesComponent {
       legend: {
         position: this.resetPositionLegend(), // Cambia la posición de la leyenda (opcional)
       },
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            legend: {
+              show: false
+            }
+          }
+        }
+      ]
     };
   }
 
@@ -33,14 +43,15 @@ export class GraphicCirculeTagRoutinesComponent {
 
     if(window.innerWidth > 784){
       return 280;
-    }else{
-      return 300;
+    }else if( window.innerWidth < 348){
+      return 180;
     }
+      return 300;
 
   }
 
   resetPositionLegend(){
-    if(window.innerWidth > 784){
+    if(window.innerWidth > 784 ||  window.innerWidth < 348){
       return 'bottom';
     }else{
       return 'right';
