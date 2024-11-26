@@ -47,6 +47,27 @@
     }
 }
 
+@media(max-width: 520px) {
+    ::ng-deep .styleCardObjetiveWeight .p-card-body .p-card-content .twoCards .cardObjetiveWeight {
+        .alignItemh4 {
+            position: absolute;
+            top: 12px;
+        }
+    
+        h4 {
+            position: absolute;
+            bottom: 15px;
+            font-size: 1.1rem;
+        }
+    
+        h5 {
+            position: absolute;
+            bottom: 0;
+            font-size: 0.7rem;
+        }
+    }   
+}
+
 @media (min-width: 939px)  and (max-width: 1247px) {
 
     ::ng-deep .styleCardObjetiveWeight .p-card-body .p-card-content .twoCards .cardObjetiveWeight {

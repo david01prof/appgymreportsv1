@@ -1,5 +1,4 @@
-import { Component, HostListener, input } from '@angular/core';
-import e from 'express';
+import { Component, input } from '@angular/core';
 import { NgApexchartsModule } from 'ng-apexcharts';
 
 @Component({
@@ -12,7 +11,6 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 export class ApexCharLineLabelsComponent {
 
   public dataChart = input.required<number[]>(); 
-  public chartWidth = input.required<number>();
   public chartColor = input.required<string[]>();
 
   // Escucha el evento de cambio de tamaño
@@ -31,7 +29,7 @@ export class ApexCharLineLabelsComponent {
       chart: {
         type: 'line',
         height: 80,  // Altura del gráfico dentro de la tarjeta
-        width: this.chartWidth(),    // Ancho ajustado para caber dentro de la tarjeta
+        width: this.calculateWidth(),    // Ancho ajustado para caber dentro de la tarjeta
         toolbar: {
           show: false  // Oculta la barra de herramientas del gráfico
         },
@@ -122,24 +120,22 @@ export class ApexCharLineLabelsComponent {
 
   private calculateWidth(){
 
-    if(window.innerWidth > 1330){
-      return 330;
-    }else if(window.innerWidth > 1200 && window.innerWidth < 1330){
+    if(window.innerWidth > 1294){
       return 230;
-    }else if(window.innerWidth > 1024 && window.innerWidth < 1200){
-      return 200;
-    }else if(window.innerWidth > 768 && window.innerWidth < 1024){
-      return 150;
-    }else if( window.innerWidth < 747 && window.innerWidth > 552){
-      return 300;
-    }else if(window.innerWidth < 552 && window.innerWidth >= 490){
-      return 250;
-    }else if(window.innerWidth < 489 && window.innerWidth >= 430){
+    }else if(  window.innerWidth > 1110 && window.innerWidth < 1294){
       return 220;
-    }else if(window.innerWidth < 430 && window.innerWidth >= 335){
-      return 180;
-    }else if(window.innerWidth < 335 && window.innerWidth >= 320){
-      return 140;
+    }else if(window.innerWidth > 1015 && window.innerWidth <= 1110){
+      return 190;
+    }else if(window.innerWidth > 935 && window.innerWidth <= 1015){
+      return 170;
+    }else if( window.innerWidth > 406 && window.innerWidth <= 935){
+      return 250;
+    }else if(  window.innerWidth > 364 && window.innerWidth <= 406){
+      return 220;
+    }else if( window.innerWidth > 324 && window.innerWidth <= 364){
+      return 200;
+    }else if(window.innerWidth <= 324){
+      return 150;
     }
     return 100;
   }

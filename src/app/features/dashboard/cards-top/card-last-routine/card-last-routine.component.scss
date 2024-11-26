@@ -35,6 +35,16 @@
     }
 }
 
+@media(max-width: 520px) {
+    ::ng-deep .styleCardRoutine .p-card-body .p-card-content .twoCards .cardRoutine {
+        h4 {
+            position: absolute;
+            font-size: 1.1rem;
+        }
+
+    }  
+}
+
 @media (min-width: 939px)  and (max-width: 1247px) {
 
     ::ng-deep .styleCardRoutine .p-card-body .p-card-content .twoCards .cardRoutine {

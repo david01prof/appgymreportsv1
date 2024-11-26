@@ -7,10 +7,8 @@
 .cardsStyles {
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
-    justify-content: center;
     gap: 2rem;
-    padding: 0 1rem;
+    overflow: hidden;
 }
 
 h3 {
@@ -18,16 +16,16 @@ h3 {
 }
 
 .cardA {
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
 }
 
 .cardB {
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
 }
 .cardC {
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
 }
 

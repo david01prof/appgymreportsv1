@@ -35,19 +35,15 @@
     }
 }
 
-@media (max-width: 328px) {
-    h4 {
-        margin-top: 20px;
-        font-size: 15px;
-    }
-}
+@media(max-width: 520px) {
+    ::ng-deep .styleCardReport .p-card-body .p-card-content .twoCards .cardReport {
+        h4 {
+            position: absolute;
+            font-size: 1.1rem;
+        }
 
-@media (min-width: 747px) {
-    h4 {
-        font-size: 15px;
-    }
+    }    
 }
-
 @media (min-width: 939px)  and (max-width: 1247px) {
 
     ::ng-deep .styleCardReport .p-card-body .p-card-content .twoCards .cardReport {
