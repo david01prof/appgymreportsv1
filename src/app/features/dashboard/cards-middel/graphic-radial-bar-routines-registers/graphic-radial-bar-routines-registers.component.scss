@@ -1,0 +1,15 @@
+.apexcharts-legend text {
+  font-weight: 900;
+}
+
+::ng-deep .styleCardRadial {
+  width: 100%;
+  display: block;
+  
+  .p-card{
+    margin: 0;
+  }
+  .p-card-body {
+  height: auto;
+  }
+}

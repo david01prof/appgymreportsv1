@@ -11,26 +11,16 @@ import { CardModule } from 'primeng/card';
   styleUrl: './graphic-circule-tag-routines.component.scss',
 })
 export class GraphicCirculeTagRoutinesComponent {
-  // Escucha el evento de cambio de tamaño
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    // this.chartOptions.chart.width = this.calculateWidth();
-    // console.log( this.chartOptions.chart.width);
-    
-    
-  }
-  chartOptions: any;
+  
+  public chartOptions: any;
 
-  constructor() {
-
-  }
-
-  ngAfterViewInit(){
+  ngOnInit(){
     this.chartOptions = {
       series: [44, 55, 41, 17], // Valores para cada sección del donut
       chart: {
         type: 'donut',
         width: this.calculateWidth(), // Tamaño del gráfico
+        height: 200
       },
       labels: ['Ventas', 'Compras', 'Marketing', 'Desarrollo'], // Etiquetas
       legend: {

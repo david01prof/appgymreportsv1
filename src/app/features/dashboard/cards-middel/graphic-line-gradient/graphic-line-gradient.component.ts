@@ -22,6 +22,10 @@ import { CardModule } from 'primeng/card';
     </p-card>
   `,
   styles: `
+
+    ::ng-deep .p-card-h-image .p-card{
+      max-width: 1000%;
+    }
     ::ng-deep .apexcharts-canvas {
       border-radius: 6px;
     }
@@ -49,7 +53,7 @@ export class GraphicLineGradientComponent {
       ],
       chart: {
         type: 'line',
-        height: 350,
+        height: 400,
         zoom: {
           enabled: false  // Deshabilita el zoom para evitar el evento pasivo
         },
