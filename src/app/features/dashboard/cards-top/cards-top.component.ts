@@ -18,66 +18,6 @@ import { CardObjetiveWeightComponent } from './card-objetive-weight/card-objetiv
       <app-card-last-reportes class="cardC"></app-card-last-reportes>
     </div>
   `,
-  styles: `
-    .cardsStyles {
-      display: flex;
-      flex-direction: column;
-      margin: 0 auto;
-      justify-content: center;
-      gap: 2rem;
-      padding: 0 1rem;
-    }
-
-    h3 {
-      font-size: 24px;
-    }
-
-    .cardA{
-      width: 80%;
-      margin: 0 auto;
-    }
-
-    .cardB{
-      width: 80%;
-      margin: 0 auto;
-    }
-    .cardC{
-      width: 80%;
-      margin: 0 auto;
-    }
-
-    @media (min-width: 747px) and (max-width: 783px) {
-      .cardsStyles {
-        display: flex;
-        flex-direction: row;
-        gap: 1rem;
-        margin-left: -5px;
-      }
-    }
-
-    @media (min-width: 784px) {
-      .cardsStyles {
-      display: flex;
-      flex-direction: row;
-      margin: 0 auto;
-      gap: 2rem;
-      padding: 0 1rem;
-      }
-
-      .cardA{
-        width: 35%;
-        display: block;
-      }
-
-      .cardB{
-        width: 35%;
-        display: block;
-      }
-      .cardC{
-        width: 35%;
-        display: block;
-      }
-    }
-  `,
+  styleUrls: ['./cards-top.component.scss'],
 })
 export class CardsTopComponent {}

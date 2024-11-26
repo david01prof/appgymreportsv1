@@ -1,0 +1,78 @@
+::ng-deep .p-card {
+    max-width: 400px;
+    min-width: 274px;
+    margin: 0 auto;
+}
+
+.cardsStyles {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    justify-content: center;
+    gap: 2rem;
+    padding: 0 1rem;
+}
+
+h3 {
+    font-size: 24px;
+}
+
+.cardA {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.cardB {
+    width: 80%;
+    margin: 0 auto;
+}
+.cardC {
+    width: 80%;
+    margin: 0 auto;
+}
+
+@media (min-width: 940px) and (max-width: 1157px) {
+    .cardsStyles {
+        display: flex;
+        flex-direction: row;
+        margin: 0 auto;
+        gap: 2rem;
+    }
+
+    .cardA {
+        width: 30%;
+        display: block;
+    }
+
+    .cardB {
+        width: 30%;
+        display: block;
+    }
+    .cardC {
+        width: 30%;
+        display: block;
+    }
+}
+
+@media (min-width: 1158px) {
+    .cardsStyles {
+        display: flex;
+        flex-direction: row;
+        margin: 0 auto;
+        gap: 2rem;
+    }
+
+    .cardA {
+        width: 35%;
+        display: block;
+    }
+
+    .cardB {
+        width: 35%;
+        display: block;
+    }
+    .cardC {
+        width: 35%;
+        display: block;
+    }
+}

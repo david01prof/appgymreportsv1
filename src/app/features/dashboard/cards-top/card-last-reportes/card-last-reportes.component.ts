@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { APP_CONSTANTS } from '../../../../shared/constants';
 import { IRegister } from '../../../registers/interfaces/iregister';
 import { DashboardService } from '../../services/dashboard.service';
-import { ApexCharLineLabelsComponent } from '../card-objetive-weight/apex-char-line-labels/apex-char-line-labels.component';
+import { ApexCharLineLabelsComponent } from '../../../../components/apex-char-line-labels/apex-char-line-labels.component';
 
 @Component({
   selector: 'app-card-last-reportes',
@@ -16,10 +16,11 @@ import { ApexCharLineLabelsComponent } from '../card-objetive-weight/apex-char-l
 })
 export class CardLastReportesComponent {
 
-  private readonly _dashboardSvc = inject(DashboardService);
-
   public document : IRegister | undefined;
+  public dataChart = [10,30,45,20,65,50];
 
+  private readonly _dashboardSvc = inject(DashboardService);
+  
   ngOnInit() {
     this.getFirstItem();
   }

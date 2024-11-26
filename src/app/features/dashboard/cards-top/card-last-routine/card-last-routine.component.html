@@ -1,10 +1,15 @@
 @if (document != undefined) {
     <p-card class="styleCardRoutine relative">
-        <div class="flex flex-column cardRoutine">
-            <h4>20</h4>
-            <h4 class="m-0">Rutinas</h4>
-        </div>
-        <app-apex-char-line-labels></app-apex-char-line-labels>
+        <div class="twoCards">
+            <div class="flex flex-column cardRoutine">
+                <h4>20</h4>
+                <h4 class="m-0">RUTINAS</h4>
+            </div>
 
+            <div class="cardRoutineB">
+                <app-apex-char-line-labels [dataChart]="dataChart" [chartWidth]="230" [chartColor]="['#FFFFFF']"></app-apex-char-line-labels>
+            </div>
+
+        </div>
     </p-card>
 }

@@ -1,12 +1,17 @@
-<!-- @if (document != undefined) { -->
-  <p-card class="styleCardObjetiveWeight relative">
-      <div class="flex flex-column cardObjetiveWeight">
-          <h4 class="font-medium text-white-500 mt-3">
-            +12% <i class="pi pi-arrow-up text-sm ml-2 text-white-500"></i>
-          </h4>
-          <h4 class="m-0">Objetivo de peso</h4>
-      </div>
-      <app-apex-char-line-labels class="cardObjetiveWeight2" ></app-apex-char-line-labels>
+<p-card class="styleCardObjetiveWeight relative">
+  <div class="twoCards">
+    <div class="flex flex-column cardObjetiveWeight">
+      <h4 class="font-medium text-green-500 mt-3 alignItemh4">
+        +12% <i class="pi pi-arrow-up text-sm ml-2 text-green-500"></i>
+      </h4>
+      <h4 class="m-0">PESO: 80kg</h4>
+      <h5 class="m-0">OBJETIVO: 80kg</h5>
+    </div>
 
-  </p-card>
-<!-- } -->
+    <div class="cardObjetiveWeightB">
+      <app-apex-char-line-labels [dataChart]="dataChart" [chartWidth]="230"
+        [chartColor]="['#FFFFFF']"></app-apex-char-line-labels>
+    </div>
+
+  </div>
+</p-card>

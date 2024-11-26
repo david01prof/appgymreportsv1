@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CardModule } from 'primeng/card';
-import { ApexCharLineLabelsComponent } from './apex-char-line-labels/apex-char-line-labels.component';
+import { ApexCharLineLabelsComponent } from '../../../../components/apex-char-line-labels/apex-char-line-labels.component';
 
 @Component({
   selector: 'app-card-objetive-weight',
@@ -11,4 +11,5 @@ import { ApexCharLineLabelsComponent } from './apex-char-line-labels/apex-char-l
 })
 export class CardObjetiveWeightComponent {
 
+  public dataChart = [12,23,18,20,5,8,9];
 }

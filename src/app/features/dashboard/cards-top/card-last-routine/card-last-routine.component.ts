@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { APP_CONSTANTS } from '../../../../shared/constants';
 import { IRoutine } from '../../../routines/interfaces/iroutine';
 import { DashboardService } from '../../services/dashboard.service';
-import { ApexCharLineLabelsComponent } from '../card-objetive-weight/apex-char-line-labels/apex-char-line-labels.component';
+import { ApexCharLineLabelsComponent } from '../../../../components/apex-char-line-labels/apex-char-line-labels.component';
 
 @Component({
   selector: 'app-card-last-routine',
@@ -16,9 +16,11 @@ import { ApexCharLineLabelsComponent } from '../card-objetive-weight/apex-char-l
 })
 export class CardLastRoutineComponent {
 
+  public document : IRoutine | undefined;
+  public dataChart = [20,40,45,80,65,90];
+
   private readonly _dashboardSvc = inject(DashboardService);
 
-  public document : IRoutine | undefined;
 
   ngOnInit() {
     this.getFirstItem();    

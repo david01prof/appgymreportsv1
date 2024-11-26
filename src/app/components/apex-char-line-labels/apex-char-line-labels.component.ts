@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, input } from '@angular/core';
 import e from 'express';
 import { NgApexchartsModule } from 'ng-apexcharts';
 
@@ -11,26 +11,27 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 })
 export class ApexCharLineLabelsComponent {
 
-  // Escucha el evento de cambio de tamaño
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    this.chartOptions.chart.width = this.calculateWidth();
-  }
-  
-  public chartOptions: any;
+  public dataChart = input.required<number[]>(); 
+  public chartWidth = input.required<number>();
+  public chartColor = input.required<string[]>();
 
-  constructor() {
+  // Escucha el evento de cambio de tamaño
+  // @HostListener('window:resize', ['$event']) onResize(event: Event) { this.chartOptions.chart.width = this.calculateWidth(); }
+  
+  public chartOptions:  any | undefined;
+
+  ngOnInit(){
     this.chartOptions = {
       series: [
         {
           name: "",
-          data: [10, 30, 45, 20, 65, 50]
+          data: this.dataChart()
         }
       ],
       chart: {
         type: 'line',
         height: 80,  // Altura del gráfico dentro de la tarjeta
-        width: 230,    // Ancho ajustado para caber dentro de la tarjeta
+        width: this.chartWidth(),    // Ancho ajustado para caber dentro de la tarjeta
         toolbar: {
           show: false  // Oculta la barra de herramientas del gráfico
         },
@@ -50,7 +51,7 @@ export class ApexCharLineLabelsComponent {
           }
         }
       },
-      colors: ['#FFFFFF'],
+      colors: this.chartColor(),
       stroke: {
         curve: 'smooth',
         width: 2
@@ -111,9 +112,9 @@ export class ApexCharLineLabelsComponent {
     };
   }
 
-  ngOnInit(){
-    this.chartOptions.chart.width = this.calculateWidth();
-  }
+  // ngOnInit(){
+  //   this.chartOptions.chart.width = this.calculateWidth();
+  // }
 
   getGradientColors(): string {
     return '#dc3545'  // Verde si es mayor, rojo si es menor

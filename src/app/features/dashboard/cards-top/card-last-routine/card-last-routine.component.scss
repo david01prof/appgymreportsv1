@@ -3,40 +3,45 @@
     margin: 0 auto;
 
     .p-card-body {
-        min-width: 223px;
-        height: 135px;
+        max-width: 400px;
         padding: 18px;
         background-image: linear-gradient(135deg, #FFD3A5 10%, #FD6585 100%);
 
         .p-card-content {
             display: flex;
-            position: relative;
+            flex-direction: column;
+            
+            .twoCards{
+                display: fleX;
+                flex-direction: row;
 
-            .cardRoutine {
-                width: 30%;
-                position: relative;
-                min-width: 90px;
-                color: white;
-
-                h4 {
-                    position: absolute;
-                    bottom: 0;
-                    font-size: 1.5rem;
+                .cardRoutine {
+                    width: 30%;
+                    position: relative;
+                    min-width: 90px;
+                    color: white;
+                    h4 {
+                        position: absolute;
+                        bottom: 0;
+                        font-size: 1.5rem;
+                    }
+                }
+    
+                .cardRoutineB{
+                    width: 60%;
                 }
             }
         }
     }
 }
 
-@media (max-width: 328px) {
-    h4 {
-        margin-top: 20px;
-        font-size: 15px;
-    }
-}
+@media (min-width: 939px)  and (max-width: 1247px) {
 
-@media (min-width: 747px) {
-    h4 {
-        font-size: 15px;
-    }
+    ::ng-deep .styleCardRoutine .p-card-body .p-card-content .twoCards .cardRoutine {
+        h4 {
+            position: absolute;
+            font-size: 1.1rem;
+        }
+
+    }    
 }
