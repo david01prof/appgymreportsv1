@@ -1,9 +1,13 @@
-<section>
-    <app-toolbar></app-toolbar>
-</section>
 
-<router-outlet />
+<div class="full-window" (click)="createRipple($event)">
+    <!-- Contenedor que ocupa toda la ventana -->
+    <section>
+        <app-toolbar></app-toolbar>
+    </section>
 
-<section>
-    <app-speed-dial></app-speed-dial>
-</section>
+    <router-outlet />
+
+    <section>
+        <app-speed-dial></app-speed-dial>
+    </section>
+</div>
