@@ -2,21 +2,63 @@
     <p-table 
         [value]="products" 
         styleClass="p-datatable-striped" 
-        [tableStyle]="{'min-width': '50rem'}">
+        [tableStyle]="{'min-width': '50rem'}"
+        [paginator]="true"
+        [dataKey]="getKey()"
+        [rows]="5"
+        [loading]="loading"
+        [rowsPerPageOptions]="[5, 10]">
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <p-iconField iconPosition="left" class="ml-auto">
+                    <p-inputIcon>
+                        <i class="pi pi-search"></i>
+                    </p-inputIcon>
+                    <input 
+                        pInputText 
+                        type="text" 
+                        (input)="dt2.filterGlobal($event.target, 'contains')" 
+                        placeholder="Search keyword" />
+                </p-iconField>
+            </div>
+        </ng-template>
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Code</th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Quantity</th>
+                    <th *ngFor="let column of columns()" [pSortableColumn]="column.id"> {{column.label}} <p-sortIcon [field]="column.id" /> </th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-product>
                 <tr>
-                    <td>{{product.code}}</td>
-                    <td>{{product.name}}</td>
-                    <td>{{product.category}}</td>
-                    <td>{{product.quantity}}</td>
+                    <td *ngFor="let column of columns()"> 
+                        
+                        @if (column.id == 'actions') {
+                            <p-button icon="pi pi-eye" severity="info" ></p-button>
+                        }
+                        @else if (column.id == 'tag') {
+                            <p-tag>{{product['tag']}}</p-tag>
+                        }
+                        @else if (column.id == 'exercises') {
+                            {{product[column.id].length}}
+                        }
+                        @else if (column.id == 'created') {
+                            {{getDate(product[column.id]) | date: 'dd/MM/yyyy'}}
+                        }
+                        @else if (column.id == 'date') {
+                            {{getDate(_routineSvc.convertTimeStamptoDate(product[column.id])) | date: 'dd/MM/yyyy'}}
+                        }
+                        @else if (column.id == 'totaligc') {
+                            @if(product["calculator"].totaligc != ''){
+                                {{product["calculator"].totaligc}}%
+                            }@else {
+                                0%
+                            }
+                        }
+                        @else {
+                            {{product[column.id]}} 
+                        }
+                        
+
+                    </td>
                 </tr>
             </ng-template>
     </p-table>

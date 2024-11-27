@@ -10,6 +10,7 @@ export interface IRoutine {
   comments: string;
   created?: number;
   updated?: number;
+  actions?: any;
 }
 
 export interface IExercise {

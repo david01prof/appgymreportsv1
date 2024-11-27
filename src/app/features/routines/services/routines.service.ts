@@ -102,7 +102,9 @@ export class RoutinesService {
   }
 
   public convertTimeStamptoDate(timestamp: Timestamp) {
-    return timestamp.toDate;
+    console.log(timestamp);
+    
+    return timestamp.toDate();
   }
 
   public getTranslateDate(date: any) {

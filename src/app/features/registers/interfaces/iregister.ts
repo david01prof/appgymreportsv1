@@ -5,6 +5,7 @@ export interface IRegister {
     calculator: IMeasurement;
     photos: IPhotos[];
     created?: number;
+    actions?: any;
 }
 
 export interface IPhotos {
