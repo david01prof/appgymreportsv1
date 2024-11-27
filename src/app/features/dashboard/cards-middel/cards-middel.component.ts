@@ -21,10 +21,10 @@ import { GraphicRadialBarRoutinesRegistersComponent } from './graphic-radial-bar
       ></app-graphic-line-gradient>
 
       <div class="styleContainerB">
-        <app-graphic-circule-tag-routines
+        <app-graphic-circule-tag-routines class="styleCircule">
         ></app-graphic-circule-tag-routines>
 
-        <app-graphic-radial-bar-routines-registers
+        <app-graphic-radial-bar-routines-registers class="styleRadial"
         ></app-graphic-radial-bar-routines-registers>
       </div>
     </div>

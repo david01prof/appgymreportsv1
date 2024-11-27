@@ -11,13 +11,14 @@ import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.comp
 import { CardsMiddelComponent } from './cards-middel/cards-middel.component';
 import { CardsTopComponent } from './cards-top/cards-top.component';
 import { DashboardService } from './services/dashboard.service';
+import { CardsBottomComponent } from './cards-bottom/cards-bottom.component';
 
 const PRIME_MODULES = [DialogModule, ButtonModule, InputTextModule,CardModule,MessagesModule];
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [PRIME_MODULES, CommonModule, BreadcrumbComponent, CardsTopComponent, CardsMiddelComponent],
+  imports: [PRIME_MODULES, CommonModule, BreadcrumbComponent, CardsTopComponent, CardsMiddelComponent,CardsBottomComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })

@@ -19,42 +19,23 @@ export class GraphicCirculeTagRoutinesComponent {
       series: [44, 55, 41, 17], // Valores para cada sección del donut
       chart: {
         type: 'donut',
-        width: this.calculateWidth(), // Tamaño del gráfico
+        width: 200, // Tamaño del gráfico
         height: 200
       },
       labels: ['Ventas', 'Compras', 'Marketing', 'Desarrollo'], // Etiquetas
       legend: {
-        position: this.resetPositionLegend(), // Cambia la posición de la leyenda (opcional)
+        position: 'bottom', // Cambia la posición de la leyenda (opcional)
       },
       responsive: [
         {
           breakpoint: 480,
           options: {
             legend: {
-              show: false
+              show: true
             }
           }
         }
       ]
     };
-  }
-
-  private calculateWidth(){
-
-    if(window.innerWidth > 784){
-      return 280;
-    }else if( window.innerWidth < 348){
-      return 180;
-    }
-      return 300;
-
-  }
-
-  resetPositionLegend(){
-    if(window.innerWidth > 784 ||  window.innerWidth < 348){
-      return 'bottom';
-    }else{
-      return 'right';
-    }
   }
 }
