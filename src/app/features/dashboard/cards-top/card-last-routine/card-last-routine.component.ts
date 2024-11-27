@@ -16,30 +16,6 @@ import { ApexCharLineLabelsComponent } from '../../../../components/apex-char-li
 })
 export class CardLastRoutineComponent {
 
-  public document : IRoutine | undefined;
   public dataChart = [20,40,45,80,65,90];
 
-  private readonly _dashboardSvc = inject(DashboardService);
-
-
-  ngOnInit() {
-    this.getFirstItem();    
-  }
-
-  async getFirstItem() {
-    try {
-      const firstDoc = await this._dashboardSvc.getFirstDocument(APP_CONSTANTS.COLLECTION_NAME_ROUTINES);
-      if (firstDoc) {
-        this.document = firstDoc as IRoutine;
-      } else {
-        console.log('La colección está vacía.');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  }
-
-  public getDate(timestamp: number) {
-    return new Date(timestamp);
-  }
 }

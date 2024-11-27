@@ -7,7 +7,7 @@ import { CardModule } from 'primeng/card';
   standalone: true,
   imports: [TableStripedRowsComponent,CardModule],
   template: `
-    <div class="tables mt-7">
+    <div class="tables mt-7 fadein animation-duration-1000">
       <p-card class="tableA" header="Registros">
       <app-table-striped-rows ></app-table-striped-rows>
       </p-card>

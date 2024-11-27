@@ -2,6 +2,6 @@
     <app-new-card-register></app-new-card-register>
 
     @for (register of registers(); track $index) {
-    <app-detail-cards [register]="register" [id]="$index"></app-detail-cards>
+    <app-detail-cards [register]="register" [id]="$index" class="fadein animation-duration-2000"></app-detail-cards>
     }
 </div>

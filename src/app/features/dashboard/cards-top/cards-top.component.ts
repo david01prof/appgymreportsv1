@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CardLastReportesComponent } from './card-last-reportes/card-last-reportes.component';
 import { CardLastRoutineComponent } from './card-last-routine/card-last-routine.component';
 import { CardObjetiveWeightComponent } from './card-objetive-weight/card-objetive-weight.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-cards-top',
@@ -10,9 +11,10 @@ import { CardObjetiveWeightComponent } from './card-objetive-weight/card-objetiv
     CardLastRoutineComponent,
     CardLastReportesComponent,
     CardObjetiveWeightComponent,
+    CommonModule
   ],
   template: `
-    <div class="cardsStyles">
+    <div class="cardsStyles fadein animation-duration-2000">
       <app-card-objetive-weight class="cardA"></app-card-objetive-weight>
       <app-card-last-routine class="cardB"></app-card-last-routine>
       <app-card-last-reportes class="cardC"></app-card-last-reportes>
@@ -20,4 +22,5 @@ import { CardObjetiveWeightComponent } from './card-objetive-weight/card-objetiv
   `,
   styleUrls: ['./cards-top.component.scss'],
 })
-export class CardsTopComponent {}
+export class CardsTopComponent {
+}

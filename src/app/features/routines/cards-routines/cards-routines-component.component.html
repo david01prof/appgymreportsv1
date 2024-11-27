@@ -3,7 +3,7 @@
 
     @for (item of data(); track $index) {
 
-    <p-card class="mb-3 custom-card" (click)="checkActiveCard(item)">
+    <p-card class="mb-3 custom-card" (click)="checkActiveCard(item)" class="fadein animation-duration-1000">
       @if (item.favourite) {
       <i class="pi pi-bookmark-fill favouriteItem">
         <i class="pi pi-star-fill"></i

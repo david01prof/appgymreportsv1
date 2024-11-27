@@ -15,7 +15,7 @@ import { GraphicRadialBarRoutinesRegistersComponent } from './graphic-radial-bar
   ],
   styleUrls: ['./cards-middel.component.scss'],
   template: `
-    <div class="cardsGraphicMiddels overflow-hidden">
+    <div class="cardsGraphicMiddels overflow-hidden fadein animation-duration-1000">
       <app-graphic-line-gradient
         class="styleContainerA"
       ></app-graphic-line-gradient>
