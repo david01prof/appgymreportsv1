@@ -1,9 +1,11 @@
+@if (chartOptions != undefined) {
 <p-card class="styleCardCircule" *ngIf="chartOptions != undefined">
-    <apx-chart 
-    [series]="chartOptions.series" 
-    [chart]="chartOptions.chart" 
-    [labels]="chartOptions.labels"
-    [responsive]="chartOptions.responsive"
-    [legend]="chartOptions.legend">
+    <apx-chart
+        [series]="chartOptions.series"
+        [chart]="chartOptions.chart"
+        [labels]="chartOptions.labels"
+        [responsive]="chartOptions.responsive"
+        [legend]="chartOptions.legend">
     </apx-chart>
 </p-card>
+}

@@ -11,4 +11,5 @@ import { SpeedDialComponent } from './components/speed-dial/speed-dial.component
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+
 }

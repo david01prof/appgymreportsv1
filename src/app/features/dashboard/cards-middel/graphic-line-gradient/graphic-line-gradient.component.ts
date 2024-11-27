@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { CardModule } from 'primeng/card';
 
@@ -8,7 +8,8 @@ import { CardModule } from 'primeng/card';
   imports: [CardModule, NgApexchartsModule],
   template: `
     <p-card header="Objetivo de peso" class="p-card-h-image">
-        <apx-chart
+        @if(chartOptions != undefined) {
+          <apx-chart
           [series]="chartOptions.series"
           [chart]="chartOptions.chart"
           [stroke]="chartOptions.stroke"
@@ -19,6 +20,7 @@ import { CardModule } from 'primeng/card';
           [yaxis]="chartOptions.yaxis"
         >
         </apx-chart>
+        }
     </p-card>
   `,
   styles: `
@@ -36,10 +38,11 @@ import { CardModule } from 'primeng/card';
     }
   `,
 })
-export class GraphicLineGradientComponent {
-  chartOptions: any;
+export class GraphicLineGradientComponent implements OnInit {
+  
+  public chartOptions: any | undefined;
 
-  constructor() {
+  ngOnInit(){
     this.chartOptions = {
       series: [
         {
@@ -81,20 +84,18 @@ export class GraphicLineGradientComponent {
         type: ['solid', 'gradient'],  // La primera línea es sólida, la segunda tiene gradiente
         gradient: {
           shadeIntensity: 0.5,
-          gradientToColors:'#1fff00',  // Obtiene el gradiente dinámico
+          gradientToColors:'',  // Obtiene el gradiente dinámico
           inverseColors: false,
           stops: [0, 100],
         }
       }
     };
-  }
 
-  ngOnInit(){
     this.chartOptions.fill.gradient.gradientToColors = this.getGradientColors();
   }
 
   // Método para generar el gradiente dinámico en función del valor
-  getGradientColors(): string[] {
+  private getGradientColors(): string[] {
     const threshold = this.chartOptions.series[0];  // Valor de referencia para cambiar de color
     return this.chartOptions.series[1].data.map((value: number) =>
       value > threshold ? '#28a745' : '#dc3545'  // Verde si es mayor, rojo si es menor

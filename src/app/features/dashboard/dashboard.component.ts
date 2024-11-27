@@ -12,6 +12,7 @@ import { CardsMiddelComponent } from './cards-middel/cards-middel.component';
 import { CardsTopComponent } from './cards-top/cards-top.component';
 import { DashboardService } from './services/dashboard.service';
 import { CardsBottomComponent } from './cards-bottom/cards-bottom.component';
+import { RippleModule } from 'primeng/ripple';
 
 const PRIME_MODULES = [DialogModule, ButtonModule, InputTextModule,CardModule,MessagesModule];
 

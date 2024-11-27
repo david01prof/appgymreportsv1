@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { CardModule } from 'primeng/card';
 
@@ -10,9 +10,9 @@ import { CardModule } from 'primeng/card';
   templateUrl: './graphic-circule-tag-routines.component.html',
   styleUrl: './graphic-circule-tag-routines.component.scss',
 })
-export class GraphicCirculeTagRoutinesComponent {
+export class GraphicCirculeTagRoutinesComponent implements OnInit {
   
-  public chartOptions: any;
+  public chartOptions: any | undefined;
 
   ngOnInit(){
     this.chartOptions = {
