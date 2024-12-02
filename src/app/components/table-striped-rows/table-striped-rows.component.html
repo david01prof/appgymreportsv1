@@ -1,14 +1,29 @@
 <div class="card">
     <p-table 
-        [value]="products" 
+        #dt2
+        [value]="products()" 
         styleClass="p-datatable-striped" 
         [tableStyle]="{'min-width': '50rem'}"
         [paginator]="true"
         [dataKey]="getKey()"
         [rows]="5"
-        [loading]="loading"
+        [globalFilterFields]="getFilterFields()"
         [rowsPerPageOptions]="[5, 10]">
         <ng-template pTemplate="caption">
+            <div class="flex">
+                <p-button label="Clear" [outlined]="true" icon="pi pi-filter-slash" (onClick)="clear(dt2)" />
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input 
+                    pInputText 
+                    type="text" 
+                    [(ngModel)]="searchValue"
+                    (input)="onGlobalFilter($event)" 
+                    placeholder="Buscar...." />
+                </span>
+            </div>
+        </ng-template>
+        <!-- <ng-template pTemplate="caption">
             <div class="flex">
                 <p-iconField iconPosition="left" class="ml-auto">
                     <p-inputIcon>
@@ -17,11 +32,11 @@
                     <input 
                         pInputText 
                         type="text" 
-                        (input)="dt2.filterGlobal($event.target, 'contains')" 
+                        (input)="onGlobalFilter($event)" 
                         placeholder="Search keyword" />
                 </p-iconField>
             </div>
-        </ng-template>
+        </ng-template> -->
             <ng-template pTemplate="header">
                 <tr>
                     <th *ngFor="let column of columns()" [pSortableColumn]="column.id"> {{column.label}} <p-sortIcon [field]="column.id" /> </th>
@@ -35,7 +50,7 @@
                             <p-button icon="pi pi-eye" severity="info" ></p-button>
                         }
                         @else if (column.id == 'tag') {
-                            <p-tag>{{product['tag']}}</p-tag>
+                            <p-tag [severity]="product['severityTag'].code">{{product['tag']}}</p-tag>
                         }
                         @else if (column.id == 'exercises') {
                             {{product[column.id].length}}

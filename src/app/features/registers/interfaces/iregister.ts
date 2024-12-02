@@ -11,3 +11,8 @@ export interface IRegister {
 export interface IPhotos {
     base64: string;
 }
+
+export interface ITagsGraph{
+    label: string;
+    contador: number;
+}

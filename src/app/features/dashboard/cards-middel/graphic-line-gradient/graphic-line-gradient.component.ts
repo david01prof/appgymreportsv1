@@ -56,7 +56,7 @@ export class GraphicLineGradientComponent implements OnInit {
       ],
       chart: {
         type: 'line',
-        height: 400,
+        height: 495,
         zoom: {
           enabled: false  // Deshabilita el zoom para evitar el evento pasivo
         },

@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { CardLastReportesComponent } from './card-last-reportes/card-last-reportes.component';
 import { CardLastRoutineComponent } from './card-last-routine/card-last-routine.component';
 import { CardObjetiveWeightComponent } from './card-objetive-weight/card-objetive-weight.component';
 import { CommonModule } from '@angular/common';
+import { IRoutine } from '../../routines/interfaces/iroutine';
+import { IRegister } from '../../registers/interfaces/iregister';
 
 @Component({
   selector: 'app-cards-top',
@@ -11,16 +13,20 @@ import { CommonModule } from '@angular/common';
     CardLastRoutineComponent,
     CardLastReportesComponent,
     CardObjetiveWeightComponent,
-    CommonModule
+    CommonModule,
   ],
   template: `
     <div class="cardsStyles fadein animation-duration-2000">
+      @if (productRoutines() != undefined && productReports() != undefined) {
       <app-card-objetive-weight class="cardA"></app-card-objetive-weight>
-      <app-card-last-routine class="cardB"></app-card-last-routine>
-      <app-card-last-reportes class="cardC"></app-card-last-reportes>
+      <app-card-last-routine class="cardB" [routines]="productRoutines()"></app-card-last-routine>
+      <app-card-last-reportes class="cardC" [reports]="productReports()"></app-card-last-reportes>
+      }
     </div>
   `,
   styleUrls: ['./cards-top.component.scss'],
 })
 export class CardsTopComponent {
+  productRoutines = input.required<IRoutine[]>();
+  productReports = input.required<IRegister[]>();
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { APP_CONSTANTS } from '../../../../shared/constants';
@@ -15,6 +15,8 @@ import { ApexCharLineLabelsComponent } from '../../../../components/apex-char-li
   styleUrl: './card-last-reportes.component.scss'
 })
 export class CardLastReportesComponent {
+
+  reports = input.required<IRegister[]>();
 
   public document : IRegister | undefined;
   public dataChart = [10,30,45,20,65,50];

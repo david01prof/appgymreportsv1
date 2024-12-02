@@ -102,8 +102,6 @@ export class RoutinesService {
   }
 
   public convertTimeStamptoDate(timestamp: Timestamp) {
-    console.log(timestamp);
-    
     return timestamp.toDate();
   }
 

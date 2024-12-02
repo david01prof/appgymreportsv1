@@ -1,15 +1,18 @@
 
-    <p-card class="styleCardReport relative ">
-        <div class="twoCards">
-            <div class="flex flex-column cardReport">
-                <h4>2</h4>
-                <h4 class="m-0">REPORTES</h4>
-            </div>
 
-            <div class="cardReportB">
-                <app-apex-char-line-labels [dataChart]="dataChart" [chartColor]="['#FFFFFF']"></app-apex-char-line-labels>
-            </div>
-
+@if (reports() != undefined) {
+<p-card class="styleCardReport relative ">
+    <div class="twoCards">
+        <div class="flex flex-column cardReport">
+            <h4>{{reports().length}}</h4>
+            <h4 class="m-0">REPORTES</h4>
         </div>
-    </p-card>
 
+        <div class="cardReportB">
+            <app-apex-char-line-labels [dataChart]="dataChart"
+                [chartColor]="['#FFFFFF']"></app-apex-char-line-labels>
+        </div>
+
+    </div>
+</p-card>
+}

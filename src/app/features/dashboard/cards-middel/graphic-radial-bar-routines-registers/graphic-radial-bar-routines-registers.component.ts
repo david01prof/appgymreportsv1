@@ -1,6 +1,8 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, input } from '@angular/core';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { CardModule } from 'primeng/card';
+import { IRegister } from '../../../registers/interfaces/iregister';
+import { IRoutine } from '../../../routines/interfaces/iroutine';
 
 @Component({
   selector: 'app-graphic-radial-bar-routines-registers',
@@ -10,15 +12,17 @@ import { CardModule } from 'primeng/card';
   styleUrl: './graphic-radial-bar-routines-registers.component.scss',
 })
 export class GraphicRadialBarRoutinesRegistersComponent {
-  series: number[] = [75]; // Porcentaje (ejemplo: 75%)
 
+  routines = input.required<IRoutine[]>();
+  reports = input.required<IRegister[]>();
+  
   public chartOptions: any | undefined;
 
   get windowRef(): Window | null {
     return typeof window !== 'undefined' ? window : null;
   }
   
-  ngOnInit() {
+  ngOnChanges() {
 
     const myWindow = this.windowRef;
     if (myWindow) {
@@ -26,7 +30,7 @@ export class GraphicRadialBarRoutinesRegistersComponent {
       const dynamicOffsetX = this.calculateOffsetX(window.innerWidth);
 
       this.chartOptions = {
-        series: [76, 67],
+        series: [this.reports().length, this.routines().length],
         chart: {
           height: 200,
           with: 200,

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { APP_CONSTANTS } from '../../../../shared/constants';
@@ -16,6 +16,8 @@ import { ApexCharLineLabelsComponent } from '../../../../components/apex-char-li
 })
 export class CardLastRoutineComponent {
 
+  routines = input.required<IRoutine[]>();
+  
   public dataChart = [20,40,45,80,65,90];
 
 }
