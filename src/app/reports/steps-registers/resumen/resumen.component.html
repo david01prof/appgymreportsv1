@@ -1,0 +1,35 @@
+<h4 *ngIf="!isDetail()">Detalle del reporte:</h4>
+
+<p-divider  *ngIf="!isDetail()"></p-divider>
+
+<div class="grid">
+  <div class="col-6">
+    <p><strong>Altura:</strong> {{ register().calculator.height }}m</p>
+  </div>
+  <div class="col-6">
+    <p><strong>Peso:</strong> {{ register().calculator.weight }}kg</p>
+  </div>
+  <div class="col-6">
+    <p><strong>Cintura:</strong> {{ register().calculator.waist }}cm</p>
+  </div>
+  <div class="col-6">
+    <p><strong>Cadera:</strong> {{ register().calculator.hip }}cm</p>
+  </div>
+  <div class="col-6">
+    <p><strong>Edad:</strong> {{ register().calculator.age }}</p>
+  </div>
+  <div class="col-6">
+    <p><strong>Sexo:</strong> {{ register().calculator.genre }}</p>
+  </div>
+</div>
+
+
+<h4>Imagenes aportadas:</h4>
+
+<p-divider></p-divider>
+
+@for (item of register().photos; track $index) {
+<div class="card flex justify-content-center shadow-2 mb-3">
+  <p-image src="{{ item.base64 }}" alt="Image" width="250" class="m-2" />
+</div>
+}

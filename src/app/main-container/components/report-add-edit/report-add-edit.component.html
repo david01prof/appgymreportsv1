@@ -1,0 +1,47 @@
+<div class="character-add-container">
+    <form [formGroup]="reportForm()" (ngSubmit)="onSubmit()">
+
+        <div formGroupName="measurement">
+            {{show(reportForm().get('measurement')?.get('genre'))}}
+            <app-custom-input
+                label="height:"
+                [control]="$any(reportForm().get('measurement')?.get('height'))"
+                placeHolder="Enter Character Name"
+                type="number"
+                errorMessage="Name is REQUIRED"></app-custom-input>
+
+            <app-custom-input
+                label="weight:"
+                [control]="$any(reportForm().get('measurement')?.get('weight'))"
+                placeHolder="Enter Character Name"
+                type="number"
+                errorMessage="Name is REQUIRED"></app-custom-input>
+
+            <app-custom-input
+                label="waist:"
+                [control]="$any(reportForm().get('measurement')?.get('waist'))"
+                placeHolder="Enter Character Name"
+                type="number"
+                errorMessage="Name is REQUIRED"></app-custom-input>
+
+            <app-custom-input
+                label="hip:"
+                [control]="$any(reportForm().get('measurement')?.get('hip'))"
+                placeHolder="Enter Character Name"
+                type="number"
+                errorMessage="Name is REQUIRED"></app-custom-input>
+        </div>
+
+        <!-- Sección Photos -->
+        <h2>Fotos</h2>
+        <div formGroupName="photos">
+            <label for="base64">Foto (Base64):</label>
+            <input id="base64" type="text" formControlName="base64" />
+        </div>
+
+        {{reportToEdit().id}}
+        <button type="submit" [disabled]="reportForm().invalid">
+           Add Character
+        </button>
+    </form>
+</div>

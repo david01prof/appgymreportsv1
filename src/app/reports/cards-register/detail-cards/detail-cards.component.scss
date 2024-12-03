@@ -1,0 +1,18 @@
+.widthSpecial{
+    width: 38%;
+}
+
+
+.line{
+    height: 1px;
+    background-origin: gray;
+    border-bottom: 1px solid  #e2e8f0;
+    width: 97%;
+}
+
+::ng-deep .p-dialog-mask.p-component-overlay {
+    background: transparent;
+}
+::ng-deep .p-dialog{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}

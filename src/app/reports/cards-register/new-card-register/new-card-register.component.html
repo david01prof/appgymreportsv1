@@ -1,0 +1,10 @@
+<div>
+    <p-card class="mb-3" [ngClass]="{ 'borde-degradado': aplicarEstilo }" (click)="visible = true">
+        <i class="pi pi-plus p-6 text-2xl text-color-secondary"> </i>
+    </p-card>
+    <pre class="text-center text-color-secondary ">Crear nuevo reporte</pre>
+
+    <p-dialog header="Nuevo registro" [modal]="true" [(visible)]="visible" [style]="{ width: '335px' }" (onHide)="clearMeasurement()">
+        <app-steps-registers (showDialog)="getShowDialog($event)" [activeInputExit]="active"></app-steps-registers>
+      </p-dialog>
+</div>

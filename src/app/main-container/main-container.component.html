@@ -1,0 +1,18 @@
+<a routerLink="/add-edit-report">Add Character</a>
+
+
+<div class="character-grid">
+  @defer (when store.reports().length) {
+
+    @for (report of store.reports(); track report.id) {
+      @defer (on viewport) {
+        <app-report-card [report]="report" />
+        {{report.measurement.genre}}
+      } @placeholder {
+        <div class="placeholder">Loading</div>
+      }
+    }
+  } @placeholder {
+    <div class="placeholder">Loading</div>
+  }
+</div>
