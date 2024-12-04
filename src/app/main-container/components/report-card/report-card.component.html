@@ -1,7 +1,7 @@
 @let reportLocal = report();
 
 @if (reportLocal) {
-    <div class="character-card">
+    <!-- <div class="character-card">
       <p>{{ reportLocal.id }}</p>
   
     <P>{{ reportLocal.measurement.genre }}</P>
@@ -15,5 +15,19 @@
           >Edit Character</a
         >
       </div>
-    </div>
-  }
+    </div> -->
+
+    <p-card class="mb-3 custom-card" [routerLink]="['/reports/' + reportLocal.id]">
+
+      <div class="flex justify-content-center">
+        <img ngSrc="assets/images/registros.png" width="90"  height="90" priority/>
+      </div>
+    
+      <pre
+        class="text-center text-base text-color-secondary">Reporte {{reportLocal.idReport + 1}}</pre>
+    
+      <div class="card flex justify-content-center">
+        {{ getCurrentDate(reportLocal.created!) | date: 'dd/MM/yyyy'}}
+      </div>
+    </p-card>
+}

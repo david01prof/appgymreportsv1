@@ -2,8 +2,8 @@ import { Component, input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { ImageModule } from 'primeng/image';
-import { IRegister } from '../../interfaces/iregister';
 import { CommonModule } from '@angular/common';
+import { IReport } from '@app/models';
 const PRIME_MODULES = [ButtonModule, DividerModule, ImageModule];
 @Component({
   selector: 'app-resumen',
@@ -13,8 +13,12 @@ const PRIME_MODULES = [ButtonModule, DividerModule, ImageModule];
   styleUrl: './resumen.component.scss',
 })
 export class ResumenComponent {
-
-  public register = input.required<IRegister>();
+  
+  public report = input.required<IReport>();
   public isDetail = input.required<boolean>();
+
+  ngOnChanges(){
+    console.log(this.report());
+  }
   
 }

@@ -2,8 +2,9 @@ import { inject, Injectable } from '@angular/core';
 import { addDoc, collection, collectionData, deleteDoc, doc, DocumentData, DocumentReference, Firestore, orderBy, query } from '@angular/fire/firestore';
 import { PrimeNGConfig } from 'primeng/api';
 import { Observable } from 'rxjs';
-import { APP_CONSTANTS } from '../../../shared/constants';
+
 import { IRegister } from '../interfaces/iregister';
+import { APP_CONSTANTS } from '@app/shared/constants';
 
 @Injectable({
   providedIn: 'root'

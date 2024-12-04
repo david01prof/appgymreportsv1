@@ -25,7 +25,7 @@ export class ReportsService {
     })
   }
 
-  public addReport2( report: Omit<IReport, "id">): Observable<any>  {
+  public addReport2( report: Omit<IReport, "id" | "created">): Observable<any>  {
     return from(addDoc(this._reportCollection,{
       created: Date.now(),
       updated: Date.now(),

@@ -1,0 +1,39 @@
+<div class="character-add-container">
+    <form [formGroup]="measurementForm()" (ngSubmit)="onSubmit()">
+
+            <app-custom-input
+                label="Altura:"
+                id="height"
+                [control]="$any(measurementForm().get('height'))"
+                type="number"
+                descriptionLabel="Escribe tu altura en cm"
+                errorMessage="Name is REQUIRED"></app-custom-input>
+
+            <app-custom-input
+                label="Peso:"
+                id="weight"
+                [control]="$any(measurementForm().get('weight'))"
+                type="number"
+                descriptionLabel="Escribe tu peso en kg"
+                errorMessage="Name is REQUIRED"></app-custom-input>
+
+            <app-custom-input
+                label="Cintura:"
+                id="waist"
+                [control]="$any(measurementForm().get('waist'))"
+                type="number"
+                descriptionLabel="Escribe tu ancho de cintura en cm"
+                errorMessage="Name is REQUIRED"></app-custom-input>
+
+            <app-custom-input
+                label="Cadera:"
+                id="hip"
+                [control]="$any(measurementForm().get('hip'))"
+                type="number"
+                errorMessage="Name is REQUIRED"></app-custom-input>
+
+        <p-button type="submit" [disabled]="measurementForm().invalid">
+           Calcular medidas
+        </p-button>
+    </form>
+</div>

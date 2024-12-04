@@ -29,15 +29,17 @@ export const GlobalStore = signalStore(
   withEntities<IReport>(),
   withMethods((store, _reportSvc = inject(ReportsService)) => ({
     getReport(id: number) {
+      console.log(id);
+      
       return store.reports().find((rep) => rep.id === id);
     },
 
-    async addReport(report: Omit<IReport, 'id'>) {
+    async addReport(report: Omit<IReport, 'id' | 'created'>) {
       try {
         await lastValueFrom(_reportSvc.addReport2(report));
 
-        patchState(store, ({ reports }) => ({
-          reports: [...reports, { id: new Date().getTime(), ...report }],
+        patchState(store, ({ reports }) => ({        
+          reports: [...reports, { id: reports[0].id, created: new Date().getTime(), ...report }],
         }));
       } catch (error) {}
     },

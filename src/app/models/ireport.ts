@@ -5,7 +5,9 @@ export interface IReportInfo {
 } 
 
 export interface IReport {
-    id: number;
+    id?: number;
+    idReport: number;
+    created: number;
     measurement: Measurement;
     photos: Photos[];
 }
@@ -36,6 +38,8 @@ export enum Gender {
 
 export const emptyReport: IReport = {
     id: 0,
+    idReport: 0,
+    created: new Date().getTime(),
     measurement: {
         genre: Gender.MALE,
         height: 0,

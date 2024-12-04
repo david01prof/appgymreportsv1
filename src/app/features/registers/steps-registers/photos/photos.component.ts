@@ -1,6 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, output } from '@angular/core';
-import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { Component, computed, inject, output, Signal } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import {
+  MeasurementForm,
+  PhotosForm,
+  ReportForm,
+} from '@app/main-container/components/interfaces';
+import { emptyReport } from '@app/models';
+import { MessageService } from 'primeng/api';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -26,28 +33,24 @@ const PRIME_MODULES = [
   providers: [MessageService],
 })
 export class PhotosComponent {
-  
+  public readonly _registerSvc = inject(RegistersService);
+  public readonly _messageSvc = inject(MessageService);
+
   public dataPhotos = output<IPhotos[]>();
+
+  public base64Images: IPhotos[] = [];
   public files = [];
-  public  base64Images: IPhotos[] = [];
 
   private totalSize: number = 0;
   private totalSizePercent: number = 0;
-
-  public readonly _registerSvc = inject(RegistersService);
-
-  constructor(
-    private config: PrimeNGConfig,
-    private messageService: MessageService
-  ) {}
 
   choose(callback: any) {
     callback();
   }
 
-  onRemoveTemplatingFile( event: any, file: any,removeFileCallback: any, index: any ) {
+  onRemoveTemplatingFile(event: any,file: any,removeFileCallback: any,index: any) {
     removeFileCallback(event, index);
-    this.totalSize -= parseInt(this. _registerSvc.formatSize(file.size));
+    this.totalSize -= parseInt(this._registerSvc.formatSize(file.size));
     this.totalSizePercent = this.totalSize / 10;
     this.base64Images.splice(index, 1);
   }
@@ -60,7 +63,7 @@ export class PhotosComponent {
 
   //TODO TEMPORAL
   onTemplatedUpload() {
-    this.messageService.add({
+    this._messageSvc.add({
       severity: 'info',
       summary: 'Success',
       detail: 'File Uploaded',
@@ -95,7 +98,41 @@ export class PhotosComponent {
   }
 
   uploadEvent(callback: any) {
+    console.log('entra');
+    
     callback();
+    console.log(this.base64Images)
     this.dataPhotos.emit(this.base64Images);
   }
+
+  public measurementEmptyForm = computed(() => emptyReport);
+  public reportForm: Signal<FormGroup<ReportForm>> = computed(
+    () =>
+      new FormGroup<ReportForm>({
+        measurement: new FormGroup<MeasurementForm>({
+          height: new FormControl(
+            this.measurementEmptyForm().measurement.height,
+            { nonNullable: true }
+          ),
+          weight: new FormControl(
+            this.measurementEmptyForm().measurement.weight,
+            { nonNullable: true }
+          ),
+          waist: new FormControl(
+            this.measurementEmptyForm().measurement.waist,
+            { nonNullable: true }
+          ),
+          hip: new FormControl(this.measurementEmptyForm().measurement.hip, {
+            nonNullable: true,
+          }),
+          totaligc: new FormControl(
+            this.measurementEmptyForm().measurement.totaligc,
+            { nonNullable: true }
+          ),
+        }),
+        photos: new FormGroup<PhotosForm>({
+          base64: new FormControl('', { nonNullable: true }),
+        }),
+      })
+  );
 }

@@ -1,18 +1,22 @@
-<a routerLink="/add-edit-report">Add Character</a>
+<div class="card flex justify-content-between flex-wrap alignItems mt-4 fadein animation-duration-2000">
 
+  <div>
+    <p-card class="mb-3" [ngClass]="{ 'borde-degradado': aplicarEstilo }" (click)="visible = true" routerLink="/add-report">
+      <i class="pi pi-plus p-6 text-2xl text-color-secondary"> </i>
+    </p-card>
+    <pre class="text-center text-color-secondary ">Crear nuevo reporte</pre>
+  </div>
 
-<div class="character-grid">
   @defer (when store.reports().length) {
-
     @for (report of store.reports(); track report.id) {
       @defer (on viewport) {
-        <app-report-card [report]="report" />
-        {{report.measurement.genre}}
+          <app-report-card [report]="report" />
       } @placeholder {
-        <div class="placeholder">Loading</div>
+        <app-spinner-loader></app-spinner-loader>
       }
     }
   } @placeholder {
-    <div class="placeholder">Loading</div>
+    <app-spinner-loader></app-spinner-loader>
   }
+
 </div>

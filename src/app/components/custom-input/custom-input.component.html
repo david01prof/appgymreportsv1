@@ -1,12 +1,26 @@
 <div class="form-group">
-    <label>{{ label() }}</label>
-  
-    <input
-      [formControl]="control()"
-      [type]="type()"
-      [attr.placeholder]="placeHolder()"
-    />
-  
+
+
+    @if (type() == 'text') {
+      <div class="flex flex-column gap-2">
+        <label [for]="id()" class="font-light">{{label()}}</label>
+        <input 
+            pInputText
+            [id]="id()" 
+            aria-describedby="username-help" 
+            [formControl]="control()"
+            [placeholder]="placeHolder()">
+        <small id="username-help">
+            {{descriptionLabel()}}
+        </small>
+    </div>
+    }
+    @else if (type() == 'number') {
+      <div class="flex flex-column gap-2 my-2">
+        <label [for]="id()" class="font-light">{{label()}}</label>
+        <p-inputNumber inputId="integeronly" [formControl]="control()" [id]="id()" (ngModelChange)="_globalService.updateSignal(true)" />
+      </div>
+    }
     @if (control() != undefined && control().invalid && control().touched) {
       <small class="error">{{ errorMessage() }}</small>
     }
