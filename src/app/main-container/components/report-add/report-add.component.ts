@@ -91,4 +91,8 @@ export class ReportAddComponent {
   disabledNextPage(e: boolean) {
     this.disabledPage = e;
   }
+
+  activeInputImage(e: boolean){
+    this.disabledPage = e;
+  }
 }

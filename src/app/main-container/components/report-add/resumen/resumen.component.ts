@@ -4,11 +4,14 @@ import { DividerModule } from 'primeng/divider';
 import { ImageModule } from 'primeng/image';
 import { CommonModule } from '@angular/common';
 import { IReport } from '@app/models';
+import { CarouselImagesComponent } from '@app/components/carousel-images/carousel-images.component';
+
 const PRIME_MODULES = [ButtonModule, DividerModule, ImageModule];
+
 @Component({
   selector: 'app-resumen',
   standalone: true,
-  imports: [PRIME_MODULES,CommonModule],
+  imports: [PRIME_MODULES,CommonModule,CarouselImagesComponent],
   templateUrl: './resumen.component.html',
   styleUrl: './resumen.component.scss',
 })

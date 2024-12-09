@@ -58,7 +58,7 @@
       >
         <!-- Photos -->
 
-        <app-photos (dataPhotos)="getValuePhotos($event)" class="fadein animation-duration-300"></app-photos>
+        <app-photos (dataPhotos)="getValuePhotos($event)" (activeInputImage)="activeInputImage($event)" class="fadein animation-duration-300"></app-photos>
 
         <!--  -->
         <div class="flex pt-4 justify-content-between">
@@ -73,6 +73,7 @@
             label="Siguiente"
             icon="pi pi-arrow-right"
             iconPos="right"
+            [disabled]="disabledPage"
           />
         </div>
       </ng-template>

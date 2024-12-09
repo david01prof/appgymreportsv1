@@ -1,0 +1,17 @@
+@defer (when images() != undefined) {
+
+<div class="flex gap-8 justify-content-left flex-wrap">
+    @for (item of images(); track $index) {
+        <p-image
+            [src]="item.base64"
+            alt="Image"
+            width="250"
+            height="250"
+            class="shadow-1 p-2"
+            [preview]="true" />
+        }
+</div>
+
+}@placeholder {
+    <app-spinner-loader></app-spinner-loader>
+}
