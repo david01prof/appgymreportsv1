@@ -1,9 +1,11 @@
 <p-toast />
 
 <p-fileUpload
+    name="myfile[]"
     [multiple]="true"
     (onSelect)="onSelectedFileUpload($event)"
     (onUpload)="onTemplatedUpload()"
+    url="https://www.primefaces.org/cdn/api/upload.php"
     accept=".jpg,.png">
 
     <ng-template pTemplate="header" let-files
@@ -21,39 +23,43 @@
                     [outlined]="true"
                     severity="success"
                     [disabled]="!files || files.length === 0" />
-                <p-button (onClick)="clearCallback(); base64images.set([]); filesRefresh.set([]); activeInputImage.emit(false)"
+                <p-button
+                    (onClick)="clearCallback(); base64images.set([]); filesRefresh.set([]); activeInputImage.emit(false)"
                     icon="pi pi-times" [rounded]="true" [outlined]="true"
                     severity="danger"
                     [disabled]="!files || files.length === 0" />
             </div>
         </div>
     </ng-template>
-    <ng-template pTemplate="content" let-uploadedFiles="uploadedFiles"
+    <ng-template pTemplate="content" let-files let-uploadedFiles="uploadedFiles"
         let-removeFileCallback="removeFileCallback"
         let-removeUploadedFileCallback="removeUploadedFileCallback">
 
-        @defer (when base64images().length > 0) {
+        @if(files?.length > 0) {
+            @defer (when base64images().length > 0) {
             <h5>Pendiente</h5>
             <div class="flex flex-column gap-3">
-                <div *ngFor="let file of filesRefresh(); let i = index" class="card m-0 px-6 flex flex-column border-1 surface-border align-items-center gap-3">
+                <div *ngFor="let file of filesRefresh(); let i = index"
+                    class="card m-0 px-6 flex flex-column border-1 surface-border align-items-center gap-3">
 
                     @if (base64images()[i] != undefined) {
-                        <div class="mt-2 flex justify-content-center">
-                            <img role="presentation" [alt]="file.name"
-                                [src]="base64images()[i].base64" width="100"
-                                height="auto" />
-                        </div>
-                        <span>{{ file.name }}</span>
-                        <div class="font-light text-sm">{{
-                            _registerSvc.formatSize(file.size) }}</div>
-                        <p-badge value="Pendiente" severity="warning" />
-                        <p-button icon="pi pi-times"
-                            (onClick)="onRemoveTemplatingFile($event, file, removeFileCallback, i)"
-                            [outlined]="true" [rounded]="true" severity="danger"
-                            class="mb-2" />
+                    <div class="mt-2 flex justify-content-center">
+                        <img role="presentation" [alt]="file.name"
+                            [src]="base64images()[i].base64" width="100"
+                            height="auto" />
+                    </div>
+                    <span>{{ file.name }}</span>
+                    <div class="font-light text-sm">{{
+                        _registerSvc.formatSize(file.size) }}</div>
+                    <p-badge value="Pendiente" severity="warning" />
+                    <p-button icon="pi pi-times"
+                        (onClick)="onRemoveTemplatingFile($event, file, removeFileCallback, i)"
+                        [outlined]="true" [rounded]="true" severity="danger"
+                        class="mb-2" />
                     }
                 </div>
             </div>
+            }
         }
 
         <div *ngIf="uploadedFiles?.length > 0">
