@@ -8,6 +8,7 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
+import { getAuth, provideAuth } from '@angular/fire/auth';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,8 +16,10 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes,withComponentInputBinding()),
     provideClientHydration(),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideAnimations(),
-    provideHttpClient()
+    provideHttpClient(), 
+
   ],
 };

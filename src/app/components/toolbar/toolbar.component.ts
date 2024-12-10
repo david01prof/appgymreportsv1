@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AuthStateService } from '@app/shared/data-access/auth.state.service';
 import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 
@@ -10,12 +11,15 @@ import { MenubarModule } from 'primeng/menubar';
     <div class="card">
       <p-menubar [model]="items" />
     </div>
+
+    <button (click)="logout()">Logout</button>
   `,
   styles: ``,
 })
 export class ToolbarComponent {
   
   public items: MenuItem[] | undefined;
+  private readonly _authSvc = inject(AuthStateService);
 
   ngOnInit() {
       this.items = [
@@ -35,6 +39,10 @@ export class ToolbarComponent {
               url: 'routines',
           }
       ]
+  }
+
+   logout(){
+    this._authSvc.logout();
   }
 
 }
