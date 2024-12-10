@@ -15,9 +15,10 @@ import {
   updateDoc
 } from '@angular/fire/firestore';
 import { FormArray, FormBuilder } from '@angular/forms';
+import { IRoutine, ITag } from '@app/container-routines/interfaces/iroutine';
+import { APP_CONSTANTS } from '@app/shared/constants';
 import { Observable } from 'rxjs';
-import { APP_CONSTANTS } from '../../../shared/constants';
-import { IRoutine, ITag } from '../interfaces/iroutine';
+
 
 @Injectable({
   providedIn: 'root',

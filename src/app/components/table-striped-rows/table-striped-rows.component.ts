@@ -1,18 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject, input, ViewChild } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Table, TableModule } from 'primeng/table';
-import { tap } from 'rxjs';
-import { IRoutine } from '../../features/routines/interfaces/iroutine';
-import { RoutinesService } from '../../features/routines/services/routines.service';
-import { RegistersService } from '../../features/registers/services/registers.service';
-import { IRegister } from '../../features/registers/interfaces/iregister';
+import { Component, inject, input, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { TagModule } from 'primeng/tag';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
-import { FormsModule } from '@angular/forms';
+import { Table, TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
+import { IRoutine } from '../../container-routines/interfaces/iroutine';
+import { IRegister } from '../../features/registers/interfaces/iregister';
+import { RoutinesService } from '@app/container-routines/components/cards-routines/services/routines.service';
+
 
 const PRIME_MODULES = [
   ButtonModule,

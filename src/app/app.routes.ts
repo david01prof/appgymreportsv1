@@ -2,40 +2,26 @@ import { Routes } from '@angular/router';
 import { privateGuard, publicGuard } from './core/auth.guard';
 
 export const routes: Routes = [
+  
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   {
     path: 'dashboard',
     canActivate: [privateGuard()],
-    loadComponent: () => import('./features/dashboard/dashboard.component'),
+    loadComponent: () => import('./shared/ui/layout.component').then(m => m.LayoutComponent),
+    loadChildren: () => import('./container-dashboard/dashboard.routes').then(m => m.routesDashboard),
   },
   {
     path: 'routines',
     canActivate: [privateGuard()],
-    loadComponent: () => import('./features/routines/routines.component'),
+    loadComponent: () => import('./shared/ui/layout.component').then(m => m.LayoutComponent),
+    loadChildren: () => import('./container-routines/routines.routes').then(m => m.routinesRoutes)
   },
   {
     path: 'reports',
     canActivate: [privateGuard()],
-    loadComponent: () =>
-      import('./main-container/main-container.component').then(
-        (m) => m.MainContainerComponent,
-      ),
-  },
-  {
-    path: 'reports/:id',
-    canActivate: [privateGuard()],
-    loadComponent: () =>
-      import('./main-container/components/report-detail/report-detail.component').then(
-        (m) => m.ReportDetailComponent,
-      ),
-  },
-  {
-    path: 'add-report',
-    canActivate: [privateGuard()],
-    loadComponent: () =>
-      import(
-        './main-container/components/report-add/report-add.component'
-      ).then((m) => m.ReportAddComponent),
+    loadComponent: () => import('./shared/ui/layout.component').then(m => m.LayoutComponent),
+    loadChildren: () =>
+      import('./container-reports/reports.routes').then(m => m.routesReports)
   },
   {
     path: 'auth',

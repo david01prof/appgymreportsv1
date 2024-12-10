@@ -3,8 +3,8 @@ import { Component, inject, input, output } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { TagModule } from 'primeng/tag';
 import { NewCardRoutineComponent } from './new-card-routine/new-card-routine.component';
-import { IRoutine } from '../interfaces/iroutine';
-import { RoutinesService } from '../services/routines.service';
+import { IRoutine } from '@app/container-routines/interfaces/iroutine';
+import { RoutinesService } from './services/routines.service';
 
 
 const PRIME_MODULES = [CardModule, TagModule];

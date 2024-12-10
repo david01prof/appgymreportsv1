@@ -1,0 +1,48 @@
+<app-breadcrumb
+    [itemsLabels]="itemsLabels"
+    urlActive="Home"></app-breadcrumb>
+
+<div class="card">
+    <p-messages [(value)]="messages!"    [showTransitionOptions]="'500ms'" 
+    [hideTransitionOptions]="'500ms'"  [enableService]="false" />
+</div>
+
+<!-- Trio de cards del top del body -->
+<div class="block">
+    <app-cards-top [productRoutines]="dataRoutine" [productReports]="dataRegister"></app-cards-top>
+</div>
+
+<!-- Cards del medio del body -->
+<div class="block mt-7 ">
+    <app-cards-middel [routines]="dataRoutine" [reports]="dataRegister"></app-cards-middel>
+</div>
+
+<!-- Cards finales del body -->
+ <div class="block">
+     <!-- <app-cards-bottom [productRegisters]="dataRegister" [productRoutines]="dataRoutine"></app-cards-bottom> -->
+ </div>
+
+
+ <br>
+ footer 
+ <br>
+
+<!-- <p-button (onClick)="showDialog()" label="Show" /> -->
+<p-dialog header="Bienvenido David" [modal]="true" [(visible)]="visible"
+    [style]="{ width: '25rem' }">
+    <span class="p-text-secondary block mb-5">Introduce tus datos y tu
+        objetivo</span>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="username" class="font-semibold w-6rem">Altura</label>
+        <input pInputText id="username" class="flex-auto" autocomplete="off" />
+    </div>
+    <div class="flex align-items-center gap-3 mb-5">
+        <label for="email" class="font-semibold w-6rem">Objetivo de peso</label>
+        <input pInputText id="email" class="flex-auto" autocomplete="off" />
+    </div>
+    <div class="flex justify-content-end gap-2">
+        <p-button label="Cancelar" severity="secondary"
+            (onClick)="visible = false" />
+        <p-button label="Guardar" (onClick)="visible = false" />
+    </div>
+</p-dialog>

@@ -5,7 +5,7 @@ import {
   MeasurementForm,
   PhotosForm,
   ReportForm,
-} from '@app/main-container/components/interfaces';
+} from '@app/container-reports/components/interfaces';
 import { emptyReport } from '@app/models';
 import { MessageService } from 'primeng/api';
 import { BadgeModule } from 'primeng/badge';

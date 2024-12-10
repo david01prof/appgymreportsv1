@@ -1,17 +1,9 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  DestroyRef,
-  inject,
-  OnInit
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { ReactiveFormsModule, FormsModule, FormControl, FormGroup } from '@angular/forms';
+import { BreadcrumbComponent } from '@app/components/breadcrumb/breadcrumb.component';
+
 import { MenuItem } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
@@ -24,13 +16,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SidebarModule } from 'primeng/sidebar';
 import { TagModule } from 'primeng/tag';
 import { tap } from 'rxjs';
-import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
-import { IFilter } from '../../container-routines/interfaces/ifilter';
-import { IRoutine } from '../../container-routines/interfaces/iroutine';
-import { CardsRoutinesComponent } from '@app/container-routines/components/cards-routines/cards-routines.component';
-import { DialogDetailComponent } from '@app/container-routines/components/cards-routines/dialog-detail/dialog-detail.component';
-import { RoutinesService } from '@app/container-routines/components/cards-routines/services/routines.service';
-
+import { CardsRoutinesComponent } from './components/cards-routines/cards-routines.component';
+import { DialogDetailComponent } from './components/cards-routines/dialog-detail/dialog-detail.component';
+import { RoutinesService } from './components/cards-routines/services/routines.service';
+import { IFilter } from './interfaces/ifilter';
+import { IRoutine } from './interfaces/iroutine';
 
 const PRIME_MODULES = [
   ButtonModule,
@@ -45,7 +35,7 @@ const PRIME_MODULES = [
 ];
 
 @Component({
-  selector: 'app-routines',
+  selector: 'app-container-routines',
   standalone: true,
   imports: [
     CommonModule,
@@ -57,10 +47,11 @@ const PRIME_MODULES = [
     FormsModule,
     CalendarModule
   ],
-  templateUrl: './routines.component.html',
-  styleUrl: './routines.component.scss',
+  templateUrl: './container-routines.component.html',
+  styleUrl: './container-routines.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export default class RoutinesComponent implements OnInit {
+export class ContainerRoutinesComponent {
   public data: IRoutine[] = [];
   public chargeComponent: boolean = false;
   public item!: IRoutine;

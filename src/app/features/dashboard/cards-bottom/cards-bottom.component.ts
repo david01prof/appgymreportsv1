@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
 import { TableStripedRowsComponent } from '../../../components/table-striped-rows/table-striped-rows.component';
 import { CardModule } from 'primeng/card';
-import { IRoutine } from '../../routines/interfaces/iroutine';
+import { IRoutine } from '../../../container-routines/interfaces/iroutine';
 import { IRegister } from '../../registers/interfaces/iregister';
 
 @Component({

@@ -7,14 +7,14 @@ import { CommonModule } from '@angular/common';
 import { SpinnerLoaderComponent } from '../components/spinner-loader/spinner-loader.component';
 
 @Component({
-  selector: 'app-main-container',
+  selector: 'app-container-reports',
   standalone: true,
   imports: [CommonModule,ReportCardComponent,RouterLink,CardModule,SpinnerLoaderComponent],
-  templateUrl: './main-container.component.html',
-  styleUrl: './main-container.component.scss',
+  templateUrl: './container-reports.component.html',
+  styleUrl: './container-reports.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MainContainerComponent {
+export class ContainerReportsComponent {
 
   readonly store = inject(GlobalStore);
 

@@ -6,7 +6,7 @@ import { SpeedDialComponent } from './components/speed-dial/speed-dial.component
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,ToolbarComponent,SpeedDialComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

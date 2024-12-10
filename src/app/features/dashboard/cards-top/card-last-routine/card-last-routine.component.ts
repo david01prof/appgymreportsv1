@@ -3,7 +3,7 @@ import { Component, inject, input } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { APP_CONSTANTS } from '../../../../shared/constants';
-import { IRoutine } from '../../../routines/interfaces/iroutine';
+import { IRoutine } from '../../../../container-routines/interfaces/iroutine';
 import { DashboardService } from '../../services/dashboard.service';
 import { ApexCharLineLabelsComponent } from '../../../../components/apex-char-line-labels/apex-char-line-labels.component';
 

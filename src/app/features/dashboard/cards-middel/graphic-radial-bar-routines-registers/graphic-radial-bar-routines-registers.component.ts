@@ -2,7 +2,7 @@ import { AfterViewInit, Component, input } from '@angular/core';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { CardModule } from 'primeng/card';
 import { IRegister } from '../../../registers/interfaces/iregister';
-import { IRoutine } from '../../../routines/interfaces/iroutine';
+import { IRoutine } from '../../../../container-routines/interfaces/iroutine';
 
 @Component({
   selector: 'app-graphic-radial-bar-routines-registers',

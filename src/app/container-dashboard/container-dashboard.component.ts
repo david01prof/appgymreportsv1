@@ -1,6 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BreadcrumbComponent } from '@app/components/breadcrumb/breadcrumb.component';
+import { CardsBottomComponent } from '@app/features/dashboard/cards-bottom/cards-bottom.component';
+import { CardsMiddelComponent } from '@app/features/dashboard/cards-middel/cards-middel.component';
+import { CardsTopComponent } from '@app/features/dashboard/cards-top/cards-top.component';
+import { DashboardService } from '@app/features/dashboard/services/dashboard.service';
+import { IRoutine } from '@app/container-routines/interfaces/iroutine';
+import { IRegister } from '@app/reports/interfaces/iregister';
+import { RegistersService } from '@app/reports/services/registers.service';
 import { AnimateOnScrollModule } from 'primeng/animateonscroll';
 import { MenuItem, Message } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -8,17 +16,8 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
-import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
-import { CardsBottomComponent } from './cards-bottom/cards-bottom.component';
-import { CardsMiddelComponent } from './cards-middel/cards-middel.component';
-import { CardsTopComponent } from './cards-top/cards-top.component';
-import { DashboardService } from './services/dashboard.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { tap } from 'rxjs';
-import { IRegister } from '../registers/interfaces/iregister';
-import { RegistersService } from '../registers/services/registers.service';
-import { IRoutine } from '../../container-routines/interfaces/iroutine';
-import { RoutinesService } from '../routines/services/routines.service';
+import { RoutinesService } from '@app/container-routines/components/cards-routines/services/routines.service';
 
 const PRIME_MODULES = [
   DialogModule,
@@ -29,7 +28,7 @@ const PRIME_MODULES = [
 ];
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-container-dashboard',
   standalone: true,
   imports: [
     PRIME_MODULES,
@@ -40,10 +39,12 @@ const PRIME_MODULES = [
     CardsBottomComponent,
     AnimateOnScrollModule,
   ],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss',
+  templateUrl: './container-dashboard.component.html',
+  styleUrl: './container-dashboard.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export default class DashboardComponent {
+export class ContainerDashboardComponent {
+
   public date = new Date();
   public currentUrl: string = '';
   public visible: boolean = false;
@@ -57,8 +58,6 @@ export default class DashboardComponent {
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _routineSvc = inject(RoutinesService);
   private readonly _registerSvc = inject(RegistersService);
-
-  constructor(private route: Router) {}
 
   ngOnInit(): void {
     this.itemsLabels = this._dashboardSvc.getBreadcrumbLabels();
@@ -76,8 +75,7 @@ export default class DashboardComponent {
   }
 
   public getAllRoutines() {
-    this._routineSvc
-      .getAllRoutines()
+    this._routineSvc.getAllRoutines()
       .pipe(
         takeUntilDestroyed(this._destroyRef),
         tap((routines: IRoutine[]) => (this.dataRoutine = [...routines]))

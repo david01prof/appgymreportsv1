@@ -4,7 +4,7 @@ import { GraphicLineGradientComponent } from './graphic-line-gradient/graphic-li
 import { GraphicCirculeTagRoutinesComponent } from './graphic-circule-tag-routines/graphic-circule-tag-routines.component';
 import { GraphicRadialBarRoutinesRegistersComponent } from './graphic-radial-bar-routines-registers/graphic-radial-bar-routines-registers.component';
 import { IRegister } from '../../registers/interfaces/iregister';
-import { IRoutine } from '../../routines/interfaces/iroutine';
+import { IRoutine } from '../../../container-routines/interfaces/iroutine';
 
 @Component({
   selector: 'app-cards-middel',

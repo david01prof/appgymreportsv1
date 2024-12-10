@@ -3,7 +3,7 @@ import { CardLastReportesComponent } from './card-last-reportes/card-last-report
 import { CardLastRoutineComponent } from './card-last-routine/card-last-routine.component';
 import { CardObjetiveWeightComponent } from './card-objetive-weight/card-objetive-weight.component';
 import { CommonModule } from '@angular/common';
-import { IRoutine } from '../../routines/interfaces/iroutine';
+import { IRoutine } from '../../../container-routines/interfaces/iroutine';
 import { IRegister } from '../../registers/interfaces/iregister';
 
 @Component({

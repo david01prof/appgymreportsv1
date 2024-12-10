@@ -16,12 +16,12 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DeleteRoutineDialog } from '../delete-routine/delete-routine-dialog';
-import { IRoutine, ITag } from '../../interfaces/iroutine';
-import { RoutinesService } from '../../services/routines.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { TagModule } from 'primeng/tag';
 import { CheckboxModule } from 'primeng/checkbox';
 import { Timestamp } from '@angular/fire/firestore';
+import { IRoutine, ITag } from '@app/container-routines/interfaces/iroutine';
+import { RoutinesService } from '../services/routines.service';
 
 const PRIME_MODULES = [
   DialogModule,

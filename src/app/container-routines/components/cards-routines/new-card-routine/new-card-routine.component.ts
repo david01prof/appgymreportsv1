@@ -4,9 +4,9 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
-import { IRoutine } from '../../interfaces/iroutine';
 import { NewRoutineComponent } from './new-routine/new-routine.component';
-import { RoutinesService } from '../../services/routines.service';
+import { IRoutine } from '@app/container-routines/interfaces/iroutine';
+import { RoutinesService } from '../services/routines.service';
 
 const PRIME_MODULES = [CardModule, DialogModule, InputTextModule];
 @Component({
