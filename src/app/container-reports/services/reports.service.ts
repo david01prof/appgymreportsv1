@@ -15,10 +15,7 @@ export class ReportsService {
 
   private readonly _firestore = inject(Firestore);
   private readonly _reportCollection = collection(this._firestore, APP_CONSTANTS.COLLECTION_NAME_REGISTERS);
-  
-  constructor(
-    private config: PrimeNGConfig
-  ) {}
+  private readonly config = inject(PrimeNGConfig);
 
   public getAllReports() : Observable<IReport[]>{
     const queryFn = query(this._reportCollection, orderBy('created', 'desc'));

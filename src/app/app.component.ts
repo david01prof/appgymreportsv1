@@ -1,4 +1,4 @@
-import { Component, HostListener, Renderer2 } from '@angular/core';
+import { Component, HostListener, inject, Renderer2 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -9,7 +9,8 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  constructor(private renderer: Renderer2) {}
+
+  private readonly renderer = inject(Renderer2);
 
   @HostListener('window:click', ['$event'])
   createRipple(event: MouseEvent): void {

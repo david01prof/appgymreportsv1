@@ -82,8 +82,6 @@ export class RoutinesService {
 
   // OTHERS METHODS
 
-  constructor(private fb: FormBuilder) {}
-
   public getColorsTag(): ITag[] {
     return [
       { name: 'Azul', code: 'primary' },

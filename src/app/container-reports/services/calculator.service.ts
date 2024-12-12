@@ -27,8 +27,6 @@ export class CalculatorService {
 
   private dataSQLPGC: number[] = [23.2, 18.3, 20.4, 5.4, 8.9];
 
-  constructor() {}
-
   public getAllMeasurements(): Observable<IMeasurement[]> {
     const queryFn = query(
       this._measurementCollection,

@@ -56,11 +56,10 @@ export class DeleteRoutineDialog {
   isVisible = output<boolean>()
 
   private readonly _routineSvc = inject(RoutinesService);
-
-  constructor(private confirmationService: ConfirmationService){}
+  private readonly _confirmationSvc = inject(ConfirmationService);
 
   confirm1(event: Event) {
-    this.confirmationService.confirm({
+    this._confirmationSvc.confirm({
       target: event.target as EventTarget,
       message: 'Quieres eliminar esta rutina?',
       header: 'Confirmacion',

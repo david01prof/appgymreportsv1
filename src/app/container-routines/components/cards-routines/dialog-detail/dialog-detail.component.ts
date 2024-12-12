@@ -63,8 +63,9 @@ export class DialogDetailComponent {
   public visible: boolean = true;
 
   public readonly _routineSvc = inject(RoutinesService);
+  private readonly fb = inject(FormBuilder);
 
-  constructor(private fb: FormBuilder) {
+  constructor() {
     this.colorsTag = this._routineSvc.getColorsTag();
   }
 

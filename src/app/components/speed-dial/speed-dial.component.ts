@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { SpeedDialModule } from 'primeng/speeddial';
@@ -40,9 +40,10 @@ import { SpeedDialModule } from 'primeng/speeddial';
   `,
 })
 export class SpeedDialComponent {
-  leftTooltipItems: MenuItem[] = [];
 
-  constructor(private route: Router) {}
+  public leftTooltipItems: MenuItem[] = [];
+
+  private readonly _route = inject(Router);
 
   ngOnInit() {
     this.leftTooltipItems = [
@@ -53,7 +54,7 @@ export class SpeedDialComponent {
         },
         icon: 'pi pi-sign-out',
         command: () => {
-          this.route.navigate(['/login']);
+          this._route.navigate(['/login']);
         },
       },
       {

@@ -62,8 +62,7 @@ export class NewRoutineComponent {
   public checked = new FormControl(false);
 
   private readonly _routineSvc = inject(RoutinesService);
-
-  constructor(private fb: FormBuilder) {}
+  private readonly fb = inject(FormBuilder);
 
   ngOnInit(): void {
 

@@ -7,8 +7,6 @@ import { collection, Firestore, getDocs, limit, orderBy, query } from '@angular/
 export class DashboardService {
 
   private readonly _firestore = inject(Firestore);
-  
-  constructor() { }
 
   public getBreadcrumbLabels() {
     return [{ label: 'Home' }];
