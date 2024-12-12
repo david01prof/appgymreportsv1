@@ -1,11 +1,12 @@
 import { Component, HostListener, inject, Renderer2 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import SpinnerComponent from './components/spinner/spinner.component';
+import { SpeedDialComponent } from "./components/speed-dial/speed-dial.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,SpinnerComponent],
+  imports: [RouterOutlet, SpinnerComponent, SpeedDialComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

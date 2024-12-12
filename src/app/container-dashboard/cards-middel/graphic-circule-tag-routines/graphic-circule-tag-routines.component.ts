@@ -25,6 +25,9 @@ export class GraphicCirculeTagRoutinesComponent implements OnChanges {
 
   ngOnChanges(){
 
+    console.log(this.routines());
+    
+
     this.calculateTagsRoutines();
     this.chartOptions = {
       series: this.series, // Valores para cada sección del donut

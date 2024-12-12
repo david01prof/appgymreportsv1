@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BreadcrumbComponent } from '@app/components/breadcrumb/breadcrumb.component';
 import { DashboardService } from '@app/container-dashboard/services/dashboard.service';
-import { ReportsService } from '@app/container-reports/services/reports.service';
 import { RoutinesService } from '@app/container-routines/components/cards-routines/services/routines.service';
 import { IReport } from '@app/models';
 import { IRoutine } from '@app/models/iroutine';
@@ -18,6 +17,7 @@ import { tap } from 'rxjs';
 import { CardsBottomComponent } from './cards-bottom/cards-bottom.component';
 import { CardsMiddelComponent } from './cards-middel/cards-middel.component';
 import { CardsTopComponent } from './cards-top/cards-top.component';
+import { ReportsService } from '@app/container-reports/services/reports.service';
 
 const PRIME_MODULES = [
   DialogModule,
@@ -51,8 +51,8 @@ export class ContainerDashboardComponent {
   public itemsLabels: MenuItem[] = [];
   public messages: Message[] | undefined;
   public isVisible = false;
-  public dataRoutine: IRoutine[] = [];
-  public dataReports: IReport[] = [];
+  public dataRoutine = signal<IRoutine[]>([]);
+  public dataReports = signal<IReport[]>([]);
 
   private readonly _dashboardSvc = inject(DashboardService);
   private readonly _destroyRef = inject(DestroyRef);
@@ -78,7 +78,7 @@ export class ContainerDashboardComponent {
     this._routineSvc.getAllRoutines()
       .pipe(
         takeUntilDestroyed(this._destroyRef),
-        tap((routines: IRoutine[]) => (this.dataRoutine = [...routines]))
+        tap((routines: IRoutine[]) => (this.dataRoutine.set([...routines])))
       )
       .subscribe();
   }
@@ -88,7 +88,7 @@ export class ContainerDashboardComponent {
       .getAllReports()
       .pipe(
         takeUntilDestroyed(this._destroyRef),
-        tap((reports: IReport[]) => (this.dataReports = [...reports]))
+        tap((reports: IReport[]) => (this.dataReports.set([...reports])))
       )
       .subscribe();
   }

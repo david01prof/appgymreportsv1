@@ -9,12 +9,12 @@
 
 <!-- Trio de cards del top del body -->
 <div class="block">
-    <app-cards-top [productRoutines]="dataRoutine" [productReports]="dataReports"></app-cards-top>
+    <app-cards-top [productRoutines]="dataRoutine()" [productReports]="dataReports()"></app-cards-top>
 </div>
 
 <!-- Cards del medio del body -->
 <div class="block mt-7 ">
-    <app-cards-middel [routines]="dataRoutine" [reports]="dataReports"></app-cards-middel>
+    <app-cards-middel [routines]="dataRoutine()" [reports]="dataReports()"></app-cards-middel>
 </div>
 
 <!-- Cards finales del body -->
