@@ -17,7 +17,7 @@
       </div>
     </div> -->
 
-    <p-card class="mb-3 custom-card" [routerLink]="['/reports/' + reportLocal.id]">
+    <p-card class="mb-3 custom-card" [routerLink]="[{  outlets: { content: [reportLocal.id] }} ]">
 
       <div class="flex justify-content-center">
         <img ngSrc="assets/images/registros.png" width="90"  height="90" priority/>

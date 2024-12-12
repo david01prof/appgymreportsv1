@@ -1,7 +1,5 @@
 import { Component, HostListener, Renderer2 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { SpeedDialComponent } from './components/speed-dial/speed-dial.component';
 
 @Component({
   selector: 'app-root',

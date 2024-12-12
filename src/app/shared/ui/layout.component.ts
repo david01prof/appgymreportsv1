@@ -1,26 +1,21 @@
 import { Component } from "@angular/core";
-import { RouterModule, RouterOutlet } from "@angular/router";
-import { SpeedDialComponent } from "@app/components/speed-dial/speed-dial.component";
-import { ToolbarComponent } from "@app/components/toolbar/toolbar.component";
+import { RouterOutlet } from "@angular/router";
+import { ToolbarComponent } from "../../components/toolbar/toolbar.component";
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [ToolbarComponent,RouterOutlet,SpeedDialComponent],
+  imports: [RouterOutlet, ToolbarComponent],
   template: `
-    <section>
-      <app-toolbar></app-toolbar>
-    </section>
-
-    <router-outlet />
-
-    <section>
-        <app-speed-dial></app-speed-dial>
-    </section>
-  
+    <app-toolbar></app-toolbar>
+    <router-outlet name="content"></router-outlet>
   `,
 })
 
 export class LayoutComponent {
+
+  ngOninit() {
+    console.log('layout');
+  }
 
 }

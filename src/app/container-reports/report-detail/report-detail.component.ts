@@ -1,25 +1,22 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   inject,
   input,
-  signal,
+  signal
 } from '@angular/core';
-import { ResumenComponent } from '../report-add/resumen/resumen.component';
 import { emptyReport, IReport } from '@app/models';
 import { GlobalStore } from '@app/store/global.store';
 import { CardModule } from 'primeng/card';
+import { ResumenCardComponent } from '../components/resumen-card/resumen-card.component';
 
 @Component({
   selector: 'app-report-detail',
   standalone: true,
-  imports: [ResumenComponent, CardModule],
+  imports: [ResumenCardComponent, CardModule],
   template: `
     @defer (when reportSignal() != undefined) {
-    <p-card class="custom-card fadein animation-duration-500">
-      <app-resumen [report]="reportSignal()" [isDetail]="true"></app-resumen>
-    </p-card>
+      <app-resumen-card [report]="reportSignal()" [isDetail]="true" class="custom-card"></app-resumen-card>
 
     }
   `,

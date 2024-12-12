@@ -18,8 +18,7 @@ import { tap } from 'rxjs';
 import { IRegister } from '../registers/interfaces/iregister';
 import { RegistersService } from '../registers/services/registers.service';
 import { IRoutine } from '../../container-routines/interfaces/iroutine';
-import { RoutinesService } from '../routines/services/routines.service';
-
+import { RoutinesService } from '@app/container-routines/components/cards-routines/services/routines.service';
 const PRIME_MODULES = [
   DialogModule,
   ButtonModule,

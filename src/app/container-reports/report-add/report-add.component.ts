@@ -15,8 +15,8 @@ import { CardModule } from 'primeng/card';
 import { StepperModule } from 'primeng/stepper';
 import { CalculatorPgcComponent } from './calculator-pgc/calculator-pgc.component';
 import { PhotosComponent } from './photos/photos.component';
-import { ResumenComponent } from './resumen/resumen.component';
 import { GlobalService } from '@app/services/global.service';
+import { ResumenCardComponent } from '../components/resumen-card/resumen-card.component';
 
 const PRIME_MODULES = [CardModule, StepperModule, ButtonModule];
 
@@ -28,7 +28,7 @@ const PRIME_MODULES = [CardModule, StepperModule, ButtonModule];
     PRIME_MODULES,
     CalculatorPgcComponent,
     PhotosComponent,
-    ResumenComponent,
+    ResumenCardComponent,
     RouterLink,
   ],
   templateUrl: './report-add.component.html',
@@ -36,6 +36,7 @@ const PRIME_MODULES = [CardModule, StepperModule, ButtonModule];
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReportAddComponent {
+  
   public readonly store = inject(GlobalStore);
 
   public reportToEdit = computed(() => emptyReport);
