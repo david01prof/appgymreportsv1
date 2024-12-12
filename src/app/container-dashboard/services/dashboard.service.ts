@@ -1,5 +1,4 @@
-import { isPlatformBrowser } from '@angular/common';
-import { Inject, inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { collection, Firestore, getDocs, limit, orderBy, query } from '@angular/fire/firestore';
 
 @Injectable({

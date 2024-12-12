@@ -2,10 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BreadcrumbComponent } from '@app/components/breadcrumb/breadcrumb.component';
-import { CardsBottomComponent } from '@app/features/dashboard/cards-bottom/cards-bottom.component';
-import { CardsMiddelComponent } from '@app/features/dashboard/cards-middel/cards-middel.component';
-import { CardsTopComponent } from '@app/features/dashboard/cards-top/cards-top.component';
-import { DashboardService } from '@app/features/dashboard/services/dashboard.service';
+import { DashboardService } from '@app/container-dashboard/services/dashboard.service';
 import { IRoutine } from '@app/container-routines/interfaces/iroutine';
 import { IRegister } from '@app/reports/interfaces/iregister';
 import { RegistersService } from '@app/reports/services/registers.service';
@@ -18,6 +15,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
 import { tap } from 'rxjs';
 import { RoutinesService } from '@app/container-routines/components/cards-routines/services/routines.service';
+import { CardsBottomComponent } from './cards-bottom/cards-bottom.component';
+import { CardsMiddelComponent } from './cards-middel/cards-middel.component';
+import { CardsTopComponent } from './cards-top/cards-top.component';
 
 const PRIME_MODULES = [
   DialogModule,

@@ -1,8 +1,9 @@
 import { Component, input } from '@angular/core';
-import { TableStripedRowsComponent } from '../../../components/table-striped-rows/table-striped-rows.component';
+import { TableStripedRowsComponent } from '@app/components/table-striped-rows/table-striped-rows.component';
+import { IRoutine } from '@app/container-routines/interfaces/iroutine';
+import { IRegister } from '@app/reports/interfaces/iregister';
 import { CardModule } from 'primeng/card';
-import { IRoutine } from '../../../container-routines/interfaces/iroutine';
-import { IRegister } from '../../registers/interfaces/iregister';
+
 
 @Component({
   selector: 'app-cards-bottom',

@@ -2,10 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { APP_CONSTANTS } from '../../../../shared/constants';
-import { IRegister } from '../../../registers/interfaces/iregister';
-import { DashboardService } from '../../services/dashboard.service';
-import { ApexCharLineLabelsComponent } from '../../../../components/apex-char-line-labels/apex-char-line-labels.component';
+import { ApexCharLineLabelsComponent } from '@app/components/apex-char-line-labels/apex-char-line-labels.component';
+import { DashboardService } from '@app/container-dashboard/services/dashboard.service';
+import { IRegister } from '@app/reports/interfaces/iregister';
 
 @Component({
   selector: 'app-card-last-reportes',

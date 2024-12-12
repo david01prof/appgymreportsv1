@@ -2,10 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { APP_CONSTANTS } from '../../../../shared/constants';
-import { IRoutine } from '../../../../container-routines/interfaces/iroutine';
-import { DashboardService } from '../../services/dashboard.service';
-import { ApexCharLineLabelsComponent } from '../../../../components/apex-char-line-labels/apex-char-line-labels.component';
+import { ApexCharLineLabelsComponent } from '@app/components/apex-char-line-labels/apex-char-line-labels.component';
+import { IRoutine } from '@app/container-routines/interfaces/iroutine';
 
 @Component({
   selector: 'app-card-last-routine',
