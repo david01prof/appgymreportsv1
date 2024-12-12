@@ -29,8 +29,6 @@ export const GlobalStore = signalStore(
   withEntities<IReport>(),
   withMethods((store, _reportSvc = inject(ReportsService)) => ({
     getReport(id: number) {
-      console.log(id);
-      
       return store.reports().find((rep) => rep.id === id);
     },
 

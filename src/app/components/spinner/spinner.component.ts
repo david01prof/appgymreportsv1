@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { SpinnerService } from '@app/services';
+import { SpinnerService } from '@app/services/spinner.service';
+
 
 @Component({
   selector: 'app-spinner',
@@ -16,6 +17,7 @@ import { SpinnerService } from '@app/services';
     }`,
 })
 export default class SpinnerComponent {
+
   private readonly spinnerSvc = inject(SpinnerService);
   isLoading = this.spinnerSvc.isLoading;
 }
