@@ -5,7 +5,7 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { NewRoutineComponent } from './new-routine/new-routine.component';
-import { IRoutine } from '@app/container-routines/interfaces/iroutine';
+import { IRoutine } from '@app/models/iroutine';
 import { RoutinesService } from '../services/routines.service';
 
 const PRIME_MODULES = [CardModule, DialogModule, InputTextModule];

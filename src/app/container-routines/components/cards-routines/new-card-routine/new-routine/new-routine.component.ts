@@ -24,7 +24,7 @@ import { TagModule } from 'primeng/tag';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { Timestamp } from 'firebase/firestore';
-import { IRoutine, ITag } from '@app/container-routines/interfaces/iroutine';
+import { IRoutine, ITag } from '@app/models/iroutine';
 import { RoutinesService } from '../../services/routines.service';
 
 const PRIME_MODULES = [

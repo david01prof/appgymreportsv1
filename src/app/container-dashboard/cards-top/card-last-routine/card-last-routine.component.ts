@@ -3,7 +3,7 @@ import { Component, inject, input } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { ApexCharLineLabelsComponent } from '@app/components/apex-char-line-labels/apex-char-line-labels.component';
-import { IRoutine } from '@app/container-routines/interfaces/iroutine';
+import { IRoutine } from '@app/models/iroutine';
 
 @Component({
   selector: 'app-card-last-routine',

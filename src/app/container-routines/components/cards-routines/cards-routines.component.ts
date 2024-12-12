@@ -3,7 +3,7 @@ import { Component, inject, input, output } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { TagModule } from 'primeng/tag';
 import { NewCardRoutineComponent } from './new-card-routine/new-card-routine.component';
-import { IRoutine } from '@app/container-routines/interfaces/iroutine';
+import { IRoutine } from '@app/models/iroutine';
 import { RoutinesService } from './services/routines.service';
 
 

@@ -19,8 +19,8 @@ import { tap } from 'rxjs';
 import { CardsRoutinesComponent } from './components/cards-routines/cards-routines.component';
 import { DialogDetailComponent } from './components/cards-routines/dialog-detail/dialog-detail.component';
 import { RoutinesService } from './components/cards-routines/services/routines.service';
-import { IFilter } from './interfaces/ifilter';
-import { IRoutine } from './interfaces/iroutine';
+import { IFilter } from '../models/ifilter';
+import { IRoutine } from '../models/iroutine';
 
 const PRIME_MODULES = [
   ButtonModule,

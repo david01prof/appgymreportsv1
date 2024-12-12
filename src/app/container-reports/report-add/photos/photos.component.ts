@@ -6,8 +6,8 @@ import {
   output,
   signal,
 } from '@angular/core';
+import { ReportsService } from '@app/container-reports/services/reports.service';
 import { IPhotos } from '@app/models';
-import { RegistersService } from '@app/reports/services/registers.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
@@ -33,7 +33,7 @@ const PRIME_MODULES = [
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PhotosComponent {
-  public readonly _registerSvc = inject(RegistersService);
+  public readonly _reportSvc = inject(ReportsService);
   public readonly _messageSvc = inject(MessageService);
 
   public dataPhotos = output<IPhotos[]>();

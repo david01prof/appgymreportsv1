@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, output, Signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CustomInputComponent } from '@app/components/custom-input/custom-input.component';
-import { MeasurementForm } from '@app/container-reports/interfaces';
-import { emptyReport, IMeasurement } from '@app/models';
+import { emptyReport, IMeasurement, MeasurementForm } from '@app/models';
 import { GlobalStore } from '@app/store/global.store';
 import { ButtonModule } from 'primeng/button';
 

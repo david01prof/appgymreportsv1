@@ -1,10 +1,9 @@
 import { Component, input } from '@angular/core';
+import { IReport, IRoutine } from '@app/models';
 import { CardModule } from 'primeng/card';
-import { GraphicLineGradientComponent } from './graphic-line-gradient/graphic-line-gradient.component';
 import { GraphicCirculeTagRoutinesComponent } from './graphic-circule-tag-routines/graphic-circule-tag-routines.component';
+import { GraphicLineGradientComponent } from './graphic-line-gradient/graphic-line-gradient.component';
 import { GraphicRadialBarRoutinesRegistersComponent } from './graphic-radial-bar-routines-registers/graphic-radial-bar-routines-registers.component';
-import { IRegister } from '../../registers/interfaces/iregister';
-import { IRoutine } from '../../../container-routines/interfaces/iroutine';
 
 @Component({
   selector: 'app-cards-middel',
@@ -34,5 +33,5 @@ import { IRoutine } from '../../../container-routines/interfaces/iroutine';
 })
 export class CardsMiddelComponent {
   routines = input.required<IRoutine[]>();
-  reports = input.required<IRegister[]>();
+  reports = input.required<IReport[]>();
 }

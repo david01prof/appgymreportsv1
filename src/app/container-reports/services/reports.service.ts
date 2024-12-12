@@ -1,38 +1,39 @@
 import { inject, Injectable } from '@angular/core';
 import { addDoc, collection, collectionData, deleteDoc, doc, DocumentData, DocumentReference, Firestore, orderBy, query } from '@angular/fire/firestore';
+import { IReport } from '@app/models';
+import { APP_CONSTANTS } from '@app/shared/constants';
 import { PrimeNGConfig } from 'primeng/api';
 import { Observable } from 'rxjs';
-import { APP_CONSTANTS } from '../../../shared/constants';
-import { IRegister } from '../interfaces/iregister';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class RegistersService {
+export class ReportsService {
 
-  public dataRegisters: IRegister[] = [];
+  public dataReports: IReport[] = [];
 
   private readonly _firestore = inject(Firestore);
-  private readonly _registerCollection = collection(this._firestore, APP_CONSTANTS.COLLECTION_NAME_REGISTERS);
+  private readonly _reportCollection = collection(this._firestore, APP_CONSTANTS.COLLECTION_NAME_REGISTERS);
   
   constructor(
     private config: PrimeNGConfig
   ) {}
 
-  public getAllRegisters() : Observable<IRegister[]>{
-    const queryFn = query(this._registerCollection, orderBy('created', 'desc'));
-    return collectionData(queryFn, {idField: 'id'}) as Observable<IRegister[]>
+  public getAllReports() : Observable<IReport[]>{
+    const queryFn = query(this._reportCollection, orderBy('created', 'desc'));
+    return collectionData(queryFn, {idField: 'id'}) as Observable<IReport[]>
   }
   
-  public newRegister( register: Partial<IRegister>): Promise<DocumentReference<DocumentData, DocumentData>>  {
-    return addDoc(this._registerCollection,{
+  public newReport( report: Partial<IReport>): Promise<DocumentReference<DocumentData, DocumentData>>  {
+    return addDoc(this._reportCollection,{
       created: Date.now(),
       updated: Date.now(),
-      ...register
+      ...report
     })
   }
 
-  public deleteRegister(id: string) : void{
+  public deleteReport(id: string) : void{
     const docRef = this._getDocRef(id);
     deleteDoc(docRef);
   }
@@ -45,11 +46,11 @@ export class RegistersService {
     return [{ label: 'Reportes' }];
   }
 
-  public safeRegisters(registers: IRegister[]) {
-    this.dataRegisters = registers;
+  public safeReports(reports: IReport[]) {
+    this.dataReports = reports;
   }
   public getSafeData() {
-    return this.dataRegisters;
+    return this.dataReports;
   }
 
   formatSize(bytes: any) {

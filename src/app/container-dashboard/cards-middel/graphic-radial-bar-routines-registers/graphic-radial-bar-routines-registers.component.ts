@@ -1,9 +1,7 @@
-import { AfterViewInit, Component, input } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { IReport, IRoutine } from '@app/models';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { CardModule } from 'primeng/card';
-import { IRegister } from '../../../registers/interfaces/iregister';
-import { IRoutine } from '../../../../container-routines/interfaces/iroutine';
-
 @Component({
   selector: 'app-graphic-radial-bar-routines-registers',
   standalone: true,
@@ -14,7 +12,7 @@ import { IRoutine } from '../../../../container-routines/interfaces/iroutine';
 export class GraphicRadialBarRoutinesRegistersComponent {
 
   routines = input.required<IRoutine[]>();
-  reports = input.required<IRegister[]>();
+  reports = input.required<IReport[]>();
   
   public chartOptions: any | undefined;
 

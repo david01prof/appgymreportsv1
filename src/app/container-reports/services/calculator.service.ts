@@ -11,9 +11,9 @@ import {
   orderBy,
   query,
 } from '@angular/fire/firestore';
+import { IMeasurement } from '@app/models/ireport';
+import { APP_CONSTANTS } from '@app/shared/constants';
 import { Observable } from 'rxjs';
-import { APP_CONSTANTS } from '../../../shared/constants';
-import { IMeasurement } from '../interfaces/imeasurement';
 
 @Injectable({
   providedIn: 'root',

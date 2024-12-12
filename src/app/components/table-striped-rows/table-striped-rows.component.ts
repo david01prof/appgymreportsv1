@@ -7,8 +7,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { Table, TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
-import { IRoutine } from '../../container-routines/interfaces/iroutine';
-import { IRegister } from '../../features/registers/interfaces/iregister';
+import { IRoutine } from '../../models/iroutine';
 import { RoutinesService } from '@app/container-routines/components/cards-routines/services/routines.service';
 
 
@@ -36,7 +35,7 @@ export class TableStripedRowsComponent {
   public isRegister = input.required<boolean>();
 
   public dataRoutine: IRoutine[] = [];
-  public dataRegister: IRegister[] = [];
+  public dataRegister: IRoutine[] = [];
   loading: boolean = true;
   searchValue: string | undefined;
 

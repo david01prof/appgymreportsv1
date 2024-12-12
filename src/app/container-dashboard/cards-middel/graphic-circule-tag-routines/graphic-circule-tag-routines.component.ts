@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, OnChanges } from '@angular/core';
+import { ITagsGraph } from '@app/components/interfaces';
+import { IRoutine } from '@app/models';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { CardModule } from 'primeng/card';
-import { IRoutine } from '../../../../container-routines/interfaces/iroutine';
-import { ITagsGraph } from '../../../registers/interfaces/iregister';
+
 
 @Component({
   selector: 'app-graphic-circule-tag-routines',

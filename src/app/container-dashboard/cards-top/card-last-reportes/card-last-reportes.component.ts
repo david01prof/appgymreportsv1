@@ -4,7 +4,7 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { ApexCharLineLabelsComponent } from '@app/components/apex-char-line-labels/apex-char-line-labels.component';
 import { DashboardService } from '@app/container-dashboard/services/dashboard.service';
-import { IRegister } from '@app/reports/interfaces/iregister';
+import { IReport } from '@app/models';
 
 @Component({
   selector: 'app-card-last-reportes',
@@ -15,9 +15,9 @@ import { IRegister } from '@app/reports/interfaces/iregister';
 })
 export class CardLastReportesComponent {
 
-  reports = input.required<IRegister[]>();
+  reports = input.required<IReport[]>();
 
-  public document : IRegister | undefined;
+  public document : IReport | undefined;
   public dataChart = [10,30,45,20,65,50];
 
   private readonly _dashboardSvc = inject(DashboardService);

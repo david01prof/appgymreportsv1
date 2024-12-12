@@ -3,9 +3,10 @@ import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BreadcrumbComponent } from '@app/components/breadcrumb/breadcrumb.component';
 import { DashboardService } from '@app/container-dashboard/services/dashboard.service';
-import { IRoutine } from '@app/container-routines/interfaces/iroutine';
-import { IRegister } from '@app/reports/interfaces/iregister';
-import { RegistersService } from '@app/reports/services/registers.service';
+import { ReportsService } from '@app/container-reports/services/reports.service';
+import { RoutinesService } from '@app/container-routines/components/cards-routines/services/routines.service';
+import { IReport } from '@app/models';
+import { IRoutine } from '@app/models/iroutine';
 import { AnimateOnScrollModule } from 'primeng/animateonscroll';
 import { MenuItem, Message } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -14,7 +15,6 @@ import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
 import { tap } from 'rxjs';
-import { RoutinesService } from '@app/container-routines/components/cards-routines/services/routines.service';
 import { CardsBottomComponent } from './cards-bottom/cards-bottom.component';
 import { CardsMiddelComponent } from './cards-middel/cards-middel.component';
 import { CardsTopComponent } from './cards-top/cards-top.component';
@@ -52,12 +52,12 @@ export class ContainerDashboardComponent {
   public messages: Message[] | undefined;
   public isVisible = false;
   public dataRoutine: IRoutine[] = [];
-  public dataRegister: IRegister[] = [];
+  public dataReports: IReport[] = [];
 
   private readonly _dashboardSvc = inject(DashboardService);
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _routineSvc = inject(RoutinesService);
-  private readonly _registerSvc = inject(RegistersService);
+  private readonly _reportSvc = inject(ReportsService);
 
   ngOnInit(): void {
     this.itemsLabels = this._dashboardSvc.getBreadcrumbLabels();
@@ -71,7 +71,7 @@ export class ContainerDashboardComponent {
     ];
 
     this.getAllRoutines();
-    this.getAllRegisters();
+    this.getAllReports();
   }
 
   public getAllRoutines() {
@@ -83,12 +83,12 @@ export class ContainerDashboardComponent {
       .subscribe();
   }
 
-  public getAllRegisters() {
-    this._registerSvc
-      .getAllRegisters()
+  public getAllReports() {
+    this._reportSvc
+      .getAllReports()
       .pipe(
         takeUntilDestroyed(this._destroyRef),
-        tap((registers: IRegister[]) => (this.dataRegister = [...registers]))
+        tap((reports: IReport[]) => (this.dataReports = [...reports]))
       )
       .subscribe();
   }
