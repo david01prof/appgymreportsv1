@@ -1,6 +1,6 @@
 import { inject, InjectionToken } from '@angular/core';
+import { ReportsService } from '@app/container-reports/services/reports.service';
 import { IReport } from '@app/models';
-import { ReportsService } from '@app/services';
 import {
   patchState,
   signalStore,
@@ -36,7 +36,7 @@ export const GlobalStore = signalStore(
 
     async addReport(report: Omit<IReport, 'id' | 'created'>) {
       try {
-        await lastValueFrom(_reportSvc.addReport2(report));
+        await lastValueFrom(_reportSvc.addReport(report));
 
         patchState(store, ({ reports }) => ({        
           reports: [...reports, { id: reports[0].id, created: new Date().getTime(), ...report }],

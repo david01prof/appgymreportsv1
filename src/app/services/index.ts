@@ -1,1 +1,1 @@
-export * from './reports.service';
+export * from './global.service';
