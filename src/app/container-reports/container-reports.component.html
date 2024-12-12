@@ -9,14 +9,8 @@
 
   @defer (when store.reports().length) {
     @for (report of store.reports(); track report.id) {
-      @defer (on viewport) {
           <app-report-card [report]="report" />
-      } @placeholder {
-        <app-spinner-loader></app-spinner-loader>
-      }
     }
-  } @placeholder {
-    <app-spinner-loader></app-spinner-loader>
   }
 
 </div>

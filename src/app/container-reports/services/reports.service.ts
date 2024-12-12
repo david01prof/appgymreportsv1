@@ -17,10 +17,6 @@ export class ReportsService {
   private readonly config = inject(PrimeNGConfig);
   private readonly _auth = inject(AuthStateService);
 
-  constructor() {
-    console.log(this._auth.currentUser);
-  }
-
   public getAllReports() : Observable<IReport[]>{
     const queryFn = query(this._reportCollection,  where('userId', '==', this._auth.currentUser!.uid), orderBy('created', 'desc'));
     return collectionData(queryFn, {idField: 'id'}) as Observable<IReport[]>;
