@@ -2,47 +2,95 @@ import { Component, inject } from '@angular/core';
 import { AuthStateService } from '@app/shared/data-access/auth.state.service';
 import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
+import { RouterLink } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
+import { MenuModule } from 'primeng/menu';
 
 @Component({
   selector: 'app-toolbar',
   standalone: true,
-  imports: [MenubarModule],
+  imports: [
+    MenubarModule,
+    AvatarModule,
+    AvatarGroupModule,
+    RouterLink,
+    ButtonModule,
+    MenuModule,
+  ],
   template: `
-    <div class="card">
-      <p-menubar [model]="items" />
-    </div>
 
-    <button (click)="logout()">Logout</button>
+        <p-menubar [model]="items">
+          <ng-template pTemplate="item" let-item let-root="root">
+            <a
+              pRipple
+              class="flex align-items-center p-menuitem-link"
+              [routerLink]="['/' + item.route]"
+            >
+              <span [class]="item.icon"></span>
+              <span class="ml-2">{{ item.label }}</span>
+            </a>
+          </ng-template>
+          <ng-template pTemplate="end">
+            <div class="flex align-items-center gap-2">
+              <div class="card flex justify-content-center">
+                <p-menu #menu [model]="itemsProfile" [popup]="true"  class="styleButton"/>
+                <p-button [link]="true" (onClick)="menu.toggle($event)"><p-avatar
+                    image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+                    shape="circle"
+                    class="mr-2"
+                  /></p-button>
+              </div>
+            </div>
+          </ng-template>
+        </p-menubar>
   `,
-  styles: ``,
+  styles: `
+    ::ng-deep .p-button.p-button-link  {
+      height: 35px;
+    }
+  `,
 })
 export class ToolbarComponent {
-  
   public items: MenuItem[] | undefined;
+  public itemsProfile: MenuItem[] | undefined;
   private readonly _authSvc = inject(AuthStateService);
+  // public
 
   ngOnInit() {
-      this.items = [
-          {
-              label: 'Home',
-              icon: 'pi pi-home',
-              url: 'dashboard'
-          },
-          {
-              label: 'Reportes',
-              icon: 'pi pi-star',
-              url: 'reports'
-          },
-          {
-              label: 'Rutinas',
-              icon: 'pi pi-search',
-              url: 'routines',
-          }
-      ]
-  }
+    this.items = [
+      {
+        label: 'Home',
+        icon: 'pi pi-home',
+        route: 'dashboard',
+      },
+      {
+        label: 'Reportes',
+        icon: 'pi pi-star',
+        route: 'reports',
+      },
+      {
+        label: 'Rutinas',
+        icon: 'pi pi-search',
+        route: 'routines',
+      },
+    ];
 
-   logout(){
-    this._authSvc.logout();
+    this.itemsProfile = [
+      {
+        label: 'Perfil',
+        icon: 'pi pi-cog',
+        route: 'dashboard',
+      },
+      {
+        label: 'Salir',
+        icon: 'pi pi-sign-out',
+        route: 'reports',
+        command: () => {
+          this._authSvc.logout();
+      }
+      },
+    ];
   }
-
 }

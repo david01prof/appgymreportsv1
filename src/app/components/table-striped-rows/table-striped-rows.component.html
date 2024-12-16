@@ -62,7 +62,7 @@
                             {{getDate(_routineSvc.convertTimeStamptoDate(product[column.id])) | date: 'dd/MM/yyyy'}}
                         }
                         @else if (column.id == 'totaligc') {
-                            @if(product["calculator"].totaligc != ''){
+                            @if(product["calculator"].totaligc !== undefined && product["calculator"].totaligc != ''){
                                 {{product["calculator"].totaligc}}%
                             }@else {
                                 0%
