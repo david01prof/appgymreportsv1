@@ -65,14 +65,17 @@
         <div *ngIf="uploadedFiles?.length > 0">
             <h5>Elementos subidos</h5>
             <div class="flex flex-column gap-3">
-                <div *ngFor="let file of uploadedFiles; let i = index"
+                <div *ngFor="let file of filesRefresh(); let i = index"
                     class="card m-0 px-6 flex flex-column border-1 surface-border align-items-center gap-3">
-                    <div class="mt-2 flex justify-content-center">
-                        <img role="presentation" [alt]="file.name"
-                            [src]="file.objectURL" width="100"
-                            height="auto" />
-                    </div>
-                    <span>{{ file.name }}</span>
+
+                    @if (base64images()[i] != undefined) {
+                        <div class="mt-2 flex justify-content-center">
+                            <img role="presentation" [alt]="file.name"
+                                [src]="base64images()[i].base64" width="100"
+                                height="auto" />
+                        </div>
+                        <span>{{ file.name }}</span>
+                    }
                     <div class="font-light text-sm">{{
                         _reportSvc.formatSize(file.size) }}</div>
                     <p-badge value="Completado" class="mt-3"

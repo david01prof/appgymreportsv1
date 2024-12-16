@@ -1,0 +1,19 @@
+
+::ng-deep .p-image {
+    width: 210px;
+    height: 250px;
+}
+
+::ng-deep .p-image-preview-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+::ng-deep .p-image-preview-container>img{
+    width: 100%;
+}
+
+::ng-deep .p-image-preview-indicator{
+    left: auto;
+}

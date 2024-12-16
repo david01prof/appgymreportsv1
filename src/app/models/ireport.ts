@@ -16,7 +16,7 @@ export interface Measurement extends IMeasurement {}
 export interface Photos extends IPhotos {}
 
 export interface IPhotos {
-    base64: string;
+    base64: Blob | string;
 }
 
 export interface IMeasurement {

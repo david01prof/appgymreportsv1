@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { addDoc, collection, collectionData, deleteDoc, doc, DocumentData, DocumentReference, Firestore, orderBy, query, where } from '@angular/fire/firestore';
-import { IReport } from '@app/models/ireport';
+import { IPhotos, IReport } from '@app/models/ireport';
 import { APP_CONSTANTS } from '@app/shared/constants';
 import { AuthStateService } from '@app/shared/data-access/auth.state.service';
 import { PrimeNGConfig } from 'primeng/api';
@@ -22,27 +22,43 @@ export class ReportsService {
     return collectionData(queryFn, {idField: 'id'}) as Observable<IReport[]>;
   }
 
-  public newReport( report: Partial<IReport>): Promise<DocumentReference<DocumentData, DocumentData>>  {
-    return addDoc(this._reportCollection,{
-      created: Date.now(),
-      updated: Date.now(),
-      ...report,
-      userId: this._auth.currentUser!.uid
-    })
-  }
-
   public addReport( report: Omit<IReport, "id" | "created">): Observable<any>  {
-    return from(addDoc(this._reportCollection,{
-      created: Date.now(),
-      updated: Date.now(),
-      userId: this._auth.currentUser!.uid,
-      ...report
-    })).pipe(
-      catchError(() => {
-        console.info("error prevented for testing")
-        return Promise.resolve()
-      })
-    )
+
+    let comprimedPhotos : IPhotos[] = [];
+
+    for(let photo of report.photos){
+      (async () => {
+        try {
+          const compressedBase64 = this.base64ToBlob(photo.base64 as string);
+          comprimedPhotos.push({ base64: compressedBase64 });
+          console.log("Imagen comprimida:", compressedBase64);
+        } catch (error) {
+          console.error("Error al comprimir la imagen:", error);
+        }
+      })();
+    }
+
+    report.photos = comprimedPhotos;
+
+
+    if(comprimedPhotos.length > 0 ){
+      return from(addDoc(this._reportCollection,{
+        created: Date.now(),
+        updated: Date.now(),
+        userId: this._auth.currentUser!.uid,
+        ...report
+      })).pipe(
+        catchError((error) => {
+          console.error('Error al agregar el reporte:', error);
+          console.info("error prevented for testing")
+          return Promise.resolve()
+        })
+      )
+    }else{
+      console.info("error prevented for testing")
+      return new Observable;
+    }
+    
   }
 
   public removeReport(id: number) : Observable<void>{
@@ -86,4 +102,26 @@ export class ReportsService {
 
     return `${formattedSize} ${sizes![i]}`;
   }
+
+  private isValidBase64 = (str: string) => {
+    return /^data:image\/(png|jpeg|jpg);base64,/.test(str);
+  };
+
+  private base64ToBlob = (base64: string): Blob => {
+    // Extraer el tipo MIME (opcional)
+    const [metadata, data] = base64.split(',');
+    const mimeMatch = metadata.match(/:(.*?);/);
+    const mimeType = mimeMatch ? mimeMatch[1] : 'application/octet-stream';
+  
+    // Convertir base64 a bytes
+    const binaryData = atob(data); // Decodificar base64 a binario
+    const byteArray = new Uint8Array(binaryData.length);
+  
+    for (let i = 0; i < binaryData.length; i++) {
+      byteArray[i] = binaryData.charCodeAt(i);
+    }
+  
+    // Crear un Blob con los datos binarios
+    return new Blob([byteArray], { type: mimeType });
+  };
 }
