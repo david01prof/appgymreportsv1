@@ -1,23 +1,24 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
+import { Router } from '@angular/router';
+import { BreadcrumbComponent } from '@app/components/breadcrumb/breadcrumb.component';
+import { CarouselImagesComponent } from '@app/components/carousel-images/carousel-images.component';
+import { ReportsService } from '@app/container-reports/services/reports.service';
+import { IReport } from '@app/models';
+import { GlobalReportStore } from '@app/store/globalReport.store';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DividerModule } from 'primeng/divider';
 import { ImageModule } from 'primeng/image';
-import { CommonModule } from '@angular/common';
-import { IReport } from '@app/models';
-import { CarouselImagesComponent } from '@app/components/carousel-images/carousel-images.component';
-import { CardModule } from 'primeng/card';
-import { ReportsService } from '@app/container-reports/services/reports.service';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService } from 'primeng/api';
-import { GlobalStore } from '@app/store/global.store';
-import { Router } from '@angular/router';
 
 const PRIME_MODULES = [ButtonModule, DividerModule, ImageModule,CardModule,ConfirmDialogModule];
 
 @Component({
   selector: 'app-resumen-card',
   standalone: true,
-  imports: [PRIME_MODULES,CommonModule,CarouselImagesComponent],
+  imports: [PRIME_MODULES,CommonModule,CarouselImagesComponent,BreadcrumbComponent],
   templateUrl: './resumen-card.component.html',
   styleUrl: './resumen-card.component.scss',
   providers:[ConfirmationService]
@@ -26,9 +27,10 @@ export class ResumenCardComponent {
   
   public report = input.required<IReport>();
   public isDetail = input.required<boolean>();
+  public readonly _reportSvc = inject(ReportsService);
 
   private readonly _confirmationSvc = inject(ConfirmationService);
-  private readonly store = inject(GlobalStore);
+  private readonly store = inject(GlobalReportStore);
   private readonly route = inject(Router);
 
   confirm2(event: Event) {

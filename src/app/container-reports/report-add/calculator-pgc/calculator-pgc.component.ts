@@ -3,7 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CustomInputComponent } from '@app/components/custom-input/custom-input.component';
 import { CalculatorService } from '@app/container-reports/services/calculator.service';
 import { emptyReport, IMeasurement, MeasurementForm } from '@app/models';
-import { GlobalStore } from '@app/store/global.store';
+import { GlobalReportStore } from '@app/store/globalReport.store';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 
@@ -27,7 +27,7 @@ import { DividerModule } from 'primeng/divider';
 })
 export class CalculatorPgcComponent {
 
-  public readonly store = inject(GlobalStore);
+  public readonly store = inject(GlobalReportStore);
   
   public dataMeasurement = output<IMeasurement>();
   public disabledNextPage = output<boolean>();

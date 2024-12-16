@@ -2,7 +2,7 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IReport } from '@app/models';
-import { GlobalStore } from '@app/store/global.store';
+import { GlobalReportStore } from '@app/store/globalReport.store';
 import { CardModule } from 'primeng/card';
 
 @Component({
@@ -14,17 +14,14 @@ import { CardModule } from 'primeng/card';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReportCardComponent {
-  report = input.required<IReport>();
-
-  readonly store = inject(GlobalStore);
-
   
+  public report = input.required<IReport>();
+
+  private readonly store = inject(GlobalReportStore);
 
   removeCharacter(id: number) {
     this.store.removeReport(id);
   }
-
-  showDialogResumen(){}
 
   getCurrentDate(date: number) {
     return new Date(date);

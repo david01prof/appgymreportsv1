@@ -11,19 +11,19 @@ import {
 import { withEntities } from '@ngrx/signals/entities';
 import { lastValueFrom } from 'rxjs';
 
-type StoreState = {
+type StoreStateReport = {
   reports: IReport[];
 };
 
-const initialState: StoreState = {
+const initialState: StoreStateReport = {
   reports: [],
 };
 
-const STORE_STATE = new InjectionToken<StoreState>('GlobalStore', {
+const STORE_STATE = new InjectionToken<StoreStateReport>('GlobalReportStore', {
   factory: () => initialState,
 });
 
-export const GlobalStore = signalStore(
+export const GlobalReportStore = signalStore(
   { providedIn: 'root' },
   withState(() => inject(STORE_STATE)),
   withEntities<IReport>(),

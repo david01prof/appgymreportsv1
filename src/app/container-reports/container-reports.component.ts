@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { GlobalStore } from '@app/store/global.store';
 import { CardModule } from 'primeng/card';
 import { ReportCardComponent } from "./components/report-card/report-card.component";
 import { BreadcrumbComponent } from "../components/breadcrumb/breadcrumb.component";
 import { ReportsService } from './services/reports.service';
+import { GlobalReportStore } from '@app/store/globalReport.store';
 
 @Component({
   selector: 'app-container-reports',
@@ -17,7 +17,7 @@ import { ReportsService } from './services/reports.service';
 })
 export class ContainerReportsComponent {
 
-  public readonly store = inject(GlobalStore);
+  public readonly store = inject(GlobalReportStore);
   public readonly _reportSvc = inject(ReportsService);
 
   public aplicarEstilo = true;

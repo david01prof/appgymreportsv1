@@ -1,22 +1,6 @@
 @let reportLocal = report();
 
 @if (reportLocal) {
-    <!-- <div class="character-card">
-      <p>{{ reportLocal.id }}</p>
-  
-    <P>{{ reportLocal.measurement.genre }}</P>
-  
-      <div class="button-container">
-        <button (click)="removeCharacter(reportLocal.id)">
-          Remove Character
-        </button>
-  
-        <a [routerLink]="['/add-edit-report/' + reportLocal.id]"
-          >Edit Character</a
-        >
-      </div>
-    </div> -->
-
     <p-card class="mb-3 custom-card" [routerLink]="[{  outlets: { content: [reportLocal.id] }} ]">
 
       <div class="flex justify-content-center">

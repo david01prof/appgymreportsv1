@@ -6,9 +6,9 @@ import {
   signal
 } from '@angular/core';
 import { emptyReport, IReport } from '@app/models';
-import { GlobalStore } from '@app/store/global.store';
 import { CardModule } from 'primeng/card';
 import { ResumenCardComponent } from '../components/resumen-card/resumen-card.component';
+import { GlobalReportStore } from '@app/store/globalReport.store';
 
 @Component({
   selector: 'app-report-detail',
@@ -24,13 +24,13 @@ import { ResumenCardComponent } from '../components/resumen-card/resumen-card.co
     .custom-card{
       width: 60%;
       display: inline-block;
-      margin: 2rem 20%;
+      margin: 1rem 20%;
     }
 
     @media (max-width: 578px) {
       .custom-card{
         width: 100%;
-        margin: 2rem 0;
+        margin: 1rem 0;
       }
     }
   `,
@@ -38,7 +38,7 @@ import { ResumenCardComponent } from '../components/resumen-card/resumen-card.co
 })
 export class ReportDetailComponent {
   public id = input<number>();
-  readonly store = inject(GlobalStore);
+  readonly store = inject(GlobalReportStore);
 
   public reportSignal = signal<IReport>(emptyReport);
 

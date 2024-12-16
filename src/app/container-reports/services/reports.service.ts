@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { addDoc, collection, collectionData, deleteDoc, doc, DocumentData, DocumentReference, Firestore, orderBy, query, where } from '@angular/fire/firestore';
-import { IPhotos, IReport } from '@app/models/ireport';
+import { addDoc, collection, collectionData, deleteDoc, doc, Firestore, orderBy, query, where } from '@angular/fire/firestore';
+import { IReport } from '@app/models/ireport';
 import { APP_CONSTANTS } from '@app/shared/constants';
 import { AuthStateService } from '@app/shared/data-access/auth.state.service';
 import { PrimeNGConfig } from 'primeng/api';
@@ -85,4 +85,7 @@ export class ReportsService {
     return [{ label: 'Reportes' },{ label: 'Nuevo' }, ];
   }
 
+  public getBreadcrumbLabelsResumen() {
+    return [{ label: 'Reportes' },{ label: 'Detalle' }, ];
+  }
 }

@@ -30,6 +30,6 @@ export class BreadcrumbComponent {
   home: MenuItem | undefined;
 
   ngOnInit() {
-    this.home = { icon: 'pi pi-home', routerLink: '/' + this.urlActive };
+    this.home = { icon: 'pi pi-home', routerLink: '/' + this.urlActive() };
   }
 }
