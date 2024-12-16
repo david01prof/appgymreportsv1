@@ -1,4 +1,4 @@
-<div class="character-add-container">
+<div class="character-add-container flex flex-column align-items-center justify-content-center">
     <form [formGroup]="measurementForm()" (ngSubmit)="onSubmit()">
 
             <app-custom-input
@@ -32,8 +32,20 @@
                 type="number"
                 errorMessage="Name is REQUIRED"></app-custom-input>
 
-        <p-button type="submit" [disabled]="measurementForm().invalid">
-           Calcular medidas
-        </p-button>
+        <div class="flex justify-content-center">
+            <p-button type="submit" [disabled]="measurementForm().invalid">
+                Calcular
+             </p-button>
+        </div>
     </form>
+
+
+    @let totaPgc = measurementForm().value.totaligc;
+
+    @if (totaPgc != undefined && !totaPgc.includes('Error al realizar esta operacion') && totaPgc != ''){
+        <div class="fadein animation-duration-1000">
+            <p-divider></p-divider>
+            <span> Indice de grasa: {{totaPgc}}%</span>
+        </div>
+    }
 </div>

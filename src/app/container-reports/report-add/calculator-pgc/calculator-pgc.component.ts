@@ -1,14 +1,16 @@
 import { ChangeDetectionStrategy, Component, computed, inject, output, Signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CustomInputComponent } from '@app/components/custom-input/custom-input.component';
+import { CalculatorService } from '@app/container-reports/services/calculator.service';
 import { emptyReport, IMeasurement, MeasurementForm } from '@app/models';
 import { GlobalStore } from '@app/store/global.store';
 import { ButtonModule } from 'primeng/button';
+import { DividerModule } from 'primeng/divider';
 
 @Component({
   selector: 'app-calculator-pgc',
   standalone: true,
-  imports: [CustomInputComponent,ReactiveFormsModule,ButtonModule],
+  imports: [CustomInputComponent,ReactiveFormsModule,ButtonModule,DividerModule],
   templateUrl: './calculator-pgc.component.html',
   styles: `
     .character-add-container {
@@ -32,6 +34,8 @@ export class CalculatorPgcComponent {
   public measurementEmptyForm = computed(() => emptyReport.measurement);
   public active : number = 0;
 
+  private readonly _calculatorSvc = inject(CalculatorService);
+
   public measurementForm: Signal<FormGroup<MeasurementForm>> = computed(
     () => 
       new FormGroup<MeasurementForm>({
@@ -45,7 +49,13 @@ export class CalculatorPgcComponent {
 
   public onSubmit(): void {
     if (this.measurementForm().valid) {
-      this.dataMeasurement.emit(this.measurementForm().value as IMeasurement);
+      const form = this.measurementForm().value as IMeasurement;
+      
+      form.height = parseFloat((form.height / 100).toFixed(2));
+      form.age = 23;
+      form.totaligc = this._calculatorSvc.calculateMeasurement(form);
+      
+      this.dataMeasurement.emit(form);
     }
   }
 }

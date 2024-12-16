@@ -53,12 +53,10 @@ export class CalculatorService {
   }
 
   public calculateMeasurement(measurement: IMeasurement): string {
+    console.log(measurement);
+    
     let ibm = measurement.weight / (measurement.height * measurement.height);
-    let pgc =
-      1.2 * ibm +
-      0.23 * measurement.age +
-      0.54 * (measurement.waist / measurement.hip) -
-      16.2;
+    let pgc = 1.2 * ibm + 0.23 * measurement.age + 0.54 * (measurement.waist / measurement.hip) - 16.2;
 
     if(isNaN(pgc)){
       return 'Error al realizar esta operacion'
