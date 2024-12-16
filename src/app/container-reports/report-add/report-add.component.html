@@ -1,3 +1,7 @@
+<app-breadcrumb
+    [itemsLabels]="_reportSvc.getBreadcrumbLabelsNew()"
+    urlActive="Home"></app-breadcrumb>
+
 <p-card class="stylesCard">
   <p-stepper [(activeStep)]="active" [linear]="true">
     <p-stepperPanel>

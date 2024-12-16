@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { ImageModule } from 'primeng/image';
@@ -6,8 +6,13 @@ import { CommonModule } from '@angular/common';
 import { IReport } from '@app/models';
 import { CarouselImagesComponent } from '@app/components/carousel-images/carousel-images.component';
 import { CardModule } from 'primeng/card';
+import { ReportsService } from '@app/container-reports/services/reports.service';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
+import { GlobalStore } from '@app/store/global.store';
+import { Router } from '@angular/router';
 
-const PRIME_MODULES = [ButtonModule, DividerModule, ImageModule,CardModule];
+const PRIME_MODULES = [ButtonModule, DividerModule, ImageModule,CardModule,ConfirmDialogModule];
 
 @Component({
   selector: 'app-resumen-card',
@@ -15,14 +20,37 @@ const PRIME_MODULES = [ButtonModule, DividerModule, ImageModule,CardModule];
   imports: [PRIME_MODULES,CommonModule,CarouselImagesComponent],
   templateUrl: './resumen-card.component.html',
   styleUrl: './resumen-card.component.scss',
+  providers:[ConfirmationService]
 })
 export class ResumenCardComponent {
   
   public report = input.required<IReport>();
   public isDetail = input.required<boolean>();
 
-  ngOnChanges(){
-    console.log(this.report());
-  }
+  private readonly _confirmationSvc = inject(ConfirmationService);
+  private readonly store = inject(GlobalStore);
+  private readonly route = inject(Router);
+
+  confirm2(event: Event) {
+    this._confirmationSvc.confirm({
+        target: event.target as EventTarget,
+        message: 'Quieres borrar el reporte?',
+        header: 'Borrar reporte ' + (this.report().idReport + 1),
+        icon: 'pi pi-info-circle',
+        acceptButtonStyleClass:"p-button-danger p-button-text",
+        rejectButtonStyleClass:"p-button-text p-button-text",
+        acceptIcon:"none",
+        rejectIcon:"none",
+
+        accept: () => {
+            // this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
+            this.store['removeReport'](this.report().id ?? 0);
+            this.route.navigate(['/reports']);
+        },
+        reject: () => {
+            // this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+        }
+    });
+}
   
 }

@@ -2,7 +2,7 @@
     <form [formGroup]="measurementForm()" (ngSubmit)="onSubmit()">
 
             <app-custom-input
-                label="Altura:"
+                label="Altura (cm):"
                 id="height"
                 [control]="$any(measurementForm().get('height'))"
                 type="number"
@@ -10,7 +10,7 @@
                 errorMessage="Name is REQUIRED"></app-custom-input>
 
             <app-custom-input
-                label="Peso:"
+                label="Peso (kg):"
                 id="weight"
                 [control]="$any(measurementForm().get('weight'))"
                 type="number"
@@ -18,7 +18,7 @@
                 errorMessage="Name is REQUIRED"></app-custom-input>
 
             <app-custom-input
-                label="Cintura:"
+                label="Cintura (cm):"
                 id="waist"
                 [control]="$any(measurementForm().get('waist'))"
                 type="number"
@@ -26,7 +26,7 @@
                 errorMessage="Name is REQUIRED"></app-custom-input>
 
             <app-custom-input
-                label="Cadera:"
+                label="Cadera (cm):"
                 id="hip"
                 [control]="$any(measurementForm().get('hip'))"
                 type="number"

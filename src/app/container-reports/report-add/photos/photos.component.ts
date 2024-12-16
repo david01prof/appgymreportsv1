@@ -42,12 +42,13 @@ export class PhotosComponent {
   public files = [];
   public filesRefresh = signal<File[]>([]);
   public base64images = signal<IPhotos[]>([]);
+  public maxSize: number = 1.3;
 
   private readonly _confirmationSvc = inject(ConfirmationService);
   // Método personalizado para manejar la carga de archivos
 
   onSelectedFileUpload(event: FileSelectEvent) {
-    let maxSize: number = 2 * 1024 * 1024; // Tamaño máximo de 2 MB en bytes
+    let maxSize: number = this.maxSize * 1024 * 1024; // Tamaño máximo de 1.3 MB en bytes de firebase
     let filesArray = Array.from(event.files);
 
     for (let indexFile in filesArray) {
@@ -142,11 +143,11 @@ export class PhotosComponent {
       message =
         'El archivo:' +
         this.imageErrorTittle[0] +
-        ' seleccionado excede el límite de 2 MB.';
+        ' seleccionado excede el límite de  '+this.maxSize+'MB.';
     } else {
       let jonText = this.imageErrorTittle.join(', ');
       message =
-        'Los archivos:' + jonText + ' exceden cada uno el límite de 2 MB.';
+        'Los archivos:' + jonText + ' exceden cada uno el límite de '+this.maxSize+'MB.';
     }
     this._confirmationSvc.confirm({
       message: message,

@@ -1,6 +1,13 @@
 <p-card class="fadein animation-duration-500">
   <h4 *ngIf="!isDetail()">Detalle del reporte:</h4>
-  <h4 *ngIf="isDetail()">Detalle del reporte {{report().idReport + 1}}:</h4>
+
+  @if (isDetail()) {
+    <div class="flex justify-content-between">
+      <h4 *ngIf="isDetail()">Detalle del reporte {{report().idReport + 1}}:</h4>
+      <p-button icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true" severity="danger" class="absolute styleButton" (onClick)="confirm2($event)" />
+    </div>
+  }
+
   
   <p-divider></p-divider>
   
@@ -36,3 +43,5 @@
     <app-carousel-images [images]="report().photos"></app-carousel-images>
   }  
 </p-card>
+
+<p-confirmDialog />

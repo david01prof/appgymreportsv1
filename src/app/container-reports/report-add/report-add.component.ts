@@ -8,15 +8,17 @@ import {
   signal,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { BreadcrumbComponent } from '@app/components/breadcrumb/breadcrumb.component';
 import { emptyReport, IMeasurement, IPhotos, IReport } from '@app/models';
+import { GlobalService } from '@app/services/global.service';
 import { GlobalStore } from '@app/store/global.store';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { StepperModule } from 'primeng/stepper';
+import { ResumenCardComponent } from '../components/resumen-card/resumen-card.component';
+import { ReportsService } from '../services/reports.service';
 import { CalculatorPgcComponent } from './calculator-pgc/calculator-pgc.component';
 import { PhotosComponent } from './photos/photos.component';
-import { GlobalService } from '@app/services/global.service';
-import { ResumenCardComponent } from '../components/resumen-card/resumen-card.component';
 
 const PRIME_MODULES = [CardModule, StepperModule, ButtonModule];
 
@@ -30,6 +32,7 @@ const PRIME_MODULES = [CardModule, StepperModule, ButtonModule];
     PhotosComponent,
     ResumenCardComponent,
     RouterLink,
+    BreadcrumbComponent
   ],
   templateUrl: './report-add.component.html',
   styleUrl: './report-add.component.scss',
@@ -38,6 +41,7 @@ const PRIME_MODULES = [CardModule, StepperModule, ButtonModule];
 export class ReportAddComponent {
   
   public readonly store = inject(GlobalStore);
+  public readonly _reportSvc = inject(ReportsService);
 
   public reportToEdit = computed(() => emptyReport);
   public dataMeasurement = signal<IMeasurement>(
