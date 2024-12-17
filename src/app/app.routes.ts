@@ -4,6 +4,7 @@ import { ReportDetailComponent } from './container-reports/report-detail/report-
 import { ContainerReportsComponent } from './container-reports/container-reports.component';
 import { privateGuard, publicGuard } from './core/auth.guard';
 import { ReportAddComponent } from './container-reports/report-add/report-add.component';
+import { ContainerProfileComponent } from './container-profile/container-profile.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -37,6 +38,15 @@ export const routes: Routes = [
       { path: '', component: ContainerReportsComponent , outlet: 'content' },
       { path: 'add', component: ReportAddComponent , outlet: 'content' },
       { path: ':id', component: ReportDetailComponent , outlet: 'content' },
+    ]
+  },
+  {
+    path: 'profile',
+    canActivate: [privateGuard()],
+    loadComponent: () => import('./shared/ui/layout.component').then(m => m.LayoutComponent),
+    // loadChildren: () => import('./container-dashboard/dashboard.routes').then((m) => m.routesDashboard),
+    children: [
+      { path: '', component: ContainerProfileComponent , outlet: 'content' }
     ]
   },
   {

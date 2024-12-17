@@ -7,6 +7,10 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
 import { RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
+import { Auth } from '@angular/fire/auth';
+import { AuthService } from '@app/auth/data-access/auth.service';
+import { GlobalService } from '@app/services';
+import { IUser } from '@app/models';
 
 @Component({
   selector: 'app-toolbar',
@@ -35,6 +39,7 @@ import { MenuModule } from 'primeng/menu';
           <ng-template pTemplate="end">
             <div class="flex align-items-center gap-2">
               <div class="card flex justify-content-center">
+                <p class="styleUsername">{{userInfo?.username}}</p>
                 <p-menu #menu [model]="itemsProfile" [popup]="true"  class="styleButton"/>
                 <p-button [link]="true" (onClick)="menu.toggle($event)"><p-avatar
                     image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
@@ -50,15 +55,22 @@ import { MenuModule } from 'primeng/menu';
     ::ng-deep .p-button.p-button-link  {
       height: 35px;
     }
+    .styleUsername{
+      margin: 10px 0;
+    }
   `,
 })
 export class ToolbarComponent {
   public items: MenuItem[] | undefined;
   public itemsProfile: MenuItem[] | undefined;
-  private readonly _authSvc = inject(AuthStateService);
-  // public
+  public userInfo : IUser | undefined;
 
-  ngOnInit() {
+  private readonly _authStateSvc = inject(AuthStateService);
+  private readonly _authSvc = inject(AuthService);
+  private readonly _globalSvc = inject(GlobalService);
+  private readonly _auth = inject(Auth);
+
+  async ngOnInit() {
     this.items = [
       {
         label: 'Home',
@@ -81,16 +93,21 @@ export class ToolbarComponent {
       {
         label: 'Perfil',
         icon: 'pi pi-cog',
-        route: 'dashboard',
+        routerLink: ['/profile']
       },
       {
         label: 'Salir',
         icon: 'pi pi-sign-out',
-        route: 'reports',
         command: () => {
-          this._authSvc.logout();
+          this._authStateSvc.logout();
       }
       },
     ];
+
+    this.userInfo =  await this._authSvc.getUserById(this._auth.currentUser!.uid);
+    console.log(this.userInfo);
+    
+    this._globalSvc.userInfo.set(this.userInfo);
+    
   }
 }

@@ -44,9 +44,7 @@ export class ReportAddComponent {
   public readonly _reportSvc = inject(ReportsService);
 
   public reportToEdit = computed(() => emptyReport);
-  public dataMeasurement = signal<IMeasurement>(
-    this.reportToEdit().measurement
-  );
+  public dataMeasurement = signal<IMeasurement>(this.reportToEdit().measurement);
   public dataPhotos = signal<IPhotos[]>(this.reportToEdit().photos);
   public dataReport = signal<IReport>(this.reportToEdit());
   public active: number = 0;

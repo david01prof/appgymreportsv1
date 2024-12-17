@@ -1,10 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BreadcrumbComponent } from '@app/components/breadcrumb/breadcrumb.component';
 import { DashboardService } from '@app/container-dashboard/services/dashboard.service';
+import { ReportsService } from '@app/container-reports/services/reports.service';
 import { RoutinesService } from '@app/container-routines/components/cards-routines/services/routines.service';
-import { IReport } from '@app/models';
+import { emptyUser, IReport, IUser } from '@app/models';
 import { IRoutine } from '@app/models/iroutine';
 import { AnimateOnScrollModule } from 'primeng/animateonscroll';
 import { MenuItem, Message } from 'primeng/api';
@@ -17,7 +25,7 @@ import { tap } from 'rxjs';
 import { CardsBottomComponent } from './cards-bottom/cards-bottom.component';
 import { CardsMiddelComponent } from './cards-middel/cards-middel.component';
 import { CardsTopComponent } from './cards-top/cards-top.component';
-import { ReportsService } from '@app/container-reports/services/reports.service';
+import { GlobalService } from '@app/services';
 
 const PRIME_MODULES = [
   DialogModule,
@@ -41,10 +49,9 @@ const PRIME_MODULES = [
   ],
   templateUrl: './container-dashboard.component.html',
   styleUrl: './container-dashboard.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContainerDashboardComponent {
-
   public date = new Date();
   public currentUrl: string = '';
   public visible: boolean = false;
@@ -53,11 +60,22 @@ export class ContainerDashboardComponent {
   public isVisible = false;
   public dataRoutine = signal<IRoutine[]>([]);
   public dataReports = signal<IReport[]>([]);
+  public activeUser = signal<IUser>(emptyUser);
+  public readonly _globalSvc = inject(GlobalService);
 
   private readonly _dashboardSvc = inject(DashboardService);
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _routineSvc = inject(RoutinesService);
   private readonly _reportSvc = inject(ReportsService);
+  
+
+  constructor() {
+    effect(() => {
+      this.activeUser.set(this._globalSvc.userInfo());
+      console.log(this.activeUser());
+      
+    }, { allowSignalWrites: true });
+  }
 
   ngOnInit(): void {
     this.itemsLabels = this._dashboardSvc.getBreadcrumbLabels();
@@ -75,10 +93,11 @@ export class ContainerDashboardComponent {
   }
 
   public getAllRoutines() {
-    this._routineSvc.getAllRoutines()
+    this._routineSvc
+      .getAllRoutines()
       .pipe(
         takeUntilDestroyed(this._destroyRef),
-        tap((routines: IRoutine[]) => (this.dataRoutine.set([...routines])))
+        tap((routines: IRoutine[]) => this.dataRoutine.set([...routines]))
       )
       .subscribe();
   }
@@ -88,7 +107,7 @@ export class ContainerDashboardComponent {
       .getAllReports()
       .pipe(
         takeUntilDestroyed(this._destroyRef),
-        tap((reports: IReport[]) => (this.dataReports.set([...reports])))
+        tap((reports: IReport[]) => this.dataReports.set([...reports]))
       )
       .subscribe();
   }

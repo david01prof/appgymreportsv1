@@ -1,0 +1,27 @@
+
+@if (_globalSvc.userInfo().createdAt != '') {
+    <div class="flex justify-content-end">
+        <!-- <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" [raised]="true" severity="warning"/> -->
+        <p-button icon="pi pi-pencil" [rounded]="true" severity="secondary" [outlined]="true" (onClick)="editUserWeight()"/>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="card flex flex-wrap gap-3 p-fluid">
+            <div class="flex-auto">
+                <label for="intergerObjetiveWeight">Peso objetivo</label>
+                <p-inputNumber 
+                    inputId="intergerObjetiveWeight" 
+                    formControlName="objetiveWeight"
+                    class="mt-2"/>
+            </div>
+            <div class="flex-auto">
+                <label for="integerActualWeight">Peso actual</label>
+                <p-inputNumber 
+                    inputId="integerActualWeight" 
+                    formControlName="actualWeight"
+                    class="mt-2" />
+            </div>
+        </div>
+    </form>
+
+}

@@ -2,13 +2,9 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/auth/data-access/auth.service';
+import { Gender } from '@app/models';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-
-interface FormSignUp {
-  email: string;
-  password: string;
-}
 
 @Component({
   selector: 'app-sign-up',
@@ -26,19 +22,28 @@ export class SignUpComponent {
 
   forms = this._formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
+    username: ['', [Validators.required, Validators.minLength(1)]],
+    password: ['', [Validators.required, Validators.minLength(1)]],
+    age: [0],
+    gender: [Gender.FEMALE],
+    objetiveWeight: [0],
+    photo: ['']
   });
 
   async onSubmit() {
     if (this.forms.invalid) return;
 
     try{
-      const { email, password } = this.forms.value;
+      const { email, username,password,age,gender, objetiveWeight, photo } = this.forms.value;
 
-      if (!email || !password) return;
+      if (email != undefined && password != undefined && username != undefined && age != undefined && gender != undefined && objetiveWeight != undefined && photo != undefined)  {
+        const userCredential = await this._authSvc.signUp({ email, password });
+        const userUid = userCredential.user.uid;
   
-      await this._authSvc.signUp({ email, password });
-      this._route.navigateByUrl('/auth/sign-in')
+        this._authSvc.saveUser({ email, username,password,age,gender, objetiveWeight, photo},userUid);
+  
+        this._route.navigateByUrl('/auth/sign-in')
+      }
     }
     catch(error){
       console.error(error);

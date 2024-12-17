@@ -18,7 +18,7 @@ import { IReport } from '@app/models';
   template: `
     <div class="cardsStyles fadein animation-duration-2000">
       @if (productRoutines() != undefined && productReports() != undefined) {
-      <app-card-objetive-weight class="cardA"></app-card-objetive-weight>
+      <app-card-objetive-weight class="cardA" [objetiveWeight]="objetiveWeight()"></app-card-objetive-weight>
       <app-card-last-routine class="cardB" [routines]="productRoutines()"></app-card-last-routine>
       <app-card-last-reportes class="cardC" [reports]="productReports()"></app-card-last-reportes>
       }
@@ -29,4 +29,5 @@ import { IReport } from '@app/models';
 export class CardsTopComponent {
   productRoutines = input.required<IRoutine[]>();
   productReports = input.required<IReport[]>();
+  objetiveWeight = input.required<number>();
 }
