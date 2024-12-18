@@ -28,6 +28,28 @@
                         class="w-full p-3 border-round" formControlName="username" />
                 </div>
 
+                <div class="mb-3 flex justify-content-around">
+                    <div class="w-6 mr-1 flex flex-wrap gap-2 p-fluid">
+                        <div class="flex-auto">
+                            <label for="integerAge">Edad:</label>
+                            <p-inputNumber 
+                                inputId="integerAge" 
+                                formControlName="age"
+                                class="mt-2"/>
+                        </div>
+                    </div>
+                    <div class="w-6 ml-1 mt-2 flex flex-wrap gap-2 p-fluid">
+                        <div class="flex-auto">
+                            <label for="integerAge">Edad:</label>
+                            <p-dropdown 
+                            [options]="genders" 
+                            formControlName="gender"
+                            optionLabel="name" 
+                            placeholder="Select a City" />
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Password -->
                 <div class="mb-4">
                     <label for="password"
@@ -39,7 +61,7 @@
             </div>
 
             <!-- Login Button -->
-            <button pButton label="Crear"
+            <button pButton label="Crear" type="submit"
                 class="w-full p-3 border-round font-bold"></button>
 
         </div>

@@ -12,6 +12,7 @@ import { CardModule } from 'primeng/card';
 export class CardObjetiveWeightComponent {
 
   objetiveWeight  = input.required<number>();
+  actualWeight = input.required<number>();
 
   public dataChart = [12,23,18,20,5,8,9];
 }

@@ -1,21 +1,20 @@
 
-@if (_globalSvc.userInfo().createdAt != '') {
-    <div class="flex justify-content-end">
-        <!-- <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" [raised]="true" severity="warning"/> -->
-        <p-button icon="pi pi-pencil" [rounded]="true" severity="secondary" [outlined]="true" (onClick)="editUserWeight()"/>
-    </div>
-
+@defer (when _globalSvc.userInfo().createdAt != '' && form != undefined) {
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div class="card flex flex-wrap gap-3 p-fluid">
+        <div class="flex justify-content-end">
+            <p-button icon="pi pi-pencil" type="submit" [rounded]="true" severity="secondary" [outlined]="true" (onClick)="editUserWeight()"/>
+        </div>
+
+        <div class="flex flex-wrap gap-2 p-fluid">
             <div class="flex-auto">
-                <label for="intergerObjetiveWeight">Peso objetivo</label>
+                <label for="intergerObjetiveWeight">Peso objetivo (kg):</label>
                 <p-inputNumber 
                     inputId="intergerObjetiveWeight" 
                     formControlName="objetiveWeight"
                     class="mt-2"/>
             </div>
             <div class="flex-auto">
-                <label for="integerActualWeight">Peso actual</label>
+                <label for="integerActualWeight">Peso actual (kg):</label>
                 <p-inputNumber 
                     inputId="integerActualWeight" 
                     formControlName="actualWeight"
@@ -23,5 +22,4 @@
             </div>
         </div>
     </form>
-
 }

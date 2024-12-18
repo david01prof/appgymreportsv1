@@ -39,7 +39,7 @@ import { IUser } from '@app/models';
           <ng-template pTemplate="end">
             <div class="flex align-items-center gap-2">
               <div class="card flex justify-content-center">
-                <p class="styleUsername">{{userInfo?.username}}</p>
+                <p class="styleUsername">{{_globalSvc.userInfo().username}}</p>
                 <p-menu #menu [model]="itemsProfile" [popup]="true"  class="styleButton"/>
                 <p-button [link]="true" (onClick)="menu.toggle($event)"><p-avatar
                     image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
@@ -63,12 +63,9 @@ import { IUser } from '@app/models';
 export class ToolbarComponent {
   public items: MenuItem[] | undefined;
   public itemsProfile: MenuItem[] | undefined;
-  public userInfo : IUser | undefined;
 
   private readonly _authStateSvc = inject(AuthStateService);
-  private readonly _authSvc = inject(AuthService);
-  private readonly _globalSvc = inject(GlobalService);
-  private readonly _auth = inject(Auth);
+  public readonly _globalSvc = inject(GlobalService);
 
   async ngOnInit() {
     this.items = [
@@ -102,12 +99,6 @@ export class ToolbarComponent {
           this._authStateSvc.logout();
       }
       },
-    ];
-
-    this.userInfo =  await this._authSvc.getUserById(this._auth.currentUser!.uid);
-    console.log(this.userInfo);
-    
-    this._globalSvc.userInfo.set(this.userInfo);
-    
+    ];    
   }
 }

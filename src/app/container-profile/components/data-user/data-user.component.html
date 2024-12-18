@@ -1,10 +1,10 @@
 
 @if (_globalSvc.userInfo().createdAt != '') {
-    <div class="grid p-2">
+    <div class="grid p-3">
          <div class="col-12  sm:col-8"><span class="font-bold">Nombre de usuario: </span>  <span class="styleSpan">{{_globalSvc.userInfo().username}}</span> </div>
         <div class="col-12  sm:col-4"><span class="font-bold">Edad: </span> <span class="styleSpan">{{_globalSvc.userInfo().age}}</span></div>
         <div class="col-12  sm:col-8"><span class="font-bold">Correo electrónico: </span>  <span class="styleSpan">{{_globalSvc.userInfo().email}}</span></div>
-        <div class="col-12  sm:col-4"><span class="font-bold">Genero: </span> <span class="styleSpan">{{_globalSvc.userInfo().gender}}</span></div>
+        <div class="col-12  sm:col-4"><span class="font-bold">Genero: </span> <span class="styleSpan">{{_globalSvc.userInfo().gender.name}}</span></div>
         <div class="col-12  sm:col-12"><span class="font-bold">Fecha de creación de cuenta: </span> <span class="styleSpan">{{getDate(_globalSvc.userInfo().createdAt) | date: 'dd/MM/yyyy'}}</span> </div>
     </div>
 }

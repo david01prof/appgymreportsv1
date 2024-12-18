@@ -3,7 +3,7 @@ import { Auth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPop
 import { Gender, IUser } from '@app/models';
 import { APP_CONSTANTS } from '@app/shared/constants';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { collection, doc, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
+import { collection, doc, Firestore, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
 
 
 @Injectable({
@@ -14,11 +14,11 @@ export class AuthService {
   private readonly _firestore = inject(Firestore);
   private _auth = inject(Auth);
 
-  signUp(user: Omit<IUser, 'username' | 'age' | 'gender' | 'objetiveWeight' | 'photo' | 'createdAt'>) {
+  signUp(user: Omit<IUser, 'username' | 'age' | 'gender' | 'objetiveWeight' | 'actualWeight' | 'photo' | 'createdAt'>) {
   return createUserWithEmailAndPassword(this._auth, user.email, user.password);
   }
 
-  signIn(user: Omit<IUser, 'username' | 'age' | 'gender' | 'objetiveWeight' | 'photo' | 'createdAt'>) {
+  signIn(user: Omit<IUser, 'username' | 'age' | 'gender' | 'objetiveWeight' | 'actualWeight' | 'photo' | 'createdAt'>) {
     return signInWithEmailAndPassword(this._auth,user.email,user.password);
   }
 
@@ -31,6 +31,7 @@ export class AuthService {
         age: user.age,
         gender: user.gender,
         objetiveWeight: user.objetiveWeight,
+        actualWeight: user.actualWeight,
         photo: user.photo,
         createdAt: new Date().toISOString() // Fecha de creación opcional
       });
@@ -40,6 +41,12 @@ export class AuthService {
       throw error;
     }
 
+  }
+
+  public updateUser(id: string, user: IUser): void {
+    const docRef = this._getDocRef(id);
+
+    updateDoc(docRef, { ...user });
   }
 
   public async getUserById(id: string): Promise<IUser> {

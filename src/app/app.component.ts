@@ -1,7 +1,7 @@
 import { Component, HostListener, inject, Renderer2 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import SpinnerComponent from './components/spinner/spinner.component';
 import { SpeedDialComponent } from "./components/speed-dial/speed-dial.component";
+import SpinnerComponent from './components/spinner/spinner.component';
 
 @Component({
   selector: 'app-root',
