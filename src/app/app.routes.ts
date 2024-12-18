@@ -5,6 +5,7 @@ import { ContainerReportsComponent } from './container-reports/container-reports
 import { privateGuard, publicGuard } from './core/auth.guard';
 import { ReportAddComponent } from './container-reports/report-add/report-add.component';
 import { ContainerProfileComponent } from './container-profile/container-profile.component';
+import { PoliticTermsComponent } from './container-legalTerms/politic-terms/politic-terms.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -47,6 +48,14 @@ export const routes: Routes = [
     // loadChildren: () => import('./container-dashboard/dashboard.routes').then((m) => m.routesDashboard),
     children: [
       { path: '', component: ContainerProfileComponent , outlet: 'content' }
+    ]
+  },
+  {
+    path: 'politic-terms',
+    loadComponent: () => import('./shared/ui/layout.component').then(m => m.LayoutComponent),
+    // loadChildren: () => import('./container-dashboard/dashboard.routes').then((m) => m.routesDashboard),
+    children: [
+      { path: '', component:  PoliticTermsComponent, outlet: 'content' }
     ]
   },
   {

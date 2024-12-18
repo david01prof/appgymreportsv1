@@ -93,6 +93,11 @@ export class ToolbarComponent {
         routerLink: ['/profile']
       },
       {
+        label: 'Terminos y condiciones',
+        icon: 'pi pi-cog',
+        routerLink: ['/politic-terms']
+      },
+      {
         label: 'Salir',
         icon: 'pi pi-sign-out',
         command: () => {

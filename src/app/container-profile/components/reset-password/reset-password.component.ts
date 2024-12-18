@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '@app/auth/data-access/auth.service';
+import { GlobalService } from '@app/services';
 import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
 
@@ -12,5 +14,13 @@ import { PasswordModule } from 'primeng/password';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ResetPasswordComponent {
+
+  private readonly _globalSvc = inject(GlobalService);
+  private readonly _authSvc = inject(AuthService);
+
   value!: string;
+
+  reset(){
+    this._authSvc.resetPassword(this._globalSvc.userInfo().email);
+  }
 }

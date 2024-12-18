@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, sendPasswordResetEmail, signInWithPopup } from '@angular/fire/auth';
 import { Gender, IUser } from '@app/models';
 import { APP_CONSTANTS } from '@app/shared/constants';
 import { signInWithEmailAndPassword } from 'firebase/auth';
@@ -55,6 +55,18 @@ export class AuthService {
     const documentData = await getDoc(docRef);
 
     return documentData.data() as IUser;
+  }
+
+  async resetPassword(email: string): Promise<void> {
+    const auth = getAuth();
+  
+    try {
+      await sendPasswordResetEmail(auth, email);
+      console.log("Correo de restablecimiento enviado correctamente.");
+    } catch (error) {
+      console.error("Error al enviar correo de restablecimiento:", error);
+      throw error;
+    }
   }
 
   private _getDocRef(id: string) {
