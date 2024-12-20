@@ -1,16 +1,13 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { GlobalService } from '@app/services';
 import { AuthStateService } from '@app/shared/data-access/auth.state.service';
 import { MenuItem } from 'primeng/api';
-import { MenubarModule } from 'primeng/menubar';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
-import { RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
-import { Auth } from '@angular/fire/auth';
-import { AuthService } from '@app/auth/data-access/auth.service';
-import { GlobalService } from '@app/services';
-import { IUser } from '@app/models';
+import { MenubarModule } from 'primeng/menubar';
 
 @Component({
   selector: 'app-toolbar',
@@ -42,7 +39,7 @@ import { IUser } from '@app/models';
                 <p class="styleUsername">{{_globalSvc.userInfo().username}}</p>
                 <p-menu #menu [model]="itemsProfile" [popup]="true"  class="styleButton"/>
                 <p-button [link]="true" (onClick)="menu.toggle($event)"><p-avatar
-                    image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+                    [image]="_globalSvc.userInfo().photo"
                     shape="circle"
                     class="mr-2"
                   /></p-button>

@@ -80,4 +80,12 @@ export class AuthService {
     provider.setCustomParameters({prompt: 'select_account'});
     return signInWithPopup(this._auth, provider);
   }
+
+
+
+  // ------------
+
+  public getBreadcrumbLabels() {
+    return [{ label: 'Perfil' }];
+  }
 }

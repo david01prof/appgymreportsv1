@@ -41,8 +41,6 @@ export class UserWeightComponent {
     effect(
       () => {
         if(this._globalSvc.userInfo().createdAt != ''){
-          console.log(this._globalSvc.userInfo());
-          
           this.form = this._formBuilder.group({
             objetiveWeight: new FormControl(
               { value: this._globalSvc.userInfo().objetiveWeight, disabled: true },
@@ -53,8 +51,6 @@ export class UserWeightComponent {
               Validators.required
             ),
           });
-  
-          console.log(this.form.value);
         }
       },
       { allowSignalWrites: true }

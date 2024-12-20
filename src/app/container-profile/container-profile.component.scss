@@ -1,0 +1,37 @@
+::ng-deep .custom-file-upload .p-button {
+  background-color: #ffffff;
+  color: #333;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  padding: 12px;
+  font-size: 14px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  top: 2.5rem;
+  left: 3rem;
+}
+
+.custom-file-upload .p-button:hover {
+  background-color: #e0e0e0; /* Color al pasar el ratón */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.custom-file-upload .p-button:focus {
+  outline: none;
+  box-shadow: 0 0 5px #999; /* Efecto de enfoque */
+}
+
+::ng-deep .p-avatar img {
+  border: 1px solid #c5c5c5;
+  border-radius: 50%;
+}
+
+::ng-deep .custom-avatar {
+  background-color: white;
+  position: absolute;
+  top: 1.5rem;
+  border: 1px solid #c5c5c5;
+  border-radius: 50%;
+}

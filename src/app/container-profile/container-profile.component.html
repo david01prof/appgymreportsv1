@@ -1,12 +1,29 @@
+<app-breadcrumb
+    [itemsLabels]="_authSvc.getBreadcrumbLabels()"
+    urlActive="profile"></app-breadcrumb>
+
 <p-card>
 
     <!-- header -->
+     <br>
     <p-divider></p-divider>
-    <div class="flex justify-content-center">
-        <p-avatar 
-        image="https://www.gravatar.com/avatar/05dfd4b41340d09cae045235eb0893c3?d=mp" 
-        styleClass="flex align-items-center justify-content-center mr-2" 
-        size="xlarge" />
+    <div class="flex justify-content-center mb-8">
+        <p-avatar
+            [image]="base64Image()"
+            styleClass="flex align-items-center justify-content-center"
+            class="custom-avatar"
+            size="xlarge">
+            <p-fileUpload
+            mode="basic"
+            class="custom-file-upload"
+            chooseIcon="pi pi-camera"
+            accept="image/*"
+            url="https://www.primefaces.org/cdn/api/upload.php" 
+            (onUpload)="onUpload($event)"
+            [auto]="true" 
+            />
+        </p-avatar>
+
     </div>
 
     <!-- Body -->
@@ -26,3 +43,5 @@
     </div>
 
 </p-card>
+
+<p-confirmDialog/>
