@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -8,7 +9,7 @@ import { InputTextModule } from 'primeng/inputtext';
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [ButtonModule,RouterLink,ReactiveFormsModule,InputTextModule],
+  imports: [ButtonModule,RouterLink,ReactiveFormsModule,InputTextModule,CommonModule],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -18,6 +19,7 @@ export class SignInComponent {
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _authSvc = inject(AuthService);
   public  readonly _route = inject(Router);
+  public forgetPassword = false;
 
   forms = this._formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
