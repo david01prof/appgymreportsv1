@@ -1,5 +1,5 @@
 <div>
-    <p-card class="mb-3" (click)="showDialog()" [ngClass]="{ 'borde-degradado': aplicarEstilo }">
+    <p-card class="mb-3" [routerLink]="[{  outlets: { content: ['add'] }} ]" [ngClass]="{ 'borde-degradado': aplicarEstilo }">
       <i class="pi pi-plus p-6 text-2xl text-color-secondary"> </i>
     </p-card>
     <pre class="text-center text-color-secondary ">Crear nueva rutina</pre>

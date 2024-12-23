@@ -39,7 +39,7 @@ export class CardsBottomComponent {
 
   public columReports = [
     { id: 'id', label: 'Id' },
-    { id: 'totaligc', label: 'Total IgC' },
+    // { id: 'totaligc', label: 'Total IgC' },
     { id: 'created', label: 'Fecha de registro' },
     { id: 'actions', label: 'Acciones' },
   ]

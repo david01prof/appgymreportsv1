@@ -1,11 +1,13 @@
 import { Routes } from '@angular/router';
 import { ContainerDashboardComponent } from './container-dashboard/container-dashboard.component';
-import { ReportDetailComponent } from './container-reports/report-detail/report-detail.component';
-import { ContainerReportsComponent } from './container-reports/container-reports.component';
-import { privateGuard, publicGuard } from './core/auth.guard';
-import { ReportAddComponent } from './container-reports/report-add/report-add.component';
-import { ContainerProfileComponent } from './container-profile/container-profile.component';
 import { PoliticTermsComponent } from './container-legalTerms/politic-terms/politic-terms.component';
+import { ContainerProfileComponent } from './container-profile/container-profile.component';
+import { ContainerReportsComponent } from './container-reports/container-reports.component';
+import { ReportAddComponent } from './container-reports/report-add/report-add.component';
+import { ReportDetailComponent } from './container-reports/report-detail/report-detail.component';
+import { AddRoutineComponent } from './container-routines/add-routine/add-routine.component';
+import { ContainerRoutinesComponent } from './container-routines/container-routines.component';
+import { privateGuard, publicGuard } from './core/auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -23,10 +25,10 @@ export const routes: Routes = [
     canActivate: [privateGuard()],
     loadComponent: () =>
       import('./shared/ui/layout.component').then((m) => m.LayoutComponent),
-    loadChildren: () =>
-      import('./container-routines/routines.routes').then(
-        (m) => m.routinesRoutes
-      ),
+    children: [
+      { path: '', component: ContainerRoutinesComponent , outlet: 'content' },
+      { path: 'add', component: AddRoutineComponent , outlet: 'content' },
+    ]
   },
 
   // Reports

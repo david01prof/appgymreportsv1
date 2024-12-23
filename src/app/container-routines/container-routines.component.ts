@@ -21,6 +21,7 @@ import { DialogDetailComponent } from './components/cards-routines/dialog-detail
 import { RoutinesService } from './components/cards-routines/services/routines.service';
 import { IFilter } from '../models/ifilter';
 import { IRoutine } from '../models/iroutine';
+import { GlobalRoutinesStore } from '@app/store/globalRoutines.store';
 
 const PRIME_MODULES = [
   ButtonModule,
@@ -63,31 +64,14 @@ export class ContainerRoutinesComponent {
   public selectedFilter: IFilter = { name: 'Titulo', code: 'title' };
   public date: Date[] | undefined;
 
-  private readonly _routineSvc = inject(RoutinesService);
-  private readonly _destroyRef = inject(DestroyRef);
+  public readonly storeRoutines = inject(GlobalRoutinesStore);
+  public readonly _routineSvc = inject(RoutinesService);
 
-
-  ngOnInit(): void {
-    this.getAllRoutines();
-    this.itemsLabels = this._routineSvc.getBreadcrumbLabels();
-    this.itemsFilter = this._routineSvc.getItemsFilter();
-  }
-
-  public getAllRoutines() {
-    this._routineSvc
-      .getAllRoutines()
-      .pipe(
-        takeUntilDestroyed(this._destroyRef),
-        tap((routines: IRoutine[]) => (this.safeData([...routines])))
-      )
-      .subscribe();
-  }
-
-  private safeData(data: IRoutine[]){
-    this.data = data;
-    this._routineSvc.safeData(data);
-    this.selectedFilter = { name: 'Titulo', code: 'title' };
-  }
+  // private safeData(data: IRoutine[]){
+  //   this.data = data;
+  //   this._routineSvc.safeData(data);
+  //   this.selectedFilter = { name: 'Titulo', code: 'title' };
+  // }
 
   public getActiveItem(e: IRoutine) {
     this.chargeComponent = true;

@@ -17,7 +17,9 @@ import {
 import { FormArray, FormBuilder } from '@angular/forms';
 import { IRoutine, ITag } from '@app/models/iroutine';
 import { APP_CONSTANTS } from '@app/shared/constants';
-import { Observable } from 'rxjs';
+import { AuthStateService } from '@app/shared/data-access/auth.state.service';
+import { where } from 'firebase/firestore';
+import { catchError, from, Observable } from 'rxjs';
 
 
 @Injectable({
@@ -33,29 +35,35 @@ export class RoutinesService {
     this._firestore,
     APP_CONSTANTS.COLLECTION_NAME_ROUTINES
   );
-
-  public newRoutine(
-    routine: Partial<IRoutine>
-  ): Promise<DocumentReference<DocumentData, DocumentData>> {
-    return addDoc(this._routineCollection, {
-      created: Date.now(),
-      updated: Date.now(),
-      ...routine,
-    });
-  }
+  private readonly _auth = inject(AuthStateService);
 
   public getAllRoutines(): Observable<IRoutine[]> {
-    const queryFn = query(this._routineCollection, orderBy('created', 'desc'));
+    const queryFn = query(this._routineCollection, where('userId', '==', this._auth.currentUser!.uid), orderBy('created', 'desc'));
     return collectionData(queryFn, { idField: 'id' }) as Observable<IRoutine[]>;
   }
 
-  public async getRoutineById(id: string): Promise<IRoutine> {
-    const docRef = this._getDocRef(id);
-
-    const documentData = await getDoc(docRef);
-
-    return documentData.data() as IRoutine;
+  public newRoutine( routine: Partial<IRoutine>): Observable<any>  {
+    return from(addDoc(this._routineCollection, {
+      created: Date.now(),
+      updated: Date.now(),
+      userId: this._auth.currentUser!.uid,
+      ...routine,
+    })).pipe(
+      catchError((error) => {
+        console.error('Error al agregar el reporte:', error);
+        console.info("error prevented for testing")
+        return Promise.resolve()
+      })
+    )
   }
+
+  // public async getRoutineById(id: string): Promise<IRoutine> {
+  //   const docRef = this._getDocRef(id);
+
+  //   const documentData = await getDoc(docRef);
+
+  //   return documentData.data() as IRoutine;
+  // }
 
   public updateRoutine(id: string, routine: IRoutine): void {
     const docRef = this._getDocRef(id);
@@ -63,9 +71,15 @@ export class RoutinesService {
     updateDoc(docRef, { ...routine });
   }
 
-  public deleteRoutine(id: string): void {
-    const docRef = this._getDocRef(id);
-    deleteDoc(docRef);
+  public deleteRoutine(id: number): Observable<void> {
+    const docRef = this._getDocRef(id.toString());
+    
+    return from(deleteDoc(docRef)).pipe(
+      catchError(() => {
+        console.error("error prevented for testing")
+        return Promise.resolve()
+      })
+    );
   }
 
   private _getDocRef(id: string) {

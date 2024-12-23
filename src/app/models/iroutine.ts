@@ -1,5 +1,6 @@
 export interface IRoutine {
-  id: string;
+  id: number;
+  idRoutine: string;
   titleRoutine: string;
   numExercises: number;
   exercises: IExercise[];

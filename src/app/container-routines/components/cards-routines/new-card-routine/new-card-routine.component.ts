@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { NewRoutineComponent } from './new-routine/new-routine.component';
 import { IRoutine } from '@app/models/iroutine';
 import { RoutinesService } from '../services/routines.service';
+import { RouterLink } from '@angular/router';
 
 const PRIME_MODULES = [CardModule, DialogModule, InputTextModule];
 @Component({
@@ -17,12 +18,13 @@ const PRIME_MODULES = [CardModule, DialogModule, InputTextModule];
     PRIME_MODULES,
     NewRoutineComponent,
     ReactiveFormsModule,
+    RouterLink
   ],
   templateUrl: './new-card-routine.component.html',
   styleUrl: './new-card-routine.component.scss'
 })
 export class NewCardRoutineComponent implements OnInit {
-  public visible: boolean = false;
+  public visible: boolean = false;  
   public chargeComponent: boolean = false;
   public item!: IRoutine;
   public date: string = '';
