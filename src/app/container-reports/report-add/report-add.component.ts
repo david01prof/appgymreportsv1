@@ -81,6 +81,7 @@ export class ReportAddComponent {
       return 0;
     }
   }
+
   getValuePhotos(e: any) {
     this.dataPhotos.set(e);
   }

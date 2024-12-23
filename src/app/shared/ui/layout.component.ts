@@ -22,7 +22,8 @@ export class LayoutComponent {
   private readonly _globalSvc = inject(GlobalService);
 
   async ngOnInit() {
-    let userInfo =  await this._authSvc.getUserById(this.auth.currentUser!.uid);    
+    let userInfo =  await this._authSvc.getUserById(this.auth.currentUser!.uid);   
+    console.log(userInfo)  
     this._globalSvc.userInfo.set(userInfo);
   }
 }

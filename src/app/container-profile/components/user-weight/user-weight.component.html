@@ -2,7 +2,8 @@
 @defer (when _globalSvc.userInfo().createdAt != '' && form != undefined) {
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="flex justify-content-end">
-            <p-button icon="pi pi-pencil" type="submit" [rounded]="true" severity="secondary" [outlined]="true" (onClick)="editUserWeight()"/>
+            <p-button *ngIf="!isSave" icon="pi pi-pencil" type="submit" [rounded]="true" severity="secondary" [outlined]="true" (onClick)="editUserWeight(); isSave = true"/>
+            <p-button *ngIf="isSave" icon="pi pi-save" type="submit" [rounded]="true" severity="primary"  (onClick)="editUserWeight(); isSave = false"/>
         </div>
 
         <div class="flex flex-wrap gap-2 p-fluid">

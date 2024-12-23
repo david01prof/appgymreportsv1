@@ -20,7 +20,7 @@ export interface IPhotos {
 }
 
 export interface IMeasurement {
-  genre: Gender;
+  genre: IGenderSelect;
   height: number;
   weight: number;
   age: number;
@@ -46,7 +46,7 @@ export const emptyReport: IReport = {
   idReport: 0,
   created: new Date().getTime(),
   measurement: {
-    genre: Gender.MALE,
+    genre: { name: 'Masculino', code: Gender.MALE },
     height: 0,
     weight: 0,
     age: 0,

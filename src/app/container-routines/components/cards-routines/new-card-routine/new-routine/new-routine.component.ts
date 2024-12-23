@@ -99,7 +99,7 @@ export class NewRoutineComponent {
       await this._routineSvc.newRoutine(_refForm);
       this.sendSubmitValue.emit(true);
     } else {
-      console.log('Formulario inválido');
+      console.error('Formulario inválido');
     }
   }
 

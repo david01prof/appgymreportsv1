@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@app/auth/data-access/auth.service';
 import { Gender, IGenderSelect } from '@app/models';
 import { ButtonModule } from 'primeng/button';
@@ -11,7 +11,7 @@ import { InputTextModule } from 'primeng/inputtext';
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [ButtonModule,ReactiveFormsModule,InputTextModule,InputNumberModule,DropdownModule,FormsModule],
+  imports: [ButtonModule,ReactiveFormsModule,InputTextModule,InputNumberModule,DropdownModule,FormsModule,RouterLink],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -53,7 +53,6 @@ export class SignUpComponent {
       if (email != undefined && password != undefined && username != undefined && age != undefined && gender != undefined && objetiveWeight != undefined && actualWeight != undefined && photo != undefined)  {
         const userCredential = await this._authSvc.signUp({ email, password });
         const userUid = userCredential.user.uid;
-        console.log(actualWeight);
         
         this._authSvc.saveUser({ email, username,password,age,gender, objetiveWeight, actualWeight, photo},userUid);
   

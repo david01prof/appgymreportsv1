@@ -1,4 +1,5 @@
 import { FormControl, FormGroup } from "@angular/forms";
+import { Gender, IGenderSelect } from "./ireport";
 
 export interface MeasurementForm {
   height: FormControl<number>;
@@ -6,6 +7,8 @@ export interface MeasurementForm {
   waist: FormControl<number>;
   hip: FormControl<number>;
   totaligc: FormControl<string>;
+  age: FormControl<number>;
+  genre: FormControl<IGenderSelect>;
 }
 
 export interface ReportForm {

@@ -1,13 +1,14 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@app/auth/data-access/auth.service';
 import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [ButtonModule,RouterLink,ReactiveFormsModule],
+  imports: [ButtonModule,RouterLink,ReactiveFormsModule,InputTextModule],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

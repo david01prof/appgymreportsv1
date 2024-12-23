@@ -1,9 +1,3 @@
-@if (isDetail()) {
-  <app-breadcrumb
-    [itemsLabels]="_reportSvc.getBreadcrumbLabelsResumen()"
-    urlActive="reports"></app-breadcrumb>
-} 
-
 <p-card class="fadein animation-duration-500">
   <h4 *ngIf="!isDetail()">Detalle del reporte:</h4>
 
@@ -37,7 +31,7 @@
         <p><strong>Edad:</strong> {{ measurement.age }}</p>
       </div>
       <div class="col-6">
-        <p><strong>Sexo:</strong> {{ measurement.genre }}</p>
+        <p><strong>Sexo:</strong> {{ measurement.genre.name }}</p>
       </div>
     </div>
     

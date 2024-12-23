@@ -74,7 +74,6 @@ export class ContainerProfileComponent {
         } else {
           this._globalSvc.convertFileToBase64(event.files[0]).then((base64) => {
             this.base64Image.set(base64);
-
             const userId = this._auth.currentUser!.uid;
             const activeUser = this._globalSvc.userInfo();
             activeUser.photo = base64;

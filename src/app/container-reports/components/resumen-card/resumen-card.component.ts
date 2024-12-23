@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
 import { Router } from '@angular/router';
-import { BreadcrumbComponent } from '@app/components/breadcrumb/breadcrumb.component';
 import { CarouselImagesComponent } from '@app/components/carousel-images/carousel-images.component';
 import { ReportsService } from '@app/container-reports/services/reports.service';
 import { IReport } from '@app/models';
@@ -18,7 +17,7 @@ const PRIME_MODULES = [ButtonModule, DividerModule, ImageModule,CardModule,Confi
 @Component({
   selector: 'app-resumen-card',
   standalone: true,
-  imports: [PRIME_MODULES,CommonModule,CarouselImagesComponent,BreadcrumbComponent],
+  imports: [PRIME_MODULES,CommonModule,CarouselImagesComponent],
   templateUrl: './resumen-card.component.html',
   styleUrl: './resumen-card.component.scss',
   providers:[ConfirmationService]

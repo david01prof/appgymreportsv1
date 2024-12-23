@@ -72,8 +72,6 @@ export class ContainerDashboardComponent {
   constructor() {
     effect(() => {
       this.activeUser.set(this._globalSvc.userInfo());
-      console.log(this.activeUser());
-      
     }, { allowSignalWrites: true });
   }
 

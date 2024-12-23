@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -20,13 +21,14 @@ import { InputNumberModule } from 'primeng/inputnumber';
 @Component({
   selector: 'app-user-weight',
   standalone: true,
-  imports: [ButtonModule, InputNumberModule, ReactiveFormsModule],
+  imports: [ButtonModule, InputNumberModule, ReactiveFormsModule,CommonModule],
   templateUrl: './user-weight.component.html',
   styleUrl: './user-weight.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserWeightComponent {
   public readonly _globalSvc = inject(GlobalService);
+  public isSave = false;
   public form !: FormGroup;
 
   private readonly _formBuilder = inject(FormBuilder);

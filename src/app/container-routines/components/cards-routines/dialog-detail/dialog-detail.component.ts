@@ -229,7 +229,7 @@ export class DialogDetailComponent {
       );
       this.visible = false;
     } else {
-      console.log('Formulario inválido');
+      console.error('Formulario inválido');
     }
   }
 
