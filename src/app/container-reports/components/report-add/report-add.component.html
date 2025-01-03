@@ -1,0 +1,121 @@
+<p-card class="stylesCard">
+  <p-stepper [(activeStep)]="active" [linear]="true">
+    <p-stepperPanel>
+      <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+        <button
+          class="bg-transparent border-none inline-flex flex-column gap-2"
+        >
+          <span
+            class="border-round border-2 w-3rem h-3rem inline-flex align-items-center justify-content-center"
+            [ngClass]="{
+              'bg-primary border-primary': index <= active,
+              'surface-border': index > active
+            }"
+          >
+            <i class="pi pi-calculator"></i>
+          </span>
+        </button>
+      </ng-template>
+      <ng-template pTemplate="content" let-nextCallback="nextCallback">
+
+        <!-- CalculatorPgc -->
+
+        <app-calculator-pgc (dataMeasurement)="getValueMeasurement($event)" (disabledNextPage)="disabledNextPage($event)" class="fadein animation-duration-300"></app-calculator-pgc>
+
+        <!--  -->
+
+        <div class="flex pt-4 justify-content-end">
+          <p-button
+            (onClick)="nextCallback.emit()"
+            label="Siguiente"
+            icon="pi pi-arrow-right"
+            iconPos="right"
+            [disabled]="disabledPage"
+          />
+        </div>
+      </ng-template>
+    </p-stepperPanel>
+    <p-stepperPanel>
+      <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+        <button
+          class="bg-transparent border-none inline-flex flex-column gap-2"
+        >
+          <span
+            class="border-round border-2 w-3rem h-3rem inline-flex align-items-center justify-content-center"
+            [ngClass]="{
+              'bg-primary border-primary': index <= active,
+              'surface-border': index > active
+            }"
+          >
+            <i class="pi pi-camera"></i>
+          </span>
+        </button>
+      </ng-template>
+      <ng-template
+        pTemplate="content"
+        let-prevCallback="prevCallback"
+        let-nextCallback="nextCallback"
+      >
+        <!-- Photos -->
+
+        <app-photos (dataPhotos)="getValuePhotos($event)" class="fadein animation-duration-300"></app-photos>
+
+        <!--  -->
+        <div class="flex pt-4 justify-content-between">
+          <p-button
+            (onClick)="prevCallback.emit()"
+            label="Anterior"
+            severity="secondary"
+            icon="pi pi-arrow-left"
+          />
+          <p-button
+            (onClick)="nextCallback.emit();"
+            label="Siguiente"
+            icon="pi pi-arrow-right"
+            iconPos="right"
+          />
+        </div>
+      </ng-template>
+    </p-stepperPanel>
+    <p-stepperPanel>
+      <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+        <button
+          class="bg-transparent border-none inline-flex flex-column gap-2"
+        >
+          <span
+            class="border-round border-2 w-3rem h-3rem inline-flex align-items-center justify-content-center"
+            [ngClass]="{
+              'bg-primary border-primary': index <= active,
+              'surface-border': index > active
+            }"
+          >
+            <i class="pi pi-list"></i>
+          </span>
+        </button>
+      </ng-template>
+      <ng-template pTemplate="content" let-prevCallback="prevCallback">
+        <!-- Resumen Report -->
+
+        <app-resumen [report]="dataReport()" [isDetail]="false" class="fadein animation-duration-300"></app-resumen>
+
+        <!--  -->
+        <div class="flex pt-4 justify-content-between">
+          <p-button
+            (onClick)="prevCallback.emit()"
+            label="Anterior"
+            severity="secondary"
+            icon="pi pi-arrow-left"
+          />
+          <p-button
+            label="Guardar"
+            (onClick)="store['addReport'](dataReport())"
+            routerLink = "/reports"
+            icon="pi pi-arrow-right"
+            iconPos="right"
+          />
+        </div>
+      </ng-template>
+    </p-stepperPanel>
+  </p-stepper>
+</p-card>
+  

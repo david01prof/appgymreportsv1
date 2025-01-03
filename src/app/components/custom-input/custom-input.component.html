@@ -1,27 +1,76 @@
+@let localControl = control();
+
 <div class="form-group">
-
-
-    @if (type() == 'text') {
-      <div class="flex flex-column gap-2">
-        <label [for]="id()" class="font-light">{{label()}}</label>
-        <input 
-            pInputText
-            [id]="id()" 
-            aria-describedby="username-help" 
-            [formControl]="control()"
-            [placeholder]="placeHolder()">
-        <small id="username-help">
-            {{descriptionLabel()}}
-        </small>
+  @if (type() == 'text') {
+    <div class="flex flex-column gap-2">
+      <label [for]="id()" class="font-light">{{ label() }}</label>
+      <input
+        pInputText
+        [id]="id()"
+        aria-describedby="username-help"
+        [formControl]="localControl"
+        [placeholder]="placeHolder()"
+        (blur)="onTouched()"
+      />
+      <small id="username-help">
+        {{ descriptionLabel() }}
+      </small>
     </div>
-    }
-    @else if (type() == 'number') {
-      <div class="flex flex-column gap-2 my-2">
-        <label [for]="id()" class="font-light">{{label()}}</label>
-        <p-inputNumber inputId="integeronly" [formControl]="control()" [id]="id()" (ngModelChange)="_globalService.updateSignal(true)" />
+  } @else if (type() == 'number') {
+    <div class="flex flex-column gap-2 my-2">
+      <label [for]="id()" class="font-light">{{ label() }}</label>
+      <p-inputNumber
+        inputId="integeronly"
+        [formControl]="localControl"
+        [id]="id()"
+        (ngModelChange)="_globalService.updateSignal(true)"
+        autocomplete="off"
+        (blur)="onTouched()"
+      />
+    </div>
+  } @else if(type() == 'textarea') {
+    <div class="my-3 gap-2">
+      <label [id]="id()" class="font-light">{{ label() }}</label>
+      <textarea
+        pInputTextarea
+        [formControl]="localControl"
+        [id]="id()"
+        rows="5"
+        cols="30"
+        pInputTextarea
+        [autoResize]="true"
+        (blur)="onTouched()"
+      ></textarea>
+    </div>
+  } @else if(type() == 'checkbox') {
+    <div class="flex mb-2">
+      <label class="w-6 text-center font-light">{{ label() }}:</label>
+      <div class="card flex justify-content-center w-6">
+        <p-checkbox
+          [formControl]="localControl"
+          [value]="localControl.value"
+          [binary]="true"
+          inputId="binary"
+          (blur)="onTouched()"
+        />
       </div>
-    }
-    @if (control() != undefined && control().invalid && control().touched) {
+    </div>
+  }
+  @else if (type() == 'dropdown') {
+    <div class="flex flex-column">
+      <label [id]="id()" class="font-light">{{ label() }}</label>
+      <p-dropdown 
+      [options]="valuesDropdown()" 
+      [formControl]="localControl"
+      [optionLabel]="keyDropdown()"
+      [placeholder]="placeHolder()"
+      (blur)="onTouched()" />
+    </div>
+  }
+  @if (localControl.invalid && (localControl.touched || localControl.dirty)) {
+    @if(localControl.errors?.['required']){
       <small class="error">{{ errorMessage() }}</small>
     }
-  </div>
+
+  }
+</div>

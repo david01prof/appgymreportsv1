@@ -15,7 +15,7 @@ import {
   updateDoc
 } from '@angular/fire/firestore';
 import { FormArray, FormBuilder } from '@angular/forms';
-import { IRoutine, ITag } from '@app/models/iroutine';
+import { IRoutine, ITag, Status } from '@app/models/iroutine';
 import { APP_CONSTANTS } from '@app/shared/constants';
 import { AuthStateService } from '@app/shared/data-access/auth.state.service';
 import { where } from 'firebase/firestore';
@@ -96,14 +96,13 @@ export class RoutinesService {
 
   // OTHERS METHODS
 
-  public getColorsTag(): ITag[] {
+  public getColorsTag(): Status[] {
     return [
-      { name: 'Azul', code: 'primary' },
-      { name: 'Rojo', code: 'danger' },
-      { name: 'Verde', code: 'success' },
-      { name: 'Naranja', code: 'warning' },
-      { name: 'Negro', code: 'contrast' },
-    ];
+      { label: 'Rojo', severity: 'danger' },
+      { label: 'Verde', severity: 'success' },
+      { label: 'Naranja', severity: 'warning' },
+      { label: 'Negro', severity: 'contrast' },
+    ]
   }
 
   public getBreadcrumbLabels() {
@@ -136,5 +135,9 @@ export class RoutinesService {
       { name: 'Tag', code: 'tag' },
       { name: 'Fecha', code: 'date' },
     ];
+  }
+
+  public getBreadcrumbLabelsNew() {
+    return [{ label: 'Rutinas' },{ label: 'Nuevo' }, ];
   }
 }

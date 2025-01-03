@@ -1,1 +1,14 @@
-<p>add-routine works!</p>
+<app-breadcrumb
+    [itemsLabels]="_routineSvc.getBreadcrumbLabelsNew()"
+    [urlActive]="'routines'"></app-breadcrumb>
+
+
+<div>
+    @for(formGroup of items(); track formGroup.controls.id.value){
+        <app-form-routine-child [formGroup]="formGroup" (addRoutine)="generateControlsExercises()" (deleteExercise)="getExercises().removeAt($event)" (addSerie)="generateControlsSeries($event)" (deleteSerie)="deleteSerie($event)"/>
+    }
+
+    <div class="flex justify-content-center mt-2 mb-4">
+        <p-button (onClick)="onSubmit()">Guardar</p-button>
+    </div>
+</div>

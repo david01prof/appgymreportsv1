@@ -1,7 +1,31 @@
-::ng-deep .p-breadcrumb {
-    background-color: transparent;
+::ng-deep .p-card {
+    width: 168px;
+    overflow: hidden;
+    margin-bottom: 16px;
 }
 
-::ng-deep .p-inputtext {
-    width: 80%;
+.alignItems {
+    justify-content: center !important;
+    gap: 4%;
 }
+
+@media (min-width: 768px) {
+    .alignItems {
+        justify-content: flex-start !important;
+        gap: 3%;
+        margin-left: 1%;
+    }
+}
+
+
+::ng-deep .borde-degradado .p-card .p-card-body{
+    border: 5px solid transparent !important; /* Configura el grosor del borde */
+    border-image: linear-gradient(to bottom, #eff3f8, white) 1 !important;
+    border-radius: 19px !important; /* Opcional: para bordes redondeados */
+    background:linear-gradient(to bottom, #eff3f8, #ffffff);
+    overflow: hidden;
+  }
+  
+  i {
+    color: #aeb1b6 !important;
+  }

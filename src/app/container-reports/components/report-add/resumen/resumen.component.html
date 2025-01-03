@@ -1,0 +1,36 @@
+<h4 *ngIf="!isDetail()">Detalle del reporte:</h4>
+<h4 *ngIf="isDetail()">Detalle del reporte {{report().idReport + 1}}:</h4>
+
+<p-divider></p-divider>
+
+@defer (when report() != undefined) {
+
+  @let measurement = report().measurement;
+  <div class="grid">
+    <div class="col-6">
+      <p><strong>Altura:</strong> {{ measurement.height }}m</p>
+    </div>
+    <div class="col-6">
+      <p><strong>Peso:</strong> {{ measurement.weight }}kg</p>
+    </div>
+    <div class="col-6">
+      <p><strong>Cintura:</strong> {{ measurement.waist }}cm</p>
+    </div>
+    <div class="col-6">
+      <p><strong>Cadera:</strong> {{ measurement.hip }}cm</p>
+    </div>
+    <div class="col-6">
+      <p><strong>Edad:</strong> {{ measurement.age }}</p>
+    </div>
+    <div class="col-6">
+      <p><strong>Sexo:</strong> {{ measurement.genre }}</p>
+    </div>
+  </div>
+  
+  
+  <h4>Imagenes aportadas:</h4>
+  
+  <p-divider></p-divider>
+
+  <app-carousel-images [images]="report().photos"></app-carousel-images>
+}

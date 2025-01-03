@@ -1,0 +1,32 @@
+<!-- <div class="card flex justify-content-center mb-4">
+  <input
+    type="text"
+    pInputText
+    [formControl]="searchControl"
+    placeholder="Buscar..."
+    (ngModelChange)="getValueFilter()"
+    *ngIf="
+      selectedFilter.code !== 'favorites' &&
+      selectedFilter.code !== 'nofavorites' &&
+      selectedFilter.code !== 'date'
+    "
+  />
+
+  <p-calendar
+    [(ngModel)]="date"
+    [iconDisplay]="'input'"
+    [showIcon]="true"
+    inputId="icondisplay"
+    selectionMode="range"
+    [readonlyInput]="true"
+    *ngIf="selectedFilter.code === 'date'"
+    (ngModelChange)="getValueFilter()"
+  />
+  <p-dropdown
+    [options]="_routineSvc.getItemsFilter()"
+    [(ngModel)]="selectedFilter"
+    optionLabel="name"
+    placeholder="Filtrar"
+    (ngModelChange)="getValueFilter()"
+  />
+</div> -->

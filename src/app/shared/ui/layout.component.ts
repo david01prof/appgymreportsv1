@@ -23,7 +23,6 @@ export class LayoutComponent {
 
   async ngOnInit() {
     let userInfo =  await this._authSvc.getUserById(this.auth.currentUser!.uid);   
-    console.log(userInfo)  
     this._globalSvc.userInfo.set(userInfo);
   }
 }

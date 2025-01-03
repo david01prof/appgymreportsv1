@@ -1,13 +1,167 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  output,
+  signal,
+  Signal,
+} from '@angular/core';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { BreadcrumbComponent } from '@app/components/breadcrumb/breadcrumb.component';
+import {
+  emptyRoutine,
+  ExercisesFormControls,
+  IExercise,
+  IRoutine,
+  ITag,
+  RoutineForm,
+  SeriesFormControls,
+  TagFormControls,
+} from '@app/models';
+import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { CardModule } from 'primeng/card';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DividerModule } from 'primeng/divider';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { TagModule } from 'primeng/tag';
+import { RoutinesService } from '../components/cards-routines/services/routines.service';
+import { CustomInputComponent } from '@app/components/custom-input/custom-input.component';
+import { FormRoutineChildComponent } from './form-routine-child/form-routine-child.component';
+
+const PRIME_MODULES = [
+  CardModule,
+  ButtonModule,
+  CalendarModule,
+  InputNumberModule,
+  InputTextModule,
+  InputTextareaModule,
+  DividerModule,
+  ScrollPanelModule,
+  TagModule,
+  DropdownModule,
+  CheckboxModule,
+  InputGroupModule,
+  InputGroupAddonModule,
+];
+
+export type CustomFormGroup = FormGroup<RoutineForm>;
 
 @Component({
   selector: 'app-add-routine',
   standalone: true,
-  imports: [],
+  imports: [
+    ReactiveFormsModule,
+    PRIME_MODULES,
+    CommonModule,
+    FormsModule,
+    BreadcrumbComponent,
+    FormRoutineChildComponent,
+  ],
   templateUrl: './add-routine.component.html',
   styleUrl: './add-routine.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddRoutineComponent {
+  
+  public readonly fb = inject(NonNullableFormBuilder);
+  public readonly _routineSvc = inject(RoutinesService);
+  
+  public routineForm: FormGroup<{ items: FormArray<CustomFormGroup> }> =
+    this.fb.group({
+      items: this.fb.array<CustomFormGroup>([]),
+    })
+  ;
+  public items = signal(this.routineForm.controls.items.controls);
 
+  private routineEmptyForm = computed(() => emptyRoutine);
+
+  constructor() {this.addRoutine()}
+
+  addRoutine() {
+    const id = this.items().length + 1;
+    const itemForm = this.fb.group<RoutineForm>({
+      id: this.fb.control(0),
+      idRoutine: this.fb.control(id),
+      titleRoutine: this.fb.control(this.routineEmptyForm().titleRoutine),
+      numExercises: this.fb.control(this.routineEmptyForm().numExercises),
+      exercises: this.fb.array<FormGroup<ExercisesFormControls>>([]),
+      date: this.fb.control(this.routineEmptyForm().date),
+      favourite: this.fb.control(this.routineEmptyForm().favourite),
+      tag: this.fb.group<TagFormControls>({
+        title: this.fb.control(this.routineEmptyForm().tag.title) ?? '',
+        tagDropdown: this.fb.control(emptyRoutine.tag.tagDropdown) ?? emptyRoutine.tag.tagDropdown,
+      }),
+      comments: this.fb.control(this.routineEmptyForm().comments),
+    });
+
+    this.routineForm.controls.items.push(itemForm);
+    this.items.set([...this.routineForm.controls.items.controls]);
+    this.generateControlsExercises();
+    this.generateControlsSeries(0);
+  }
+
+  public generateControlsExercises() {
+    this.getExercises().push(
+      this.fb.group<ExercisesFormControls>({
+        titleExercise: this.fb.control(''),
+        numSeries: this.fb.control(1),
+        series: this.fb.array<FormGroup<SeriesFormControls>>([]),
+      })
+    );
+
+    this.items.set([...this.routineForm.controls.items.controls]);
+  }
+
+  public deleteExercise(id: number) {
+    this.getExercises().removeAt(id);
+  }
+
+  public generateControlsSeries(id:number) {
+    this.getSeries(id).push(
+      this.fb.group<SeriesFormControls>({
+        replays: this.fb.control(0),
+        weight: this.fb.control(0)
+      })
+    )
+  
+    this.items.set([...this.routineForm.controls.items.controls]);
+  }
+
+  public deleteSerie(e:any) {
+    this.getSeries(e.parent).removeAt(e.child);
+  }
+
+
+  public async onSubmit() {
+    let _refForm : Partial<IRoutine> = this.items()[0].value;
+    await this._routineSvc.newRoutine(_refForm);
+  }
+
+  public getExercises(): FormArray {
+    return this.items()[0].controls.exercises as FormArray;
+  }
+
+  public getSeries(id: number): FormArray {
+    return this.getExercises().at(id).get('series') as FormArray;
+  }
 }

@@ -1,48 +1,21 @@
 <app-breadcrumb
   [itemsLabels]="_routineSvc.getBreadcrumbLabels()"
-  [urlActive]="'dashboard'"
+  [urlActive]="'routines'"
 ></app-breadcrumb>
 
-<!-- <div class="card flex justify-content-center mb-4">
-  <input
-    type="text"
-    pInputText
-    [formControl]="searchControl"
-    placeholder="Buscar..."
-    (ngModelChange)="getValueFilter()"
-    *ngIf="
-      selectedFilter.code !== 'favorites' &&
-      selectedFilter.code !== 'nofavorites' &&
-      selectedFilter.code !== 'date'
-    "
-  />
+<div class="card flex justify-content-between flex-wrap alignItems mt-4 fadein animation-duration-2000">
 
-  <p-calendar
-    [(ngModel)]="date"
-    [iconDisplay]="'input'"
-    [showIcon]="true"
-    inputId="icondisplay"
-    selectionMode="range"
-    [readonlyInput]="true"
-    *ngIf="selectedFilter.code === 'date'"
-    (ngModelChange)="getValueFilter()"
-  />
-  <p-dropdown
-    [options]="_routineSvc.getItemsFilter()"
-    [(ngModel)]="selectedFilter"
-    optionLabel="name"
-    placeholder="Filtrar"
-    (ngModelChange)="getValueFilter()"
-  />
-</div> -->
+  <div>
+    <p-card class="mb-3" [ngClass]="{ 'borde-degradado': aplicarEstilo }"  [routerLink]="[{  outlets: { content: ['add'] }} ]" >
+      <i class="pi pi-plus p-6 text-2xl text-color-secondary"> </i>
+    </p-card>
+    <pre class="text-center text-color-secondary ">Crear nueva rutina</pre>
+  </div>
 
-<app-cards-routines
-  [data]="data"
-  (activeItem)="getActiveItem($event)"
-></app-cards-routines>
+  @defer (when storeRoutines.routines().length > 0) {
+    @for (routine of storeRoutines.routines(); track $index) {
+      <app-cards-routines [data]="routine"></app-cards-routines>
+    }
+  }
 
-<app-dialog-detail
-  *ngIf="chargeComponent"
-  [routine]="item"
-  (sendDialogHide)="getValueHideDialog()"
-></app-dialog-detail>
+</div>

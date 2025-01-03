@@ -29,7 +29,7 @@ export const GlobalRoutinesStore = signalStore(
   withState(() => inject(STORE_STATE)),
   withEntities<IReport>(),
   withMethods((store, _routinesSvc = inject(RoutinesService)) => ({
-    getReport(id: number) {
+    getRoutine(id: number) {
       return store.routines().find((rep) => rep.id === id);
     },
 

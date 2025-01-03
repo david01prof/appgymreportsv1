@@ -1,0 +1,139 @@
+<div [formGroup]="formGroup()">
+  <div class="sm:w-10 md:w-8 mx-auto">
+    <p-card class="fadein animation-duration-500 w-full h-full">
+
+      <!-- Favourite Item -->
+      <i class="pi pi-bookmark-fill favouriteItem" [ngClass]="show()">
+          <i class="pi pi-star-fill"></i>
+      </i>
+
+      <!-- Title routine -->
+      <app-custom-input
+        [control]="formGroup().controls.titleRoutine"
+        type="text"
+        id="titleRoutine"
+        label="Titulo"
+        formControlName="titleRoutine" />
+
+      <p-divider></p-divider>
+
+      <div class="flex justify-content-start gap-2 mb-2" (click)="addRoutine.emit()">
+        <span class="text-gray-400">Anadir ejercicio:</span> <i
+          class="pi pi-plus-circle text-gray-400"></i>
+      </div>
+
+
+      <div formArrayName="exercises">
+        <div [formGroupName]="i" *ngFor="let item of formGroup().controls.exercises.controls; let i = index" class="mt-4">
+          <div class="flex justify-content-between mt-2">
+            <p class="font-bold">Ejercicio {{i + 1}}</p>
+            <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (onClick)="deleteExercise.emit(i)" />
+          </div>
+
+          <!-- Title exercise -->
+          <app-custom-input
+            [control]="formGroup().controls.exercises.controls[i].controls.titleExercise"
+            type="text"
+            id="titleExercise"
+            label="Titulo"
+            placeHolder="Introduce el titulo del ejercicio...."
+            formControlName="titleExercise" 
+          />
+
+          <div formArrayName="series" >
+            <p-divider></p-divider>
+            <p-accordion>
+            <div *ngFor="let item of formGroup().controls.exercises.controls[i].controls.series.controls; let j = index" [formGroupName]="j" class="seriesDiv">
+                <p-accordionTab>
+                  <ng-template pTemplate="header">
+                        <div class="grid w-full alignAccordion mr-3">
+                          <span class="col-10">Serie {{ j + 1 }}</span>
+                          <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" class="col-2"  (onClick)="deleteSerie.emit({parent:i, child:j})"></p-button>
+                        </div>
+                  </ng-template>
+
+                  <div class="grid px-3 fadein animation-duration-500 overflow-hidden">
+                    <div class="col-6 md:col-6">
+                      <!-- Weight -->
+                      <app-custom-input
+                        [control]="formGroup().controls.exercises.controls[i].controls.series.controls[j].controls.weight"
+                        type="number"
+                        id="weight"
+                        label="Peso"
+                        formControlName="weight" />
+                    </div>
+                    <div class="col-6 md:col-6">
+                      <!-- Replays -->
+                      <app-custom-input
+                        [control]="formGroup().controls.exercises.controls[i].controls.series.controls[j].controls.replays"
+                        type="number"
+                        id="replays"
+                        label="Repeticiones"
+                        formControlName="replays" />
+                    </div>
+                  </div>
+                </p-accordionTab>
+            </div>
+          </p-accordion>
+            <div class="flex justify-content-start gap-2 px-3"
+              (click)="addSerie.emit(i)">
+              <span class="text-gray-400">Anadir serie:</span> <i
+                class="pi pi-plus-circle text-gray-400"></i>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <p-divider></p-divider>
+
+      <!-- Tag -->
+      <div class="grid gap-2" formGroupName="tag">
+        <div class="col-6">
+          <div class="flex flex-column gap-2">
+            <app-custom-input
+              [control]="formGroup().controls.tag.controls.title"
+              type="text"
+              id="tag"
+              label="Tag"
+              formControlName="title" />
+          </div>
+        </div>
+        <div class="col-5 mt-2">
+          <app-custom-input
+            label="Color del tag"
+            id="tag"
+            [valuesDropdown]="_routineSvc.getColorsTag()"
+            keyDropdown="label"
+            [control]="formGroup().controls.tag.controls.tagDropdown"
+            [placeHolder]="'Selecciona un color'"
+            type="dropdown" />
+        </div>
+      </div>
+
+      <div class="flex justify-content-left tagDiv">
+        <p-tag
+          value="{{ formGroup().controls.tag.controls.title.value }}"
+          [severity]="
+            formGroup().controls.tag.controls.tagDropdown.value?.severity
+          "></p-tag>
+      </div>
+
+      <!-- Comments -->
+      <app-custom-input
+        [control]="formGroup().controls.comments"
+        type="textarea"
+        id="comments"
+        label="Comentarios"
+        formControlName="comments" />
+
+      <!-- Favourite -->
+      <app-custom-input
+        [control]="formGroup().controls.favourite"
+        type="checkbox"
+        id="favourite"
+        label="Anadir a favoritos"
+        formControlName="favourite" />
+    </p-card>
+  </div>
+</div>
