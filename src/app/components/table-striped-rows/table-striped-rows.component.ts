@@ -9,6 +9,7 @@ import { Table, TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { IRoutine } from '../../models/iroutine';
 import { RoutinesService } from '@app/container-routines/services/routines.service';
+import { RouterLink } from '@angular/router';
 
 
 const PRIME_MODULES = [
@@ -22,7 +23,7 @@ const PRIME_MODULES = [
 @Component({
   selector: 'app-table-striped-rows',
   standalone: true,
-  imports: [CommonModule, PRIME_MODULES,FormsModule],
+  imports: [CommonModule, PRIME_MODULES,FormsModule,RouterLink],
   templateUrl: './table-striped-rows.component.html',
   styleUrl: './table-striped-rows.component.scss',
 })

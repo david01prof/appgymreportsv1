@@ -10,47 +10,38 @@
         [globalFilterFields]="getFilterFields()"
         [rowsPerPageOptions]="[5, 10]">
         <ng-template pTemplate="caption">
-            <div class="flex">
-                <p-button label="Clear" [outlined]="true" icon="pi pi-filter-slash" (onClick)="clear(dt2)" />
-                <span class="p-input-icon-left ml-auto">
+            <div class="grid">
+                <p-button label="Clear" [outlined]="true" icon="pi pi-filter-slash" (onClick)="clear(dt2)"  class="col-5 overflow-hidden"/>
+                <span class="p-input-icon-left ml-auto col-7 overflow-hidden">
                     <i class="pi pi-search"></i>
                     <input 
                     pInputText 
                     type="text" 
                     [(ngModel)]="searchValue"
                     (input)="onGlobalFilter($event)" 
-                    placeholder="Buscar...." />
+                    placeholder="Buscar...."
+                    class="w-full" />
                 </span>
             </div>
         </ng-template>
-        <!-- <ng-template pTemplate="caption">
-            <div class="flex">
-                <p-iconField iconPosition="left" class="ml-auto">
-                    <p-inputIcon>
-                        <i class="pi pi-search"></i>
-                    </p-inputIcon>
-                    <input 
-                        pInputText 
-                        type="text" 
-                        (input)="onGlobalFilter($event)" 
-                        placeholder="Search keyword" />
-                </p-iconField>
-            </div>
-        </ng-template> -->
             <ng-template pTemplate="header">
                 <tr>
-                    <th *ngFor="let column of columns()" [pSortableColumn]="column.id"> {{column.label}} <p-sortIcon [field]="column.id" /> </th>
+                    <th *ngFor="let column of columns()" [pSortableColumn]="column.id" class="text-center"> {{column.label}} <p-sortIcon [field]="column.id" /> </th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-product>
                 <tr>
-                    <td *ngFor="let column of columns()"> 
-                        
-                        @if (column.id == 'actions') {
-                            <p-button icon="pi pi-eye" severity="info" ></p-button>
+                    <td *ngFor="let column of columns()" class="text-center"> 
+
+                        @if(column.id == 'id'){
+                            @if (isRegister()) {
+                                Reporte {{product.idReport + 1}}
+                            } @else {
+                                {{product[column.id]}} 
+                            }
                         }
                         @else if (column.id == 'tag') {
-                            <p-tag [severity]="product['severityTag'].code">{{product['tag']}}</p-tag>
+                            <p-tag [severity]="product['tag'].tagDropdown?.severity"> {{product['tag'].title}}</p-tag> 
                         }
                         @else if (column.id == 'exercises') {
                             {{product[column.id].length}}
@@ -67,12 +58,18 @@
                             }@else {
                                 0%
                             }
+                        }@else if (column.id == 'actions') {
+                            <div class="flex justify-content-center">
+                                @if(isRegister()){
+                                    <p-button icon="pi pi-eye" severity="info" [routerLink]="['/reports',{  outlets: { content: [product.id] }} ]" ></p-button>
+                                }
+                                @else {
+                                    <p-button icon="pi pi-eye" severity="info" [routerLink]="['/routines',{  outlets: { content: [product.id] }} ]" ></p-button>
+                                }
+                            </div>
+                        }@else{
+                            {{product[column.id]}}
                         }
-                        @else {
-                            {{product[column.id]}} 
-                        }
-                        
-
                     </td>
                 </tr>
             </ng-template>

@@ -25,6 +25,7 @@ export class GraphicCirculeTagRoutinesComponent implements OnChanges {
 
   ngOnChanges(){
     this.calculateTagsRoutines();
+   
     this.chartOptions = {
       series: this.series, // Valores para cada sección del donut
       chart: {
@@ -53,21 +54,21 @@ export class GraphicCirculeTagRoutinesComponent implements OnChanges {
 
     for(let routine of this.routines()){
       
-      // if(this.collectionLabelsTags.length == 0){
-      //   this.collectionLabelsTags.push(routine.tag);
-      //   this.collectionLengthTagsLabels.push({label: routine.tag, contador: 1});
-      // }else{
-      //   if(this.collectionLabelsTags.indexOf(routine.tag) == -1){
-      //     this.collectionLabelsTags.push(routine.tag);
-      //     this.collectionLengthTagsLabels.push({label: routine.tag, contador: 1});
-      //   }else{
-      //     let tagGraph : ITagsGraph | undefined = this.collectionLengthTagsLabels.find( (x: ITagsGraph) => x.label == routine.tag);
-      //     if(tagGraph != undefined){
-      //       tagGraph.contador++;
-      //     }
+      if(this.collectionLabelsTags.length == 0){
+        this.collectionLabelsTags.push(routine.tag.title ?? '');
+        this.collectionLengthTagsLabels.push({label: routine.tag.title ?? '', contador: 1});
+      }else{
+        if(this.collectionLabelsTags.indexOf(routine.tag.title ?? '') == -1){
+          this.collectionLabelsTags.push(routine.tag.title ?? '');
+          this.collectionLengthTagsLabels.push({label: routine.tag.title ?? '', contador: 1});
+        }else{
+          let tagGraph : ITagsGraph | undefined = this.collectionLengthTagsLabels.find( (x: ITagsGraph) => x.label == routine.tag);
+          if(tagGraph != undefined){
+            tagGraph.contador++;
+          }
           
-      //   }
-      // }
+        }
+      }
     }
 
     this.getSerie();

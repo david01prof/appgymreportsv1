@@ -30,7 +30,6 @@ export class CardsBottomComponent {
 
   public columnsRoutines = [
     { id: 'titleRoutine', label: 'Titulo' },
-    { id: 'numExercises', label: 'Num. de ejercicios' },
     { id: 'exercises', label: 'Ejercicios' },
     { id: 'date', label: 'Fecha' },
     { id: 'tag', label: 'Etiqueta' },

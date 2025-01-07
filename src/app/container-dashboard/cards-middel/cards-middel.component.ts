@@ -4,6 +4,7 @@ import { CardModule } from 'primeng/card';
 import { GraphicCirculeTagRoutinesComponent } from './graphic-circule-tag-routines/graphic-circule-tag-routines.component';
 import { GraphicLineGradientComponent } from './graphic-line-gradient/graphic-line-gradient.component';
 import { GraphicRadialBarRoutinesRegistersComponent } from './graphic-radial-bar-routines-registers/graphic-radial-bar-routines-registers.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-cards-middel',
@@ -13,15 +14,17 @@ import { GraphicRadialBarRoutinesRegistersComponent } from './graphic-radial-bar
     GraphicLineGradientComponent,
     GraphicCirculeTagRoutinesComponent,
     GraphicRadialBarRoutinesRegistersComponent,
+    CommonModule
   ],
   styleUrls: ['./cards-middel.component.scss'],
   template: `
     <div class="cardsGraphicMiddels overflow-hidden fadein animation-duration-1000">
       <app-graphic-line-gradient
         class="styleContainerA"
+        [reports]="reports()"
       ></app-graphic-line-gradient>
 
-      <div class="styleContainerB">
+      <div class="styleContainerB" *ngIf="routines().length > 0">
         <app-graphic-circule-tag-routines class="styleCircule" [routines]="routines()">
         ></app-graphic-circule-tag-routines>
 
