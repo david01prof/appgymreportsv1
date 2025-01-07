@@ -52,8 +52,8 @@ const PRIME_MODULES = [
     PRIME_MODULES,
     BreadcrumbComponent
   ],
-  templateUrl: './detail-update-report.component.html',
-  styleUrl: './detail-update-report.component.scss',
+  templateUrl: './detail-update-routine.component.html',
+  styleUrl: './detail-update-routine.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DetailUpdateReportComponent {

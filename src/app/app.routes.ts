@@ -8,7 +8,7 @@ import { ReportDetailComponent } from './container-reports/report-detail/report-
 import { AddRoutineComponent } from './container-routines/add-routine/add-routine.component';
 import { ContainerRoutinesComponent } from './container-routines/container-routines.component';
 import { privateGuard, publicGuard } from './core/auth.guard';
-import { DetailUpdateReportComponent } from './container-routines/detail-update-report/detail-update-report.component';
+import { DetailUpdateReportComponent } from './container-routines/detail-update-routine/detail-update-routine.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
