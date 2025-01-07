@@ -5,7 +5,7 @@ import { BreadcrumbComponent } from '@app/components/breadcrumb/breadcrumb.compo
 import { RouterLink } from '@angular/router';
 import { GlobalRoutinesStore } from '@app/store/globalRoutines.store';
 import { CardModule } from 'primeng/card';
-import { RoutinesService } from './components/cards-routines/services/routines.service';
+import { RoutinesService } from './services/routines.service';
 import { CardsRoutinesComponent } from './components/cards-routines/cards-routines.component';
 
 

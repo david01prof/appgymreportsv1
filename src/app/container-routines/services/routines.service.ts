@@ -109,6 +109,10 @@ export class RoutinesService {
     return [{ label: 'Rutinas' }];
   }
 
+  public getBreadcrumbLabelsDetail() {
+    return [{ label: 'Rutinas' }, { label: 'Detalle' }];
+  }
+
   public getSeries(id: number, exercises: any): FormArray {
     return exercises.at(id).get('series') as FormArray;
   }

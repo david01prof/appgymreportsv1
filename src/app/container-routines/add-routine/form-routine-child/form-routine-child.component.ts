@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CustomInputComponent } from '@app/components/custom-input/custom-input.component';
-import { RoutinesService } from '@app/container-routines/components/cards-routines/services/routines.service';
+import { RoutinesService } from '@app/container-routines/services/routines.service';
 import { RoutineForm } from '@app/models';
 import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';

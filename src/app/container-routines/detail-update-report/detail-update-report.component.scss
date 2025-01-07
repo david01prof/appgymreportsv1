@@ -1,0 +1,28 @@
+.alignAccordion{
+    padding-top: 9px;
+    span{
+        padding-top: 19px;
+    }
+}
+.seriesDiv{
+    margin-top: -14px;
+}
+
+.tagDiv{
+    margin-top: -14px;
+}
+
+.favouriteItem {
+    position: absolute;
+    top: 0rem;
+    font-size: 2.2rem;
+    right: 0rem;
+    color: orange;
+    & i {
+        position: absolute;
+        top: 0.3rem;
+        font-size: 1rem;
+        right: 0.6rem;
+        color: white;
+    }
+}

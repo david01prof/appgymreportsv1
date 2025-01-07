@@ -8,6 +8,7 @@ import { ReportDetailComponent } from './container-reports/report-detail/report-
 import { AddRoutineComponent } from './container-routines/add-routine/add-routine.component';
 import { ContainerRoutinesComponent } from './container-routines/container-routines.component';
 import { privateGuard, publicGuard } from './core/auth.guard';
+import { DetailUpdateReportComponent } from './container-routines/detail-update-report/detail-update-report.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -23,11 +24,11 @@ export const routes: Routes = [
   {
     path: 'routines',
     canActivate: [privateGuard()],
-    loadComponent: () =>
-      import('./shared/ui/layout.component').then((m) => m.LayoutComponent),
+    loadComponent: () => import('./shared/ui/layout.component').then((m) => m.LayoutComponent),
     children: [
       { path: '', component: ContainerRoutinesComponent , outlet: 'content' },
       { path: 'add', component: AddRoutineComponent , outlet: 'content' },
+      { path: ':id', component: DetailUpdateReportComponent , outlet: 'content' },
     ]
   },
 

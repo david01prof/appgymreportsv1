@@ -1,6 +1,6 @@
 import { inject, InjectionToken } from '@angular/core';
 import { ReportsService } from '@app/container-reports/services/reports.service';
-import { RoutinesService } from '@app/container-routines/components/cards-routines/services/routines.service';
+import { RoutinesService } from '@app/container-routines/services/routines.service';
 import { IReport, IRoutine } from '@app/models';
 import {
   patchState,

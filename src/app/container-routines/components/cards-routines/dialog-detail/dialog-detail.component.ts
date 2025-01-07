@@ -21,7 +21,7 @@ import { TagModule } from 'primeng/tag';
 import { CheckboxModule } from 'primeng/checkbox';
 import { Timestamp } from '@angular/fire/firestore';
 import { IRoutine, ITag } from '@app/models/iroutine';
-import { RoutinesService } from '../services/routines.service';
+import { RoutinesService } from '../../../services/routines.service';
 
 const PRIME_MODULES = [
   DialogModule,

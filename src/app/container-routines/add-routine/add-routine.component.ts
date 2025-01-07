@@ -1,35 +1,26 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   computed,
-  effect,
   inject,
-  input,
-  output,
-  signal,
-  Signal,
+  signal
 } from '@angular/core';
 import {
   FormArray,
-  FormBuilder,
-  FormControl,
   FormGroup,
   FormsModule,
   NonNullableFormBuilder,
-  ReactiveFormsModule,
+  ReactiveFormsModule
 } from '@angular/forms';
 import { BreadcrumbComponent } from '@app/components/breadcrumb/breadcrumb.component';
 import {
   emptyRoutine,
   ExercisesFormControls,
-  IExercise,
   IRoutine,
-  ITag,
   RoutineForm,
   SeriesFormControls,
-  TagFormControls,
+  TagFormControls
 } from '@app/models';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -44,9 +35,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { TagModule } from 'primeng/tag';
-import { RoutinesService } from '../components/cards-routines/services/routines.service';
-import { CustomInputComponent } from '@app/components/custom-input/custom-input.component';
+import { RoutinesService } from '../services/routines.service';
 import { FormRoutineChildComponent } from './form-routine-child/form-routine-child.component';
+import { Router } from '@angular/router';
 
 const PRIME_MODULES = [
   CardModule,
@@ -94,6 +85,7 @@ export class AddRoutineComponent {
   public items = signal(this.routineForm.controls.items.controls);
 
   private routineEmptyForm = computed(() => emptyRoutine);
+  private readonly router = inject(Router);
 
   constructor() {this.addRoutine()}
 
@@ -155,6 +147,7 @@ export class AddRoutineComponent {
   public async onSubmit() {
     let _refForm : Partial<IRoutine> = this.items()[0].value;
     await this._routineSvc.newRoutine(_refForm);
+    this.router.navigate(['/routines']);
   }
 
   public getExercises(): FormArray {

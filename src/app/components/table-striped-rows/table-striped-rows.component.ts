@@ -8,7 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { Table, TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { IRoutine } from '../../models/iroutine';
-import { RoutinesService } from '@app/container-routines/components/cards-routines/services/routines.service';
+import { RoutinesService } from '@app/container-routines/services/routines.service';
 
 
 const PRIME_MODULES = [

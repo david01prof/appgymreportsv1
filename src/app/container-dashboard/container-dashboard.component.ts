@@ -11,7 +11,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BreadcrumbComponent } from '@app/components/breadcrumb/breadcrumb.component';
 import { DashboardService } from '@app/container-dashboard/services/dashboard.service';
 import { ReportsService } from '@app/container-reports/services/reports.service';
-import { RoutinesService } from '@app/container-routines/components/cards-routines/services/routines.service';
+import { RoutinesService } from '@app/container-routines/services/routines.service';
 import { emptyUser, IReport, IUser } from '@app/models';
 import { IRoutine } from '@app/models/iroutine';
 import { AnimateOnScrollModule } from 'primeng/animateonscroll';
