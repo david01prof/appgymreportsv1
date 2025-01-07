@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, UpperCasePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -12,12 +12,14 @@ import {
   FormGroup,
   NonNullableFormBuilder,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { BreadcrumbComponent } from '@app/components/breadcrumb/breadcrumb.component';
 import { CustomInputComponent } from '@app/components/custom-input/custom-input.component';
 import {
   ExercisesFormControls,
   IExercise,
+  IRoutine,
   ISeries,
   RoutineForm,
   SeriesFormControls,
@@ -30,6 +32,7 @@ import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { TagModule } from 'primeng/tag';
 import { RoutinesService } from '../services/routines.service';
+import { Router } from '@angular/router';
 
 const PRIME_MODULES = [
   CardModule,
@@ -47,7 +50,7 @@ const PRIME_MODULES = [
     CustomInputComponent,
     ReactiveFormsModule,
     PRIME_MODULES,
-    BreadcrumbComponent,
+    BreadcrumbComponent
   ],
   templateUrl: './detail-update-report.component.html',
   styleUrl: './detail-update-report.component.scss',
@@ -59,10 +62,14 @@ export class DetailUpdateReportComponent {
   public store = inject(GlobalRoutinesStore);
   public readonly fb = inject(NonNullableFormBuilder);
   public readonly _routineSvc = inject(RoutinesService);
+  
 
   public routineForm!: FormGroup<RoutineForm>;
 
   public items!: Signal<RoutineForm>;
+  public isDisabled : boolean = true;
+
+  private readonly _router = inject(Router);
 
   ngOnChanges() {
     if (this.id() != undefined) {
@@ -76,8 +83,8 @@ export class DetailUpdateReportComponent {
         this.routineForm = this.fb.group<RoutineForm>({
           id: this.fb.control(0),
           idRoutine: this.fb.control(routine.id),
-          titleRoutine: this.fb.control(routine.titleRoutine),
-          numExercises: this.fb.control(routine.numExercises),
+          titleRoutine: this.fb.control({ value: routine.titleRoutine, disabled: false }),
+          numExercises: this.fb.control({ value: routine.numExercises, disabled: false }),
           exercises: this.fb.array<FormGroup<ExercisesFormControls>>(formGroupsExercises),
           date: this.fb.control(routine.date),
           favourite: this.fb.control(routine.favourite),
@@ -87,7 +94,7 @@ export class DetailUpdateReportComponent {
               this.fb.control(routine.tag.tagDropdown) ??
               routine.tag.tagDropdown,
           }),
-          comments: this.fb.control(routine.comments),
+          comments: this.fb.control({value: routine.comments, disabled: false}),
         });
 
         this.items = signal(this.routineForm.controls);
@@ -104,12 +111,11 @@ export class DetailUpdateReportComponent {
     }
 
     return this.fb.group<ExercisesFormControls>({
-      titleExercise: this.fb.control(exercise.titleExercise ?? ''),
-      numSeries: this.fb.control(exercise.numSeries ?? 1),
+      titleExercise: this.fb.control( { value: exercise.titleExercise ?? '', disabled: false }),
+      numSeries: this.fb.control( { value: exercise.numSeries ?? 1, disabled: false }),
       series: this.fb.array<FormGroup<SeriesFormControls>>(formGroupsSeries),
     });
   }
-
 
   public generateControlsExercises() {
 
@@ -130,10 +136,11 @@ export class DetailUpdateReportComponent {
 
   public generateControlsExistingSeries(serie: ISeries) {
     return this.fb.group<SeriesFormControls>({
-        replays: this.fb.control(serie.replays ?? 0),
-        weight: this.fb.control(serie.weight ?? 0),
+        replays: this.fb.control( { value: serie.replays ?? 0, disabled: false}),
+        weight: this.fb.control( { value:serie.weight ?? 0, disabled: false}),
     })
   }
+
   public generateControlsSeries(id: number) {
     this.getSeries(id).push(
       this.fb.group<SeriesFormControls>({
@@ -150,9 +157,11 @@ export class DetailUpdateReportComponent {
   }
 
   public async onSubmit() {
-    // let _refForm : Partial<IRoutine> = this.items()[0].value;
-    // await this._routineSvc.newRoutine(_refForm);
-    // this.router.navigate(['/routines']);
+    let _refForm : Partial<IRoutine> = this.routineForm.value;
+    await this._routineSvc.updateRoutine(
+      _refForm
+    );
+    this._router.navigate(['/routines']);
   }
 
   public getExercises(): FormArray {

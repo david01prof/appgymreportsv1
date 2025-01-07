@@ -1,10 +1,9 @@
 
 <app-breadcrumb
-  [itemsLabels]="_routineSvc.getBreadcrumbLabelsDetail()"
-  [urlActive]="'routines'"
-></app-breadcrumb>
+    [itemsLabels]="_routineSvc.getBreadcrumbLabelsDetail()"
+    [urlActive]="'routines'"></app-breadcrumb>
 
-@if (items != undefined) {
+@if (items != undefined && !isDisabled) {
 <div [formGroup]="routineForm">
     <div class="sm:w-10 md:w-8 mx-auto">
         <p-card class="fadein animation-duration-500 w-full h-full">
@@ -14,30 +13,40 @@
                 <i class="pi pi-star-fill"></i>
             </i>
 
+            <div class="flex justify-content-end gap-2">
+                <p-button icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true" severity="danger" class="" />
+                <p-button icon="pi pi-eye" [rounded]="true" [text]="true" [raised]="true" severity="warning" class=""  (click)="isDisabled = true"/>
+            </div>
+
             <!-- Title routine -->
             <app-custom-input
                 [control]="routineForm.controls.titleRoutine"
                 type="text"
                 id="titleRoutine"
-                label="Titulo"
+                [label]="isDisabled ? '' : 'Titulo'"
                 formControlName="titleRoutine" />
 
             <p-divider></p-divider>
 
-            <div class="flex justify-content-start gap-2 mb-2" (click)="generateControlsExercises()">
+            @if (!isDisabled) {
+            <div class="flex justify-content-start gap-2 mb-2"
+                (click)="generateControlsExercises()">
                 <span class="text-gray-400">Anadir ejercicio:</span> <i
                     class="pi pi-plus-circle text-gray-400"></i>
             </div>
+            }
 
             <div formArrayName="exercises">
                 <div [formGroupName]="i"
                     *ngFor="let item of routineForm.controls.exercises.controls; let i = index"
                     class="mt-4">
-                    <div class="flex justify-content-between mt-2">
+                    <div class="flex justify-content-between">
                         <p class="font-bold">Ejercicio {{i + 1}}</p>
+                        @if (!isDisabled) {
                         <p-button icon="pi pi-trash" [rounded]="true"
                             [text]="true" severity="danger"
                             (onClick)="deleteExercise(i)" />
+                        }
                     </div>
 
                     <!-- Title exercise -->
@@ -45,7 +54,7 @@
                         [control]="routineForm.controls.exercises.controls[i].controls.titleExercise"
                         type="text"
                         id="titleExercise"
-                        label="Titulo"
+                        [label]="isDisabled ? '' : 'Titulo'"
                         placeHolder="Introduce el titulo del ejercicio...."
                         formControlName="titleExercise" />
 
@@ -61,7 +70,12 @@
                                             class="grid w-full alignAccordion mr-3">
                                             <span class="col-10">Serie {{ j + 1
                                                 }}</span>
-                                            <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" class="col-2" (onClick)="deleteSerie({parent:i, child:j})"></p-button>
+                                            @if (!isDisabled) {
+                                            <p-button icon="pi pi-trash"
+                                                [rounded]="true" [text]="true"
+                                                severity="danger" class="col-2"
+                                                (onClick)="deleteSerie({parent:i, child:j})"></p-button>
+                                            }
                                         </div>
                                     </ng-template>
 
@@ -89,11 +103,14 @@
                                 </p-accordionTab>
                             </div>
                         </p-accordion>
-                        <div class="flex justify-content-start gap-2 px-3" (click)="generateControlsSeries(i)">
+
+                        @if (!isDisabled) {
+                        <div class="flex justify-content-start gap-2 px-3"
+                            (click)="generateControlsSeries(i)">
                             <span class="text-gray-400">Anadir serie:</span> <i
                                 class="pi pi-plus-circle text-gray-400"></i>
                         </div>
-
+                        }
                     </div>
                 </div>
             </div>
@@ -101,6 +118,7 @@
             <p-divider></p-divider>
 
             <!-- Tag -->
+            @if(!isDisabled) {
             <div class="grid gap-2" formGroupName="tag">
                 <div class="col-6">
                     <div class="flex flex-column gap-2">
@@ -123,6 +141,11 @@
                         type="dropdown" />
                 </div>
             </div>
+            }
+
+            @if (isDisabled) {
+            <p>Tag</p>
+            }
 
             <div class="flex justify-content-left tagDiv">
                 <p-tag
@@ -141,12 +164,102 @@
                 formControlName="comments" />
 
             <!-- Favourite -->
+            @if (!isDisabled) {
             <app-custom-input
                 [control]="routineForm.controls.favourite"
                 type="checkbox"
                 id="favourite"
                 label="Anadir a favoritos"
                 formControlName="favourite" />
+            }
+        </p-card>
+    </div>
+</div>
+
+<div class="flex justify-content-center mt-2 mb-4">
+    <p-button (onClick)="onSubmit()">Guardar</p-button>
+</div>
+}
+
+<!-- TODO DETALLE -->
+
+@if (items != undefined && isDisabled) {
+<div [formGroup]="routineForm">
+    <div class="sm:w-10 md:w-8 mx-auto">
+        <p-card class="fadein animation-duration-500 w-full h-full">
+
+            <!-- Favourite Item -->
+            <i class="pi pi-bookmark-fill favouriteItem" [ngClass]="show()">
+                <i class="pi pi-star-fill"></i>
+            </i>
+
+            <div class="grid" [ngClass]="{'mt-4': routineForm.controls.favourite.value}"> 
+                <p class="col-8">{{routineForm.controls.titleRoutine.value | uppercase}}</p>
+
+                <div class="flex justify-content-end gap-2 col-4">
+                    <p-button icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true" severity="danger" class="" />
+                    <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" [raised]="true" severity="secondary" class=""  (click)="isDisabled = false"/>
+                </div>
+
+            </div>
+
+            <div formArrayName="exercises">
+                <div [formGroupName]="i" *ngFor="let item of routineForm.controls.exercises.controls; let i = index" class="mt-4">
+
+                    <span class="font-bold">Ejercicio {{i + 1}}</span>:  <span>{{routineForm.controls.exercises.controls[i].controls.titleExercise.value}}</span>
+
+                    <div formArrayName="series">
+                        <p-divider *ngIf="routineForm.controls.exercises.controls[i].controls.series.controls.length > 0"></p-divider>
+                        <p-accordion>
+                            <div *ngFor="let item of routineForm.controls.exercises.controls[i].controls.series.controls; let j = index" [formGroupName]="j" class="seriesDiv">
+                                <p-accordionTab [header]="'Serie' + ( j + 1 )">
+                                    <div class="grid pr-5 py-0 fadein animation-duration-500 overflow-hidden">
+                                        <div class="col-6 md:col-6">
+                                            <!-- Weight -->
+                                            <div class="flex flex-column">
+                                                <p class="font-bold text-center">Peso</p>
+                                                <span class="text-center">{{routineForm.controls.exercises.controls[i].controls.series.controls[j].controls.weight.value}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 md:col-6">
+                                            <!-- Replays -->
+                                            <div class="flex flex-column">
+                                                <p class="font-bold text-center">Repeticiones</p>
+                                                <span class="text-center">{{routineForm.controls.exercises.controls[i].controls.series.controls[j].controls.replays.value}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p-accordionTab>
+                            </div>
+                        </p-accordion>
+                    </div>
+                </div>
+            </div>
+
+            <p-divider></p-divider>
+
+            <!-- Tag -->
+            <div class="flex">
+                <p>Tag:</p>
+                <div class="flex justify-content-left tagDivDetail">
+                    <p-tag
+                        value="{{ routineForm.controls.tag.controls.title.value }}"
+                        [severity]="
+                          routineForm.controls.tag.controls.tagDropdown.value?.severity
+                        "></p-tag>
+                </div>
+            </div>
+
+            <!-- Comments -->
+            <p>Comentarios:</p>
+            @if (routineForm.controls.comments.value != '') {
+                <div class="break-text">
+                    {{routineForm.controls.comments.value}}
+                </div>
+            }
+            @else {
+                <p>No hay comentarios</p>
+            }
         </p-card>
     </div>
 </div>

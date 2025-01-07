@@ -57,18 +57,14 @@ export class RoutinesService {
     )
   }
 
-  // public async getRoutineById(id: string): Promise<IRoutine> {
-  //   const docRef = this._getDocRef(id);
+  public updateRoutine(routine: Partial<IRoutine>): void {
+    if(routine.idRoutine != undefined){
+      console.log(routine.idRoutine);
+      
+      const docRef = this._getDocRef(routine.idRoutine.toString());
+      updateDoc(docRef, { ...routine });
+    }
 
-  //   const documentData = await getDoc(docRef);
-
-  //   return documentData.data() as IRoutine;
-  // }
-
-  public updateRoutine(id: string, routine: IRoutine): void {
-    const docRef = this._getDocRef(id);
-
-    updateDoc(docRef, { ...routine });
   }
 
   public deleteRoutine(id: number): Observable<void> {

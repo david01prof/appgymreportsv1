@@ -12,6 +12,10 @@
     margin-top: -14px;
 }
 
+.tagDivDetail{
+    margin-top: 12px;
+}
+
 .favouriteItem {
     position: absolute;
     top: 0rem;
@@ -26,3 +30,10 @@
         color: white;
     }
 }
+
+.break-text {
+    word-wrap: break-word; /* Compatibilidad con navegadores antiguos */
+    overflow-wrap: break-word; /* Maneja palabras largas */
+    word-break: break-word; /* Rompe cadenas largas */
+    white-space: normal; /* Permite que las líneas se ajusten */
+  }
