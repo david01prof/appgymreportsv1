@@ -54,8 +54,7 @@ export class CalculatorPgcComponent {
   public onSubmit(): void {
     if (this.measurementForm().valid) {
       const form = this.measurementForm().value as IMeasurement;
-      console.log(this._globalSvc.userInfo());
-      
+
       form.height = parseFloat((form.height / 100).toFixed(2));
       form.age = 23;
       form.totaligc = this._calculatorSvc.calculateMeasurement(form);

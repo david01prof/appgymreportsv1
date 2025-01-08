@@ -22,13 +22,14 @@ import { CommonModule } from '@angular/common';
       <app-graphic-line-gradient
         class="styleContainerA"
         [reports]="reports()"
+        *ngIf="reports().length > 1"
       ></app-graphic-line-gradient>
 
       <div class="styleContainerB" *ngIf="routines().length > 0">
         <app-graphic-circule-tag-routines class="styleCircule" [routines]="routines()">
         ></app-graphic-circule-tag-routines>
 
-        <app-graphic-radial-bar-routines-registers class="styleRadial" [reports]="reports()" [routines]="routines()">
+        <app-graphic-radial-bar-routines-registers class="styleRadial" [reports]="reports()" [routines]="routines()" >
         ></app-graphic-radial-bar-routines-registers>
       </div>
     </div>

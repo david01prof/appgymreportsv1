@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, input } from '@angular/core';
-import { CardModule } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
+import { Component, input } from '@angular/core';
 import { ApexCharLineLabelsComponent } from '@app/components/apex-char-line-labels/apex-char-line-labels.component';
-import { DashboardService } from '@app/container-dashboard/services/dashboard.service';
 import { IReport } from '@app/models';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-card-last-reportes',
@@ -18,11 +17,16 @@ export class CardLastReportesComponent {
   reports = input.required<IReport[]>();
 
   public document : IReport | undefined;
-  public dataChart = [10,30,45,20,65,50];
-
-  private readonly _dashboardSvc = inject(DashboardService);
+  public dataChart : number[] = [0];
   
-
+  ngOnChanges(){
+    if(this.reports().length > 0 ){
+      for(let report = 0; report < this.reports().length; report++){
+        this.dataChart.push(1);
+      }
+    }
+  }
+  
   public getDate(timestamp: number) {
     return new Date(timestamp);
   }

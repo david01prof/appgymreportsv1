@@ -56,7 +56,7 @@ export class GraphicRadialBarRoutinesRegistersComponent {
           },
         },
         colors: ['#1ab7ea', '#0084ff'],
-        labels: ['Rutinas', 'Registros'],
+        labels: ['Registros', 'Rutinas'],
         legend: {
           show: true,
           floating: true,

@@ -2,9 +2,8 @@
     [itemsLabels]="itemsLabels"
     urlActive="Home"></app-breadcrumb>
 
-<div class="card">
-    <p-messages [(value)]="messages!"    [showTransitionOptions]="'500ms'" 
-    [hideTransitionOptions]="'500ms'"  [enableService]="false" />
+<div class="card" *ngIf="isActive()">
+    <p-messages [(value)]="messages!"    [showTransitionOptions]="'500ms'"  [hideTransitionOptions]="'500ms'"  [enableService]="false"/>
 </div>
 
 <!-- Trio de cards del top del body -->

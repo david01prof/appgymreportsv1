@@ -28,11 +28,6 @@ export class FormRoutineChildComponent {
 
   public readonly _routineSvc = inject(RoutinesService);
 
-  ngOnChanges(): void {
-    console.log(this.formGroup());
-    
-  }
-
   show(){
     if(this.formGroup().value.favourite){
       return 'block'

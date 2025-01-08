@@ -16,6 +16,14 @@ export class CardLastRoutineComponent {
 
   routines = input.required<IRoutine[]>();
   
-  public dataChart = [20,40,45,80,65,90];
+  public dataChart : number[] = [0];
+
+  ngOnChanges(){
+    if(this.routines().length > 0 ){
+      for(let routine = 0; routine < this.routines().length; routine++){
+        this.dataChart.push(1)
+      }      
+    }
+  }
 
 }

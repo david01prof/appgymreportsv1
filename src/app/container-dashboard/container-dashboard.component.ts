@@ -61,6 +61,7 @@ export class ContainerDashboardComponent {
   public dataRoutine = signal<IRoutine[]>([]);
   public dataReports = signal<IReport[]>([]);
   public activeUser = signal<IUser>(emptyUser);
+  public isActive = signal(false);
   public readonly _globalSvc = inject(GlobalService);
 
   private readonly _dashboardSvc = inject(DashboardService);
@@ -72,7 +73,15 @@ export class ContainerDashboardComponent {
   constructor() {
     effect(() => {
       this.activeUser.set(this._globalSvc.userInfo());
+
+      if(this._globalSvc.userInfo().actualWeight == 0 && this._globalSvc.userInfo().objetiveWeight == 0){
+        this.isActive.set(true);
+      }else{
+        this.isActive.set(false);
+      }
     }, { allowSignalWrites: true });
+
+
   }
 
   ngOnInit(): void {

@@ -6,7 +6,7 @@ import {
   input,
   signal,
 } from '@angular/core';
-import { ResumenComponent } from '../report-add/resumen/resumen.component';
+import { ResumenComponent } from '../resumen/resumen.component';
 import { emptyReport, IReport } from '@app/models';
 import { GlobalStore } from '@app/store/global.store';
 import { CardModule } from 'primeng/card';

@@ -34,8 +34,6 @@ export const GlobalReportStore = signalStore(
 
     async addReport(report: Omit<IReport, 'id' | 'created'>) {
       try {
-        console.log(report);
-        
         await lastValueFrom(_reportSvc.addReport(report));
 
         patchState(store, ({ reports }) => ({        

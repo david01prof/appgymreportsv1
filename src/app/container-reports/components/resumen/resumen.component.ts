@@ -19,9 +19,4 @@ export class ResumenComponent {
   
   public report = input.required<IReport>();
   public isDetail = input.required<boolean>();
-
-  ngOnChanges(){
-    console.log(this.report());
-  }
-  
 }

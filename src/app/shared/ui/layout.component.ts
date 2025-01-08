@@ -11,8 +11,17 @@ import { GlobalService } from "@app/services";
   imports: [RouterOutlet, ToolbarComponent],
   template: `
     <app-toolbar></app-toolbar>
-    <router-outlet name="content"></router-outlet>
+
+    <section class="sectionSpace">
+      <router-outlet name="content"></router-outlet>
+    </section>
+
   `,
+  styles: `
+    .sectionSpace{
+      margin-bottom: 80px;
+    }
+  `
 })
 
 export class LayoutComponent {

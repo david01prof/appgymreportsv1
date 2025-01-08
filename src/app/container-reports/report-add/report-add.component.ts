@@ -99,4 +99,28 @@ export class ReportAddComponent {
   activeInputImage(e: boolean){
     this.disabledPage = e;
   }
+
+  getLabelNext(){
+    if(window.innerWidth < 350){
+      return '';
+    }else{
+      return 'Siguiente';
+    }
+  }
+
+  getLabelBack(){
+    if(window.innerWidth < 350){
+      return '';
+    }else{
+      return 'Anterior';
+    }
+  }
+
+  getLabelSave(){
+    if(window.innerWidth < 350){
+      return '';
+    }else{
+      return 'Guardar';
+    }
+  }
 }

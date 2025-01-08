@@ -35,8 +35,6 @@ export const GlobalRoutinesStore = signalStore(
 
     async addRoutine(routine: Omit<IRoutine, 'id' | 'created'>) {
       try {
-        console.log(routine);
-        
         await lastValueFrom(_routinesSvc.newRoutine(routine));
 
         patchState(store, ({ routines }) => ({        

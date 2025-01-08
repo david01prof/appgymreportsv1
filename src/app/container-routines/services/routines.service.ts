@@ -59,8 +59,6 @@ export class RoutinesService {
 
   public updateRoutine(routine: Partial<IRoutine>): void {
     if(routine.idRoutine != undefined){
-      console.log(routine.idRoutine);
-      
       const docRef = this._getDocRef(routine.idRoutine.toString());
       updateDoc(docRef, { ...routine });
     }

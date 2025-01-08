@@ -14,8 +14,8 @@
             </i>
 
             <div class="flex justify-content-end gap-2">
-                <p-button icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true" severity="danger" class="" />
-                <p-button icon="pi pi-eye" [rounded]="true" [text]="true" [raised]="true" severity="warning" class=""  (click)="isDisabled = true"/>
+                <p-button icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true" severity="danger"  (onClick)="confirm2($event)" />
+                <p-button icon="pi pi-eye" [rounded]="true" [text]="true" [raised]="true" severity="warning"  (click)="isDisabled = true"/>
             </div>
 
             <!-- Title routine -->
@@ -197,8 +197,8 @@
                 <p class="col-8">{{routineForm.controls.titleRoutine.value | uppercase}}</p>
 
                 <div class="flex justify-content-end gap-2 col-4">
-                    <p-button icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true" severity="danger" class="" />
-                    <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" [raised]="true" severity="secondary" class=""  (click)="isDisabled = false"/>
+                    <p-button icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true" severity="danger"  (onClick)="confirm2($event)" />
+                    <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" [raised]="true" severity="secondary"  (click)="isDisabled = false"/>
                 </div>
 
             </div>
@@ -264,3 +264,5 @@
     </div>
 </div>
 }
+
+<p-confirmDialog />

@@ -25,7 +25,8 @@ export class ApexCharLineLabelsComponent{
     const myWindow = this.windowRef;
     if (myWindow) {
       if(this.dataChart() != undefined){
-
+        console.log(this.dataChart());
+        
         const windowWidth = window.innerWidth;
   
         this.chartOptions = {

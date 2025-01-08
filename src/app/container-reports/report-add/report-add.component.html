@@ -31,7 +31,7 @@
         <div class="flex pt-4 justify-content-end">
           <p-button
             (onClick)="nextCallback.emit()"
-            label="Siguiente"
+            [label]="getLabelNext()"
             icon="pi pi-arrow-right"
             iconPos="right"
             [disabled]="disabledPage"
@@ -68,13 +68,13 @@
         <div class="flex pt-4 justify-content-between">
           <p-button
             (onClick)="prevCallback.emit()"
-            label="Anterior"
+            [label]="getLabelBack()"
             severity="secondary"
             icon="pi pi-arrow-left"
           />
           <p-button
             (onClick)="nextCallback.emit();"
-            label="Siguiente"
+            [label]="getLabelNext()"
             icon="pi pi-arrow-right"
             iconPos="right"
             [disabled]="disabledPage"
@@ -107,15 +107,15 @@
         <div class="flex pt-4 justify-content-between">
           <p-button
             (onClick)="prevCallback.emit()"
-            label="Anterior"
+            [label]="getLabelBack()"
             severity="secondary"
             icon="pi pi-arrow-left"
           />
           <p-button
-            label="Guardar"
+            [label]="getLabelSave()"
             (onClick)="store['addReport'](dataReport())"
             routerLink = "/reports"
-            icon="pi pi-arrow-right"
+            icon="pi pi-save"
             iconPos="right"
           />
         </div>

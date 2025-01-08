@@ -33,6 +33,8 @@ import { DividerModule } from 'primeng/divider';
 import { TagModule } from 'primeng/tag';
 import { RoutinesService } from '../services/routines.service';
 import { Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 const PRIME_MODULES = [
   CardModule,
@@ -40,6 +42,7 @@ const PRIME_MODULES = [
   DividerModule,
   AccordionModule,
   TagModule,
+  ConfirmDialogModule
 ];
 
 @Component({
@@ -55,6 +58,7 @@ const PRIME_MODULES = [
   templateUrl: './detail-update-routine.component.html',
   styleUrl: './detail-update-routine.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ConfirmationService]
 })
 export class DetailUpdateReportComponent {
   public id = input<number>();
@@ -70,6 +74,7 @@ export class DetailUpdateReportComponent {
   public isDisabled : boolean = true;
 
   private readonly _router = inject(Router);
+  private readonly _confirmationSvc = inject(ConfirmationService);
 
   ngOnChanges() {
     if (this.id() != undefined) {
@@ -179,4 +184,26 @@ export class DetailUpdateReportComponent {
       return 'hidden';
     }
   }
+
+  confirm2(event: Event) {
+    this._confirmationSvc.confirm({
+        target: event.target as EventTarget,
+        message: 'Quieres borrar la rutina?',
+        header: 'Borrar rutina:' + this.routineForm.controls.titleRoutine.value,
+        icon: 'pi pi-info-circle',
+        acceptButtonStyleClass:"p-button-danger p-button-text",
+        rejectButtonStyleClass:"p-button-text p-button-text",
+        acceptIcon:"none",
+        rejectIcon:"none",
+
+        accept: () => {
+            // this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
+            this.store['removeRoutine'](this.id() ?? 0);
+            this._router.navigate(['/routines']);
+        },
+        reject: () => {
+            // this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+        }
+    });
+}
 }
