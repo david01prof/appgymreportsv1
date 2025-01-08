@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { ApexCharLineLabelsComponent } from '@app/components/apex-char-line-labels/apex-char-line-labels.component';
 import { IReport } from '@app/models';
 import { CardModule } from 'primeng/card';
@@ -16,13 +16,17 @@ export class CardObjetiveWeightComponent {
   actualWeight = input.required<number>();
   reports = input.required<IReport[]>();
 
-  public dataChart : number[] = [0];
+  public dataChart = signal<number[]>([0]);
 
   ngOnChanges(){
     if(this.reports().length > 0){
+      let ref :number[]= [0];
       for(let report of this.reports()){
-        this.dataChart.push(report.measurement.weight)
-      }      
+        ref.push(report.measurement.weight)
+      } 
+
+      ref = ref.reverse();
+      this.dataChart.set(ref);
     }
   }
 }

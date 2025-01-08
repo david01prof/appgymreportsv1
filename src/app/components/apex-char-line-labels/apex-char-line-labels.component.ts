@@ -13,6 +13,7 @@ export class ApexCharLineLabelsComponent{
 
   public dataChart = input.required<number[]>(); 
   public chartColor = input.required<string[]>();
+  public titleTag = input<string>();
 
   public chartOptions:  any | undefined;
 
@@ -25,8 +26,6 @@ export class ApexCharLineLabelsComponent{
     const myWindow = this.windowRef;
     if (myWindow) {
       if(this.dataChart() != undefined){
-        console.log(this.dataChart());
-        
         const windowWidth = window.innerWidth;
   
         this.chartOptions = {
@@ -113,7 +112,7 @@ export class ApexCharLineLabelsComponent{
             },
             y: {
               formatter: function (value: number) {
-                return `Peso: ${value}`;  // Personaliza la etiqueta que muestra el tooltip
+                return `${value}`;  // Personaliza la etiqueta que muestra el tooltip
               }
             }
           }

@@ -47,7 +47,6 @@ export class GraphicLineGradientComponent implements OnChanges {
   private readonly _globalSvc = inject(GlobalService);
 
   ngOnChanges() {
-    console.log(this.reports());
     if (this.reports().length > 0) {
       var allIgc: number[] = [];
       var objetive: number[] = [];
@@ -62,6 +61,10 @@ export class GraphicLineGradientComponent implements OnChanges {
         objetive.push(this._globalSvc.userInfo().objetiveWeight);
       }
 
+      allIgc = allIgc.reverse();
+
+      console.log(allIgc);
+      
       this.chartOptions = {
         series: [
           {
@@ -127,8 +130,6 @@ export class GraphicLineGradientComponent implements OnChanges {
         }
       }
     }
-    console.log(x);
-    
     return x;
   }
 }
