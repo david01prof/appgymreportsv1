@@ -63,7 +63,7 @@ export class GraphicLineGradientComponent implements OnChanges {
 
       allIgc = allIgc.reverse();
 
-      console.log(allIgc);
+      var months = this.generateMonths();
       
       this.chartOptions = {
         series: [
@@ -95,7 +95,7 @@ export class GraphicLineGradientComponent implements OnChanges {
           text: '',
         },
         xaxis: {
-          categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago'],
+          categories: months,
         },
         yaxis: {
           labels: {
@@ -131,5 +131,40 @@ export class GraphicLineGradientComponent implements OnChanges {
       }
     }
     return x;
+  }
+
+  private generateMonths(){
+    var months : string[] = [];
+    for(let report of this.reports()){
+      const date = new Date(report.created).getMonth();
+      switch(date){
+        case 0:
+          months.push('Enero'); break;
+        case 1:
+          months.push('Febrero'); break;
+        case 2:
+          months.push('Marzo'); break;
+        case 3:
+          months.push('Abril'); break;
+        case 4:
+          months.push('Mayo'); break;
+        case 5:
+          months.push('Junio'); break;
+        case 6:
+          months.push('Julio'); break;
+        case 7:
+          months.push('Agosto'); break;
+        case 8:
+          months.push('Septiembre'); break;
+        case 9:
+          months.push('Octubre'); break;
+        case 10:
+          months.push('Noviembre'); break;
+        case 11:
+          months.push('Diciembre'); break;
+      }
+
+    }
+    return months;
   }
 }
