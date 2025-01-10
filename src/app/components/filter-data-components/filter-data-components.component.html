@@ -1,0 +1,17 @@
+<p-button severity="secondary" icon="pi pi-sliders-h" (onClick)="checkVisible()"/>
+
+@if(isVisible){
+    <div class="fadein animation-duration-500">
+        filtros
+        <div class="flex justify-content-center flex-column">
+            <p-dropdown 
+                [options]="cities" 
+                [(ngModel)]="selectedCity" 
+                optionLabel="name"
+                placeholder="Select a City"
+                class="w-full mb-2" />
+            
+            <input type="text" pInputText [(ngModel)]="value" />
+        </div>
+    </div>
+}

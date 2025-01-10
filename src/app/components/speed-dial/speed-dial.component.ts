@@ -16,14 +16,14 @@ import { SpeedDialModule } from 'primeng/speeddial';
   `,
   styles: `
     :host ::ng-deep .speeddial-left {
-    left: 0;
-    bottom: 0;
+      left: 0;
+      bottom: 0;
     }
 
     :host ::ng-deep .speeddial-right {
         position: fixed;
-        bottom: 20px;
-        right: 20px;
+        bottom: 120px;
+        right: 8px;
     }
 
     :host ::ng-deep .speeddial-right button{
@@ -49,17 +49,17 @@ export class SpeedDialComponent {
     this.leftTooltipItems = [
       {
         tooltipOptions: {
-          tooltipLabel: 'Logout',
+          tooltipLabel: 'Titulo',
           tooltipPosition: 'left',
         },
         icon: 'pi pi-sign-out',
         command: () => {
-          this._route.navigate(['/login']);
+          // this._route.navigate(['/login']);
         },
       },
       {
         tooltipOptions: {
-          tooltipLabel: 'Ajustes',
+          tooltipLabel: 'Fecha',
           tooltipPosition: 'left',
         },
         icon: 'pi pi-cog',
@@ -67,7 +67,16 @@ export class SpeedDialComponent {
       },
       {
         tooltipOptions: {
-          tooltipLabel: 'Usuario',
+          tooltipLabel: 'Favoritos',
+          tooltipPosition: 'left',
+        },
+        icon: 'pi pi-user',
+        command: () => {},
+      },
+
+      {
+        tooltipOptions: {
+          tooltipLabel: 'Favoritos',
           tooltipPosition: 'left',
         },
         icon: 'pi pi-user',

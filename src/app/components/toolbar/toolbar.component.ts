@@ -12,6 +12,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { SplitButtonModule } from 'primeng/splitbutton';
+import { DividerModule } from 'primeng/divider';
 
 @Component({
   selector: 'app-toolbar',
@@ -26,48 +27,18 @@ import { SplitButtonModule } from 'primeng/splitbutton';
     ToolbarModule,
     IconFieldModule,
     InputIconModule,
-    SplitButtonModule
+    SplitButtonModule,
+    DividerModule
   ],
   template: `
-    <!-- <p-menubar [model]="items">
-      <ng-template pTemplate="item" let-item let-root="root">
-        <a
-          pRipple
-          class="flex align-items-center p-menuitem-link"
-          [routerLink]="['/' + item.route]"
-        >
-          <span [class]="item.icon"></span>
-          <span class="ml-2">{{ item.label }}</span>
-        </a>
-      </ng-template>
-      <ng-template pTemplate="end">
-        <div class="flex align-items-center gap-2">
-          <div class="card flex justify-content-center">
-            <p class="styleUsername">{{ _globalSvc.userInfo().username }}</p>
-            <p-menu
-              #menu
-              [model]="itemsProfile"
-              [popup]="true"
-              class="styleButton"
-            />
-            <p-button [link]="true" (onClick)="menu.toggle($event)"
-              ><p-avatar
-                [image]="_globalSvc.userInfo().photo"
-                shape="circle"
-                class="mr-2"
-            /></p-button>
-          </div>
-        </div>
-      </ng-template>
-    </p-menubar> -->
-
     <div class="flex align-items-center gap-2">
           <p-menu
               #menu
               [model]="itemsProfile"
               [popup]="true"
               class="styleButton"
-            />
+          > 
+          </p-menu>
           <div class="card flex justify-content-center menuCss">
             <!-- <p class="styleUsername">{{ _globalSvc.userInfo().username }}</p> -->
 
@@ -132,23 +103,12 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 })
 export class ToolbarComponent {
   public items: MenuItem[] | undefined;
-  public items2: MenuItem[] | undefined;
   public itemsProfile: MenuItem[] | undefined;
 
   private readonly _authStateSvc = inject(AuthStateService);
   public readonly _globalSvc = inject(GlobalService);
 
   async ngOnInit() {
-    this.items2 = [
-      {
-          label: 'Update',
-          icon: 'pi pi-refresh'
-      },
-      {
-          label: 'Delete',
-          icon: 'pi pi-times'
-      }
-  ];
     this.items = [
       {
         label: 'Home',
@@ -184,6 +144,9 @@ export class ToolbarComponent {
         command: () => {
           this._authStateSvc.logout();
         },
+      },
+      {
+        label: 'V1 BETA',
       },
     ];
   }

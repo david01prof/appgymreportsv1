@@ -2,8 +2,9 @@
     [itemsLabels]="_reportSvc.getBreadcrumbLabels()"
     urlActive="reports"></app-breadcrumb>
 
-<div class="card flex justify-content-between flex-wrap alignItems mt-4 fadein animation-duration-2000">
+<app-filter-data-components></app-filter-data-components>
 
+<div class="card flex justify-content-between flex-wrap alignItems mt-4 fadein animation-duration-2000">  
   <div>
     <p-card class="mb-3" [ngClass]="{ 'borde-degradado': aplicarEstilo }" (click)="visible = true" [routerLink]="[{  outlets: { content: ['add'] }} ]" >
       <i class="pi pi-plus p-6 text-2xl text-color-secondary"> </i>
