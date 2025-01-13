@@ -3,6 +3,8 @@
   [urlActive]="'routines'"
 ></app-breadcrumb>
 
+<app-filter-data-components [inputsSelect]="dataInputSelect" (dataToFilter)="filterData($event)" (selectedValue)="selectValue.set($event)" (clear)="this.storeRoutines.set(this.store.routines())"/>
+
 <div class="card flex justify-content-between flex-wrap alignItems mt-4 fadein animation-duration-2000">
 
   <div>
@@ -12,8 +14,8 @@
     <pre class="text-center text-color-secondary ">Crear nueva rutina</pre>
   </div>
 
-  @defer (when storeRoutines.routines().length > 0) {
-    @for (routine of storeRoutines.routines(); track $index) {
+  @defer (when storeRoutines().length > 0) {
+    @for (routine of storeRoutines(); track $index) {
       <app-cards-routines [data]="routine"></app-cards-routines>
     }
   }

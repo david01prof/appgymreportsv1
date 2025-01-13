@@ -10,16 +10,12 @@ html{
     font-weight: lighter;
 }
 
-.separator{
-    height: 1.2rem;
-    width: 100%;
-}
-
-
 label{
     color: #495057;
     font-size: 1rem;
 }
+
+// Estilos base de prime 
 
 .p-dialog-draggable .p-dialog-header{
     height: 3.75rem;
@@ -48,4 +44,12 @@ label{
 
 .p-inputtextarea-resizable{
     width: 100%;
+}
+
+.p-calendar{
+    width: 100%;
+
+    .p-inputtext {
+        text-align: center;
+    }
 }

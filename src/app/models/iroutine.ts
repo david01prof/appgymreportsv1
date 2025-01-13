@@ -3,6 +3,7 @@ import { FormArray, FormControl, FormGroup } from "@angular/forms";
 export interface IRoutine {
   id: number;
   idRoutine: number;
+  created: number;
   titleRoutine: string;
   numExercises: number;
   exercises?: IExercise[];
@@ -65,6 +66,7 @@ export const emptyRoutine : IRoutine = {
   id: 0,
   idRoutine: 0,
   titleRoutine: 'Nueva rutina',
+  created: new Date().getTime(),
   numExercises: 1,
   exercises: [],
   date: new Date(),

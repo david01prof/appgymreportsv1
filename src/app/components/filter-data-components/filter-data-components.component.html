@@ -1,17 +1,37 @@
-<p-button severity="secondary" icon="pi pi-sliders-h" (onClick)="checkVisible()"/>
+@defer (when inputsSelect().length > 0) {
+    <p-button severity="secondary" icon="pi pi-sliders-h" (onClick)="checkVisible()"/>
 
-@if(isVisible){
-    <div class="fadein animation-duration-500">
-        filtros
-        <div class="flex justify-content-center flex-column">
-            <p-dropdown 
-                [options]="cities" 
-                [(ngModel)]="selectedCity" 
-                optionLabel="name"
-                placeholder="Select a City"
-                class="w-full mb-2" />
+    @if(isVisible){
+        <div class="fadein animation-duration-500">
+            <!-- <p-card> -->
+                <div class="flex justify-content-center flex-column">
+                    <p-dropdown 
+                        [options]="inputsSelect()" 
+                        [(ngModel)]="valueSelected" 
+                        optionLabel="name"
+                        placeholder="Select a City"
+                        class="w-full mb-2"
+                        (ngModelChange)="selectedValue.emit($event)" />
+                    
+                    @if (valueSelected.code != "noFavourite" && valueSelected.code != "favourite"){
+                        @if(valueSelected.code != "date"){
+                            <input type="text" pInputText [(ngModel)]="value" />
+                        }@else{
+                            <p-calendar 
+                            [(ngModel)]="rangeDates" 
+                            selectionMode="range" 
+                            [readonlyInput]="true"  class="w-full"
+                            />
+                        }
+                    }
+    
+                    <div class="flex justify-content-center gap-2 mt-3">
+                        <p-button icon="pi pi-filter-slash" (onClick)="clear.emit(0); value = ''; rangeDates = [];"></p-button>
+                        <p-button icon="pi pi-search" (onClick)="search()"></p-button>
+                    </div>
+                </div>
+            <!-- </p-card> -->
             
-            <input type="text" pInputText [(ngModel)]="value" />
         </div>
-    </div>
+    }
 }
