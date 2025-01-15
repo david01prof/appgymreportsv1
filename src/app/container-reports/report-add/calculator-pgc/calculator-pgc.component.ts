@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, inject, output, Signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CustomInputComponent } from '@app/components/custom-input/custom-input.component';
 import { CalculatorService } from '@app/container-reports/services/calculator.service';
-import { emptyReport, IMeasurement, MeasurementForm } from '@app/models';
+import { emptyReport, Gender, IMeasurement, MeasurementForm } from '@app/models';
 import { GlobalService } from '@app/services';
 import { GlobalReportStore } from '@app/store/globalReport.store';
 import { ButtonModule } from 'primeng/button';
@@ -29,25 +29,27 @@ import { DividerModule } from 'primeng/divider';
 export class CalculatorPgcComponent {
 
   public readonly store = inject(GlobalReportStore);
-  private readonly _globalSvc = inject(GlobalService);
+  public readonly _globalSvc = inject(GlobalService);
   
   public dataMeasurement = output<IMeasurement>();
   public disabledNextPage = output<boolean>();
   public measurementEmptyForm = computed(() => emptyReport.measurement);
   public active : number = 0;
+  public gender : Gender = Gender.FEMALE;
 
   private readonly _calculatorSvc = inject(CalculatorService);
 
   public measurementForm: Signal<FormGroup<MeasurementForm>> = computed(
     () => 
       new FormGroup<MeasurementForm>({
-        height: new FormControl(this.measurementEmptyForm().height, { nonNullable: true }),
-        weight: new FormControl(this.measurementEmptyForm().weight, { nonNullable: true }),
-        waist: new FormControl(this.measurementEmptyForm().waist, { nonNullable: true }),
-        hip: new FormControl(this.measurementEmptyForm().hip, { nonNullable: true }),
-        age: new FormControl(this.measurementEmptyForm().age, { nonNullable: true }),
-        genre: new FormControl(this.measurementEmptyForm().genre, { nonNullable: true }),
-        totaligc: new FormControl(this.measurementEmptyForm().totaligc, { nonNullable: true }),
+        height: new FormControl(this.measurementEmptyForm().height, [Validators.min(50)]),
+        weight: new FormControl(this.measurementEmptyForm().weight, [Validators.min(30)]),
+        waist: new FormControl(this.measurementEmptyForm().waist, [Validators.min(50)]),
+        hip: new FormControl(this.measurementEmptyForm().hip, [Validators.min(50)]),
+        age: new FormControl(this.measurementEmptyForm().age, {nonNullable: true}),
+        neck: new FormControl(this.measurementEmptyForm().neck, [Validators.min(20)]),
+        genre: new FormControl(this.measurementEmptyForm().genre,  {nonNullable: true}),
+        totaligc: new FormControl(this.measurementEmptyForm().totaligc, {nonNullable: true} ),
       }),
   )
 
@@ -55,11 +57,12 @@ export class CalculatorPgcComponent {
     if (this.measurementForm().valid) {
       const form = this.measurementForm().value as IMeasurement;
 
-      form.height = parseFloat((form.height / 100).toFixed(2));
-      form.age = 23;
-      form.totaligc = this._calculatorSvc.calculateMeasurement(form);
+      form.height = form.height;
+      form.age = this._globalSvc.userInfo().age;
+      form.totaligc = this._calculatorSvc.calculateMeasurement(form).toString();
       form.genre = this._globalSvc.userInfo().gender;
       form.age = this._globalSvc.userInfo().age;
+      console.log(form);
       
       this.dataMeasurement.emit(form);
     }

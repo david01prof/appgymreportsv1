@@ -68,7 +68,7 @@
     </div>
   }
   @if (localControl.invalid && (localControl.touched || localControl.dirty)) {
-    @if(localControl.errors?.['required']){
+    @if(localControl.errors?.['required'] || localControl.errors?.['min']){
       <small class="error">{{ errorMessage() }}</small>
     }
 

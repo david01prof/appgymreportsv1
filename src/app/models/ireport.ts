@@ -26,6 +26,7 @@ export interface IMeasurement {
   age: number;
   waist: number;
   hip: number;
+  neck: number;
   totaligc: string;
 }
 
@@ -52,6 +53,7 @@ export const emptyReport: IReport = {
     age: 0,
     waist: 0,
     hip: 0,
+    neck: 0,
     totaligc: '',
   },
   photos: [],

@@ -11,8 +11,11 @@ import {
   orderBy,
   query,
 } from '@angular/fire/firestore';
-import { IMeasurement } from '@app/models/ireport';
+import { AuthService } from '@app/auth/data-access/auth.service';
+import { Gender, IMeasurement } from '@app/models/ireport';
+import { GlobalService } from '@app/services';
 import { APP_CONSTANTS } from '@app/shared/constants';
+import { AuthStateService } from '@app/shared/data-access/auth.state.service';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -20,6 +23,7 @@ import { Observable } from 'rxjs';
 })
 export class CalculatorService {
   private readonly _firestore = inject(Firestore);
+  private readonly _globalSvc = inject(GlobalService);
   private readonly _measurementCollection = collection(
     this._firestore,
     APP_CONSTANTS.COLLECTION_NAME_CALCULATOR
@@ -52,16 +56,19 @@ export class CalculatorService {
     deleteDoc(docRef);
   }
 
-  public calculateMeasurement(measurement: IMeasurement): string {
-    let ibm = measurement.weight / (measurement.height * measurement.height);
-    let pgc = 1.2 * ibm + 0.23 * measurement.age + 0.54 * (measurement.waist / measurement.hip) - 16.2;
+  public calculateMeasurement(measurement: IMeasurement) {
 
-    if(isNaN(pgc)){
-      return 'Error al realizar esta operacion'
-    }else{
-      return pgc.toFixed(2);
+    let porcentajeGrasa: number;
+
+    if (this._globalSvc.userInfo().gender.code === Gender.MALE) {
+      porcentajeGrasa = (495 / (1.0324 - 0.19077 * Math.log10(measurement.waist - measurement.neck) + 0.15456 * Math.log10(measurement.height))) - 450;
+    } else{
+      porcentajeGrasa = (495 / (1.29579 - 0.35004 * Math.log10(measurement.waist + measurement.hip - measurement.neck) + 0.22100 * Math.log10(measurement.height))) - 450;
     }
+
+    return parseFloat(porcentajeGrasa.toFixed(2));
   }
+  
 
   public get allPGCS() {
     return this.dataSQLPGC;
