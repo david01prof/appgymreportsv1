@@ -23,7 +23,7 @@
                 [control]="routineForm.controls.titleRoutine"
                 type="text"
                 id="titleRoutine"
-                [label]="isDisabled ? '' : 'Titulo'"
+                [label]="isDisabled ? '' : 'Título'"
                 formControlName="titleRoutine" />
 
             <p-divider></p-divider>
@@ -31,7 +31,7 @@
             @if (!isDisabled) {
             <div class="flex justify-content-start gap-2 mb-2"
                 (click)="generateControlsExercises()">
-                <span class="text-gray-400">Anadir ejercicio:</span> <i
+                <span class="text-gray-400">Añadir ejercicio:</span> <i
                     class="pi pi-plus-circle text-gray-400"></i>
             </div>
             }
@@ -107,7 +107,7 @@
                         @if (!isDisabled) {
                         <div class="flex justify-content-start gap-2 px-3"
                             (click)="generateControlsSeries(i)">
-                            <span class="text-gray-400">Anadir serie:</span> <i
+                            <span class="text-gray-400">Añadir serie:</span> <i
                                 class="pi pi-plus-circle text-gray-400"></i>
                         </div>
                         }
@@ -169,7 +169,7 @@
                 [control]="routineForm.controls.favourite"
                 type="checkbox"
                 id="favourite"
-                label="Anadir a favoritos"
+                label="Añadir a favoritos"
                 formControlName="favourite" />
             }
         </p-card>
@@ -266,3 +266,4 @@
 }
 
 <p-confirmDialog />
+<p-toast/>

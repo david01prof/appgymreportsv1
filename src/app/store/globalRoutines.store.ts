@@ -1,4 +1,5 @@
 import { inject, InjectionToken } from '@angular/core';
+import { Router } from '@angular/router';
 import { ReportsService } from '@app/container-reports/services/reports.service';
 import { RoutinesService } from '@app/container-routines/services/routines.service';
 import { IReport, IRoutine } from '@app/models';
@@ -10,6 +11,7 @@ import {
   withState,
 } from '@ngrx/signals';
 import { withEntities } from '@ngrx/signals/entities';
+import { MessageService } from 'primeng/api';
 import { lastValueFrom } from 'rxjs';
 
 type StoreStateReport = {
@@ -29,30 +31,69 @@ export const GlobalRoutinesStore = signalStore(
   withState(() => inject(STORE_STATE)),
   withEntities<IReport>(),
   withMethods((store, _routinesSvc = inject(RoutinesService)) => ({
+
     getRoutine(id: number) {
       return store.routines().find((rep) => rep.id === id);
     },
 
     async addRoutine(routine: Omit<IRoutine, 'id' | 'created'>) {
       try {
-        await lastValueFrom(_routinesSvc.newRoutine(routine));
+        const response = await lastValueFrom(_routinesSvc.newRoutine(routine));
+        if(response){
+          patchState(store, ({ routines }) => ({        
+            routines: [...routines, { id: routines[0].id, created: new Date().getTime(), ...routine }],
+          }));
 
-        patchState(store, ({ routines }) => ({        
-          routines: [...routines, { id: routines[0].id, created: new Date().getTime(), ...routine }],
-        }));
-      } catch (error) {}
+          return true;
+        }else{
+          throw new Error('Error al agregar la rutina');
+        }
+        
+      } catch (error) {
+        console.error('Error en addRoutine:', error);
+        return false;
+      }
+    },
+
+    async updateRoutine(routine: IRoutine) {
+      try {
+        const response = await lastValueFrom(_routinesSvc.updateRoutine(routine));
+
+        if(response){
+          patchState(store, ({ routines }) => ({
+            routines: routines.map((r) => (r.id === routine.id ? { ...r, ...routine } : r)),
+          }));
+
+          return true;
+        }else{
+          throw new Error('Error al actualizar la rutina');
+        }
+        
+      } catch (error) {
+        return false;
+      }
     },
 
     async removeRoutine(id: number) {
       try {
-        await lastValueFrom(_routinesSvc.deleteRoutine(id));
+        const response = await lastValueFrom(_routinesSvc.deleteRoutine(id));
 
-        patchState(store, ({ routines }) => ({
-          routines: routines.filter((rep) => rep.id !== id),
-        }));
-      } catch (error) {}
+        if(response){
+          patchState(store, ({ routines }) => ({
+            routines: routines.filter((rep) => rep.id !== id),
+          }));
+
+          return true;
+        }else{
+          throw new Error('Error al eliminar la rutina');
+        }
+        
+      } catch (error) {
+        return false;
+      }
     },
   })),
+
   withHooks({
     async onInit(store, _routinesSvc = inject(RoutinesService)) {
 

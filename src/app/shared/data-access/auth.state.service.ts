@@ -24,7 +24,6 @@ export class AuthStateService {
 
     signOut(auth)
       .then(() => {
-        console.log('Logout exitoso');
         // Redirigir o realizar alguna acción post-logout
         return this._router.navigate(['/auth/sign-in']);
       })

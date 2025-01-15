@@ -113,8 +113,7 @@
           />
           <p-button
             [label]="getLabelSave()"
-            (onClick)="store['addReport'](dataReport())"
-            routerLink = "/reports"
+            (onClick)="submit(dataReport())"
             icon="pi pi-save"
             iconPos="right"
           />

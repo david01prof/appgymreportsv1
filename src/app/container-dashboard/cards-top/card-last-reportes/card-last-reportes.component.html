@@ -2,17 +2,16 @@
 
 @if (reports() != undefined) {
 <p-card class="styleCardReport relative ">
-    <div class="twoCards">
-        <div class="flex flex-column cardReport">
-            <h4>{{reports().length}}</h4>
-            <h4 class="m-0">REPORTES</h4>
+    <div class="grid">
+        <div class="col-4 flex flex-column">
+            <span class="marginSpan text-white">{{reports().length}}</span>
+            <span class="m-0 text-white">REPORTES</span>
         </div>
 
-        <div class="cardReportB">
-            <app-apex-char-line-labels [dataChart]="dataChart()"
+        <div class="col-8">
+            <app-apex-char-line-labels [dataChart]="dataChart()" *ngIf="dataChart().length > 1"
                 [chartColor]="['#FFFFFF']"></app-apex-char-line-labels>
         </div>
-
     </div>
 </p-card>
 }

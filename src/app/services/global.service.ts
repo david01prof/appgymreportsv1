@@ -8,6 +8,7 @@ export class GlobalService {
 
   sharedSignal = signal<boolean>(false);
   userInfo = signal<IUser>(emptyUser);
+  toastSignal = signal<any>(null);
 
   updateSignal(value: boolean) {
     this.sharedSignal.set(value);

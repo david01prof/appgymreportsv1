@@ -3,6 +3,8 @@
   [urlActive]="'routines'"
 ></app-breadcrumb>
 
+<p-toast />
+
 <app-filter-data-components [inputsSelect]="dataInputSelect" (dataToFilter)="filterData($event)" (selectedValue)="selectValue.set($event)" (clear)="this.storeRoutines.set(this.store.routines())"/>
 
 <div class="card flex justify-content-between flex-wrap alignItems mt-4 fadein animation-duration-2000">
@@ -21,3 +23,4 @@
   }
 
 </div>
+

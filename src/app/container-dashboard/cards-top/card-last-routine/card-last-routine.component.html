@@ -1,15 +1,15 @@
-
-<p-card class="styleCardRoutine relative">
-    <div class="twoCards">
-        <div class="flex flex-column cardRoutine">
-            <h4>{{routines().length}}</h4>
-            <h4 class="m-0">RUTINAS</h4>
+@if (routines() != undefined) {
+    <p-card class="styleCardRoutine relative">
+        <div class="grid">
+            <div class="col-4 flex flex-column">
+                <span class="marginSpan text-white">{{routines().length}}</span>
+                <span class="m-0 text-white">RUTINAS</span>
+            </div>
+    
+            <div class="col-8">
+                <app-apex-char-line-labels [dataChart]="dataChart()" *ngIf="dataChart().length > 1"
+                    [chartColor]="['#FFFFFF']"></app-apex-char-line-labels>
+            </div>
         </div>
-
-        <div class="cardRoutineB">
-            <app-apex-char-line-labels [dataChart]="dataChart()"
-                [chartColor]="['#FFFFFF']"></app-apex-char-line-labels>
-        </div>
-
-    </div>
-</p-card>
+    </p-card>
+}

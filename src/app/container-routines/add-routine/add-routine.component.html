@@ -2,7 +2,6 @@
     [itemsLabels]="_routineSvc.getBreadcrumbLabelsNew()"
     [urlActive]="'routines'"></app-breadcrumb>
 
-
 <div>
     @for(formGroup of items(); track formGroup.controls.id.value){
         <app-form-routine-child [formGroup]="formGroup" (addRoutine)="generateControlsExercises()" (deleteExercise)="getExercises().removeAt($event)" (addSerie)="generateControlsSeries($event)" (deleteSerie)="deleteSerie($event)"/>
@@ -12,3 +11,5 @@
         <p-button (onClick)="onSubmit()">Guardar</p-button>
     </div>
 </div>
+
+<p-toast/>

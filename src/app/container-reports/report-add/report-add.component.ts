@@ -7,7 +7,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { BreadcrumbComponent } from '@app/components/breadcrumb/breadcrumb.component';
 import { emptyReport, IMeasurement, IPhotos, IReport } from '@app/models';
 import { GlobalService } from '@app/services/global.service';
@@ -19,6 +19,7 @@ import { ReportsService } from '../services/reports.service';
 import { CalculatorPgcComponent } from './calculator-pgc/calculator-pgc.component';
 import { PhotosComponent } from './photos/photos.component';
 import { GlobalReportStore } from '@app/store/globalReport.store';
+import { MessageService } from 'primeng/api';
 
 const PRIME_MODULES = [CardModule, StepperModule, ButtonModule];
 
@@ -31,7 +32,6 @@ const PRIME_MODULES = [CardModule, StepperModule, ButtonModule];
     CalculatorPgcComponent,
     PhotosComponent,
     ResumenCardComponent,
-    RouterLink,
     BreadcrumbComponent
   ],
   templateUrl: './report-add.component.html',
@@ -51,6 +51,8 @@ export class ReportAddComponent {
   public disabledPage: boolean = false;
 
   private readonly _globalSvc = inject(GlobalService);
+  private readonly router = inject(Router);
+  private readonly messageSvc = inject(MessageService);
 
   constructor() {
     effect(
@@ -121,6 +123,17 @@ export class ReportAddComponent {
       return '';
     }else{
       return 'Guardar';
+    }
+  }
+
+  async submit(report: IReport){
+    const success = await this.store.addReport(report)
+
+    if(success){
+      this._globalSvc.toastSignal.set({ severity: 'success', summary: 'Operación realizada', detail: 'Reporte creado correctamente!', life: 2000 });
+      this.router.navigate(['/reports']);
+    }else{
+      this.messageSvc.add({ severity: 'error', summary: 'Operación realizada', detail: 'Fallo al crear el reporte' });
     }
   }
 }

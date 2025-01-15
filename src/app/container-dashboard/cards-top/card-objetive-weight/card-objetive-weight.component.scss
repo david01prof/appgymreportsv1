@@ -1,91 +1,25 @@
+span{
+    font-size: 1.1rem;
+}
+
 ::ng-deep .styleCardObjetiveWeight {
     width: 100%;
     margin: 0 auto;
 
     .p-card-body {
         max-width: 400px;
+        min-height: 131px;
         padding: 18px;
         background-image: linear-gradient(135deg, #373737 10%, #cdcaca 100%);
 
-        .p-card-content {
-            display: flex;
-            flex-direction: column;
-
-            .twoCards {
-                display: fleX;
-                flex-direction: row;
-
-                .cardObjetiveWeight {
-                    width: 35%;
-                    position: relative;
-                    min-width: 90px;
-                    color: white;
-
-                    h4 {
-                        position: absolute;
-                        bottom: 15px;
-                        font-size: 1.5rem;
-                    }
-
-                    h5 {
-                        position: absolute;
-                        bottom: 0;
-                        font-size: 0.8rem;
-                    }
-
-                    .alignItemh4 {
-                        position: absolute;
-                        top: -5px;
-                    }
-                }
-
-                .cardObjetiveWeightB {
-                    width: 55%;
-                }
-            }
+        .marginSpan{
+            margin-top: 55px;
         }
     }
 }
 
-@media(max-width: 520px) {
-    ::ng-deep .styleCardObjetiveWeight .p-card-body .p-card-content .twoCards .cardObjetiveWeight {
-        .alignItemh4 {
-            position: absolute;
-            top: 12px;
-        }
-    
-        h4 {
-            position: absolute;
-            bottom: 15px;
-            font-size: 1.1rem;
-        }
-    
-        h5 {
-            position: absolute;
-            bottom: 0;
-            font-size: 0.7rem;
-        }
-    }   
-}
-
-@media (min-width: 939px)  and (max-width: 1247px) {
-
-    ::ng-deep .styleCardObjetiveWeight .p-card-body .p-card-content .twoCards .cardObjetiveWeight {
-        .alignItemh4 {
-            position: absolute;
-            top: 12px;
-        }
-    
-        h4 {
-            position: absolute;
-            bottom: 15px;
-            font-size: 1.1rem;
-        }
-    
-        h5 {
-            position: absolute;
-            bottom: 0;
-            font-size: 0.7rem;
-        }
-    }    
+@media(max-width: 390px) {
+    ::ng-deep .styleCardObjetiveWeight .p-card-body .marginSpan{
+        margin-top: 44px;
+    }
 }

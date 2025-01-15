@@ -2,7 +2,7 @@
     <p-button severity="secondary" icon="pi pi-sliders-h" (onClick)="checkVisible()"/>
 
     @if(isVisible){
-        <div class="fadein animation-duration-500">
+        <div class="fadein animation-duration-500 mt-2">
             <!-- <p-card> -->
                 <div class="flex justify-content-center flex-column">
                     <p-dropdown 
@@ -26,7 +26,7 @@
                     }
     
                     <div class="flex justify-content-center gap-2 mt-3">
-                        <p-button icon="pi pi-filter-slash" (onClick)="clear.emit(0); value = ''; rangeDates = [];"></p-button>
+                        <p-button icon="pi pi-filter-slash" severity="warning" (onClick)="clear.emit(0); value = ''; rangeDates = [];"></p-button>
                         <p-button icon="pi pi-search" (onClick)="search()"></p-button>
                     </div>
                 </div>

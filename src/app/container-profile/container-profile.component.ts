@@ -62,8 +62,6 @@ export class ContainerProfileComponent {
   }
 
   onUpload(event: any) {
-    // this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode' });
-
     const files = event.files;
     if (files != undefined) {
       for (const file of files) {

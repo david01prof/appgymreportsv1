@@ -9,14 +9,18 @@ import { GlobalReportStore } from '@app/store/globalReport.store';
 import { ButtonModule } from 'primeng/button';
 import { FilterDataComponentsComponent } from "../components/filter-data-components/filter-data-components.component";
 import { IFilter, IReport } from '@app/models';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { GlobalService } from '@app/services';
 
 @Component({
   selector: 'app-container-reports',
   standalone: true,
-  imports: [CommonModule, ReportCardComponent, RouterLink, CardModule, BreadcrumbComponent, ButtonModule, FilterDataComponentsComponent],
+  imports: [CommonModule, ReportCardComponent, RouterLink, CardModule, BreadcrumbComponent, ButtonModule, FilterDataComponentsComponent,ToastModule],
   templateUrl: './container-reports.component.html',
   styleUrl: './container-reports.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [MessageService]
 })
 export class ContainerReportsComponent {
 
@@ -31,11 +35,20 @@ export class ContainerReportsComponent {
   public dataInputSelect : IFilter[] = [
     { name: 'Fecha', code: 'date' },
   ]
+  public readonly messageService = inject(MessageService);
 
+  private readonly globalSvc = inject(GlobalService);
   constructor(){
     effect(() => {
       this.storeReports.set(this.store.reports());      
     }, { allowSignalWrites: true });
+  }
+
+  ngAfterViewInit(){
+    if(this.globalSvc.toastSignal() != null){
+      this.messageService.add(this.globalSvc.toastSignal()); 
+      this.globalSvc.toastSignal.set(null);
+    }
   }
 
   filterData(data: any){
@@ -53,11 +66,9 @@ export class ContainerReportsComponent {
       });
 
       this.storeReports.set([...temp]);
-      console.log(temp);
       
      }else{
       this.storeReports.set(this.store.reports());
      }
   }
-
 }

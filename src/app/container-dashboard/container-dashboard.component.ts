@@ -12,7 +12,7 @@ import { BreadcrumbComponent } from '@app/components/breadcrumb/breadcrumb.compo
 import { DashboardService } from '@app/container-dashboard/services/dashboard.service';
 import { ReportsService } from '@app/container-reports/services/reports.service';
 import { RoutinesService } from '@app/container-routines/services/routines.service';
-import { emptyUser, IReport, IUser } from '@app/models';
+import { emptyUser, Gender, IReport, IUser } from '@app/models';
 import { IRoutine } from '@app/models/iroutine';
 import { AnimateOnScrollModule } from 'primeng/animateonscroll';
 import { MenuItem, Message } from 'primeng/api';
@@ -71,14 +71,32 @@ export class ContainerDashboardComponent {
   
 
   constructor() {
+    let actualUser = this._globalSvc.userInfo(); 
     effect(() => {
       this.activeUser.set(this._globalSvc.userInfo());
 
-      if(this._globalSvc.userInfo().actualWeight == 0 && this._globalSvc.userInfo().objetiveWeight == 0){
+      if(actualUser != this._globalSvc.userInfo() && this._globalSvc.userInfo().actualWeight == 0 && this._globalSvc.userInfo().objetiveWeight == 0){
         this.isActive.set(true);
+
+        let temp = 'Bienvenido'
+        if(this._globalSvc.userInfo().gender.code == Gender.MALE){
+          temp = 'Bienvenido'
+        }else if(this._globalSvc.userInfo().gender.code == Gender.FEMALE){
+          temp = 'Bienvenida'
+        }
+        this.messages = [
+          {
+            severity: 'secondary',
+            detail:
+              `👋 Hola! ${temp}, a MiFitTracker! Antes de empezar, por favor completa tu perfil para una mejor experiencia.`,
+          },
+        ];
+        actualUser = this._globalSvc.userInfo();
       }else{
         this.isActive.set(false);
       }
+
+      
     }, { allowSignalWrites: true });
 
 
@@ -87,14 +105,7 @@ export class ContainerDashboardComponent {
   ngOnInit(): void {
     this.itemsLabels = this._dashboardSvc.getBreadcrumbLabels();
 
-    this.messages = [
-      {
-        severity: 'secondary',
-        detail:
-          '👋 Hola! Bienvenido a Freya! Antes de empezar, por favor completa tu perfil para una mejor experiencia.',
-      },
-    ];
-
+   
     this.getAllRoutines();
     this.getAllReports();
   }

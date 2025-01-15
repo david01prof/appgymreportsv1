@@ -19,7 +19,7 @@ import { IRoutine, ITag, Status } from '@app/models/iroutine';
 import { APP_CONSTANTS } from '@app/shared/constants';
 import { AuthStateService } from '@app/shared/data-access/auth.state.service';
 import { where } from 'firebase/firestore';
-import { catchError, from, Observable } from 'rxjs';
+import { catchError, from, map, Observable, of } from 'rxjs';
 
 
 @Injectable({
@@ -50,28 +50,35 @@ export class RoutinesService {
       ...routine,
     })).pipe(
       catchError((error) => {
-        console.error('Error al agregar el reporte:', error);
-        console.info("error prevented for testing")
+        console.error('Error al agregar la rutina:', error);
         return Promise.resolve()
       })
     )
   }
 
-  public updateRoutine(routine: Partial<IRoutine>): void {
+  public updateRoutine(routine: Partial<IRoutine>) : Observable<any> {
+    
     if(routine.idRoutine != undefined){
       const docRef = this._getDocRef(routine.idRoutine.toString());
-      updateDoc(docRef, { ...routine });
+      return from(updateDoc(docRef, { ...routine })).pipe(
+        map(() => ({ success: true })),
+        catchError((error) => {
+          console.error('Error al actualizar la rutina:', error);
+          return Promise.resolve()
+        })
+      );
     }
-
+    return of(null);
   }
 
-  public deleteRoutine(id: number): Observable<void> {
+  public deleteRoutine(id: number): Observable<any> {
     const docRef = this._getDocRef(id.toString());
     
     return from(deleteDoc(docRef)).pipe(
+      map(() => ({ success: true })),
       catchError(() => {
         console.error("error prevented for testing")
-        return Promise.resolve()
+        return Promise.resolve();
       })
     );
   }

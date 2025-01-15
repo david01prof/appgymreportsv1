@@ -5,11 +5,12 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@app/auth/data-access/auth.service';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [ButtonModule,RouterLink,ReactiveFormsModule,InputTextModule,CommonModule],
+  imports: [ButtonModule,RouterLink,ReactiveFormsModule,InputTextModule,CommonModule,PasswordModule],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

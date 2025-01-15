@@ -4,6 +4,7 @@ import {
   Component,
   computed,
   inject,
+  output,
   signal
 } from '@angular/core';
 import {
@@ -38,6 +39,10 @@ import { TagModule } from 'primeng/tag';
 import { RoutinesService } from '../services/routines.service';
 import { FormRoutineChildComponent } from './form-routine-child/form-routine-child.component';
 import { Router } from '@angular/router';
+import { GlobalRoutinesStore } from '@app/store/globalRoutines.store';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { GlobalService } from '@app/services';
 
 const PRIME_MODULES = [
   CardModule,
@@ -53,6 +58,7 @@ const PRIME_MODULES = [
   CheckboxModule,
   InputGroupModule,
   InputGroupAddonModule,
+  ToastModule
 ];
 
 export type CustomFormGroup = FormGroup<RoutineForm>;
@@ -71,11 +77,15 @@ export type CustomFormGroup = FormGroup<RoutineForm>;
   templateUrl: './add-routine.component.html',
   styleUrl: './add-routine.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [MessageService]
 })
 export class AddRoutineComponent {
   
   public readonly fb = inject(NonNullableFormBuilder);
   public readonly _routineSvc = inject(RoutinesService);
+  public readonly messageService = inject(MessageService);
+
+  public getToast = output<any>();
   
   public routineForm: FormGroup<{ items: FormArray<CustomFormGroup> }> =
     this.fb.group({
@@ -86,6 +96,8 @@ export class AddRoutineComponent {
 
   private routineEmptyForm = computed(() => emptyRoutine);
   private readonly router = inject(Router);
+  private readonly globalRoutineSvc = inject(GlobalRoutinesStore);
+  private readonly globalSvc = inject(GlobalService);
 
   constructor() {this.addRoutine()}
 
@@ -143,11 +155,17 @@ export class AddRoutineComponent {
     this.getSeries(e.parent).removeAt(e.child);
   }
 
-
   public async onSubmit() {
     let _refForm : Partial<IRoutine> = this.items()[0].value;
-    await this._routineSvc.newRoutine(_refForm);
-    this.router.navigate(['/routines']);
+    const fullRoutine: Omit<IRoutine, 'id' | 'created'> = _refForm as Omit<IRoutine, 'id' | 'created'>;
+    const success = await this.globalRoutineSvc.addRoutine(fullRoutine);
+
+    if(success){
+      this.globalSvc.toastSignal.set({ severity: 'success', summary: 'Operación realizada', detail: 'Rutina creada correctamente!', life: 2000 });
+      this.router.navigate(['/routines']);
+    }else{
+      this.messageService.add({ severity: 'error', summary: 'Operación realizada', detail: 'Fallo al crear la rutina' });
+    }
   }
 
   public getExercises(): FormArray {

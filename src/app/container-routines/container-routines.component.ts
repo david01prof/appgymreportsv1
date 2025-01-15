@@ -9,6 +9,11 @@ import { RoutinesService } from './services/routines.service';
 import { CardsRoutinesComponent } from './components/cards-routines/cards-routines.component';
 import { FilterDataComponentsComponent } from '@app/components/filter-data-components/filter-data-components.component';
 import { IFilter, IRoutine } from '@app/models';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { RippleModule } from 'primeng/ripple';
+import { GlobalService } from '@app/services';
 
 
 @Component({
@@ -20,16 +25,22 @@ import { IFilter, IRoutine } from '@app/models';
     BreadcrumbComponent,
     RouterLink,
     CardsRoutinesComponent,
-    FilterDataComponentsComponent
+    FilterDataComponentsComponent,
+    ToastModule,
+    ButtonModule,
+    RippleModule
   ],
   templateUrl: './container-routines.component.html',
   styleUrl: './container-routines.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [MessageService]
 })
 export class ContainerRoutinesComponent {
   public readonly store = inject(GlobalRoutinesStore);
   public readonly _routineSvc = inject(RoutinesService);
   public storeRoutines = signal<IRoutine[]>([]);
+
+  public readonly messageService = inject(MessageService);
 
   public selectValue = signal<any>('');
 
@@ -43,10 +54,19 @@ export class ContainerRoutinesComponent {
   public dataToFilter = signal<any>('');
   public aplicarEstilo = true;
 
+  private readonly globalSvc = inject(GlobalService);
+
   constructor(){
     effect(() => {
-      this.storeRoutines.set(this.store.routines());      
+      this.storeRoutines.set(this.store.routines());
     }, { allowSignalWrites: true });
+  }
+
+  ngAfterViewInit(){
+    if(this.globalSvc.toastSignal() != null){
+      this.messageService.add(this.globalSvc.toastSignal()); 
+      this.globalSvc.toastSignal.set(null);
+    }
   }
   
   filterData(data: any){
@@ -95,5 +115,4 @@ export class ContainerRoutinesComponent {
     }
     
   }
-
 }

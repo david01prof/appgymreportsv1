@@ -1,18 +1,17 @@
 <p-card class="styleCardObjetiveWeight relative">
-  <div class="twoCards">
-    <div class="flex flex-column cardObjetiveWeight">
-      <h4 class="font-medium mt-3 alignItemh4" [ngClass]="{'text-green-500': isPositive(), 'text-red-500': !isPositive()}">
+  <div class="grid">
+    <div class="col-4 flex flex-column">
+      <!-- <h4 class="font-medium mt-3 alignItemh4" [ngClass]="{'text-green-500': isPositive(), 'text-red-500': !isPositive()}">
         <i class="pi text-xs ml-2" [ngClass]="{'text-green-500': isPositive(), 'text-red-500': !isPositive(), 'pi-minus': !isPositive(), 'pi-plus': isPositive()}"></i>
         {{improvements()}}% 
         <i class="pi text-sm ml-2 " [ngClass]="{'text-green-500': isPositive(), 'text-red-500': !isPositive(), 'pi-arrow-down': !isPositive(), 'pi-arrow-up': isPositive()}"></i>
-      </h4>
-      <h4 class="m-0">PESO: {{actualWeight()}}kg</h4>
-      <h5 class="m-0">OBJETIVO: {{objetiveWeight()}}kg</h5>
+      </h4> -->
+      <span class="marginSpan text-white text-sm md:text-md">PESO: {{actualWeight()}}kg</span>
+      <span class="m-0 text-white text-sm md:text-md">OBJETIVO: {{objetiveWeight()}}kg</span>
     </div>
 
-    <div class="cardObjetiveWeightB">
-      <app-apex-char-line-labels [dataChart]="dataChart()" 
-        [chartColor]="['#FFFFFF']"></app-apex-char-line-labels>
+    <div class="col-8">
+      <app-apex-char-line-labels [dataChart]="dataChart()" *ngIf="dataChart().length > 1" [chartColor]="['#FFFFFF']"></app-apex-char-line-labels>
     </div>
 
   </div>

@@ -4,8 +4,9 @@ import { Router } from '@angular/router';
 import { CarouselImagesComponent } from '@app/components/carousel-images/carousel-images.component';
 import { ReportsService } from '@app/container-reports/services/reports.service';
 import { IReport } from '@app/models';
+import { GlobalService } from '@app/services';
 import { GlobalReportStore } from '@app/store/globalReport.store';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -31,6 +32,8 @@ export class ResumenCardComponent {
   private readonly _confirmationSvc = inject(ConfirmationService);
   private readonly store = inject(GlobalReportStore);
   private readonly route = inject(Router);
+  private readonly _globalSvc = inject(GlobalService);
+  private readonly messageSvc = inject(MessageService);
 
   confirm2(event: Event) {
     this._confirmationSvc.confirm({
@@ -43,13 +46,15 @@ export class ResumenCardComponent {
         acceptIcon:"none",
         rejectIcon:"none",
 
-        accept: () => {
-            // this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
-            this.store['removeReport'](this.report().id ?? 0);
-            this.route.navigate(['/reports']);
-        },
-        reject: () => {
-            // this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+        accept: async () => {
+            const success = await this.store.removeReport(this.report().id ?? 0);
+
+            if(success){
+              this._globalSvc.toastSignal.set({ severity: 'success', summary: 'Operación realizada', detail: 'Reporte eliminado correctamente!', life: 2000 });
+              this.route.navigate(['/reports']);
+            }else{
+              this.messageSvc.add({ severity: 'error', summary: 'Operación realizada', detail: 'Fallo al eliminar el reporte' });
+            }
         }
     });
 }

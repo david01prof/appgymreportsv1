@@ -4,53 +4,16 @@
 
     .p-card-body {
         max-width: 400px;
+        min-height: 131px;
         padding: 18px;
         background-image: linear-gradient(135deg, #2afadf 10%, #4c83ff 100%);
 
-        .p-card-content {
-            display: flex;
-            flex-direction: column;
-            
-            .twoCards{
-                display: fleX;
-                flex-direction: row;
-
-                .cardReport {
-                    width: 30%;
-                    position: relative;
-                    min-width: 90px;
-                    color: white;
-                    h4 {
-                        position: absolute;
-                        bottom: 0;
-                        font-size: 1.5rem;
-                    }
-                }
-    
-                .cardReportB{
-                    width: 60%;
-                }
-            }
+        .marginSpan{
+            margin-top: 55px;
         }
     }
 }
 
-@media(max-width: 520px) {
-    ::ng-deep .styleCardReport .p-card-body .p-card-content .twoCards .cardReport {
-        h4 {
-            position: absolute;
-            font-size: 1.1rem;
-        }
-
-    }    
-}
-@media (min-width: 939px)  and (max-width: 1247px) {
-
-    ::ng-deep .styleCardReport .p-card-body .p-card-content .twoCards .cardReport {
-        h4 {
-            position: absolute;
-            font-size: 1.1rem;
-        }
-
-    }    
+span {
+    font-size: 1.1rem;
 }

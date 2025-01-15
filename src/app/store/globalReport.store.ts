@@ -34,22 +34,36 @@ export const GlobalReportStore = signalStore(
 
     async addReport(report: Omit<IReport, 'id' | 'created'>) {
       try {
-        await lastValueFrom(_reportSvc.addReport(report));
+        const response = await lastValueFrom(_reportSvc.addReport(report));
 
-        patchState(store, ({ reports }) => ({        
-          reports: [...reports, { id: reports[0].id, created: new Date().getTime(), ...report }],
-        }));
-      } catch (error) {}
+        if(response){
+          patchState(store, ({ reports }) => ({        
+            reports: [...reports, { id: reports[0].id, created: new Date().getTime(), ...report }],
+          }));
+        }
+
+        return true;
+      } catch (error) {
+        throw new Error('Error al agregar el reporte');
+      }
     },
-
+  
     async removeReport(id: number) {
       try {
-        await lastValueFrom(_reportSvc.removeReport(id));
+       const response = await lastValueFrom(_reportSvc.removeReport(id));
 
+       if(response){
         patchState(store, ({ reports }) => ({
           reports: reports.filter((rep) => rep.id !== id),
         }));
-      } catch (error) {}
+        return true;
+       }else{
+        throw new Error('Error al eliminar la rutina');
+       }
+        
+      } catch (error) {
+        return false;
+      }
     },
   })),
   withHooks({

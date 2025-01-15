@@ -1,14 +1,15 @@
 import { Component, HostListener, inject, Renderer2 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SpeedDialComponent } from "./components/speed-dial/speed-dial.component";
+import { MessageService } from 'primeng/api';
 import SpinnerComponent from './components/spinner/spinner.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, SpinnerComponent, SpeedDialComponent],
+  imports: [RouterOutlet, SpinnerComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
+  providers: [MessageService]
 })
 export class AppComponent {
 

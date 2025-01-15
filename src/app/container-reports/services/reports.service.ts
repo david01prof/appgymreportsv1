@@ -4,7 +4,7 @@ import { IReport } from '@app/models/ireport';
 import { APP_CONSTANTS } from '@app/shared/constants';
 import { AuthStateService } from '@app/shared/data-access/auth.state.service';
 import { PrimeNGConfig } from 'primeng/api';
-import { catchError, from, Observable } from 'rxjs';
+import { catchError, from, map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -37,10 +37,11 @@ export class ReportsService {
     )
   }
 
-  public removeReport(id: number) : Observable<void>{
+  public removeReport(id: number) : Observable<any>{
     const docRef = this._getDocRef(id.toString());
     
     return from(deleteDoc(docRef)).pipe(
+      map(() => ({ success: true })),
       catchError(() => {
         console.error("error prevented for testing")
         return Promise.resolve()

@@ -1,25 +1,32 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@app/auth/data-access/auth.service';
-import { Gender, IGenderSelect } from '@app/models';
+import { emptyUser, Gender, IGenderSelect, IUser } from '@app/models';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [ButtonModule,ReactiveFormsModule,InputTextModule,InputNumberModule,DropdownModule,FormsModule,RouterLink],
+  imports: [ButtonModule,ReactiveFormsModule,InputTextModule,InputNumberModule,DropdownModule,FormsModule,RouterLink,CommonModule,PasswordModule],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SignUpComponent {
 
-  public genders: IGenderSelect[] | undefined;
+  public genders: IGenderSelect[] = [
+    { name: 'Femenino', code: Gender.FEMALE },
+    { name: 'Masculino', code: Gender.MALE },
+  ];
   public selectedGende: Gender = Gender.FEMALE;
+  public isValidUsername = true;
+  public isPasswordMatch = true;
 
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _authSvc = inject(AuthService);
@@ -29,19 +36,37 @@ export class SignUpComponent {
     email: ['', [Validators.required, Validators.email]],
     username: ['', [Validators.required, Validators.minLength(1)]],
     password: ['', [Validators.required, Validators.minLength(1)]],
+    confirmPassword: ['', [Validators.required, Validators.minLength(1)]],
     age: [0],
     gender: [{ name: 'Femenino', code: Gender.FEMALE }],
     objetiveWeight: [0],
     actualWeight: [0],
-    photo: ['']
+    photo: [emptyUser.photo]
   });
 
-  ngOnInit(): void {
-    this.genders =  [
-      { name: 'Femenino', code: Gender.FEMALE },
-      { name: 'Masculino', code: Gender.MALE },
-      { name: 'No identificado', code: Gender.UNKNOWN },
-    ]
+  checkIfExists(){
+    const username = this.forms.value.username;
+    if(username != undefined ){
+      this._authSvc.getAllUsers().subscribe((users: IUser[]) => {
+        for(let user of users){
+          if(user.username == username){
+            this.isValidUsername = false;
+            break;
+          }else{
+            this.isValidUsername = true;
+          }
+        }
+      })
+    }
+
+  }
+
+  checkIfMatch(){
+    if(this.forms.value.password != this.forms.value.confirmPassword){
+      return this.isPasswordMatch =false;
+    }else{
+      return this.isPasswordMatch = true;
+    }
   }
 
   async onSubmit() {

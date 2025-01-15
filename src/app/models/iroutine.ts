@@ -71,6 +71,6 @@ export const emptyRoutine : IRoutine = {
   exercises: [],
   date: new Date(),
   favourite: false,
-  tag: { title: 'new', tagDropdown: { label: 'Info', severity: 'info' } },
+  tag: { title: 'new', tagDropdown: { label: 'Verde', severity: 'success' } },
   comments: '',
 }

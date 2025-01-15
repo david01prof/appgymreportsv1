@@ -81,7 +81,7 @@ export class PhotosComponent {
   onTemplatedUpload() {
     this._messageSvc.add({
       severity: 'info',
-      summary: 'Success',
+      summary: 'Operación realizada',
       detail: 'File Uploaded',
       life: 3000,
     });

@@ -33,8 +33,10 @@ import { DividerModule } from 'primeng/divider';
 import { TagModule } from 'primeng/tag';
 import { RoutinesService } from '../services/routines.service';
 import { Router } from '@angular/router';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { GlobalService } from '@app/services';
+import { ToastModule } from 'primeng/toast';
 
 const PRIME_MODULES = [
   CardModule,
@@ -42,7 +44,8 @@ const PRIME_MODULES = [
   DividerModule,
   AccordionModule,
   TagModule,
-  ConfirmDialogModule
+  ConfirmDialogModule,
+  ToastModule
 ];
 
 @Component({
@@ -75,6 +78,9 @@ export class DetailUpdateReportComponent {
 
   private readonly _router = inject(Router);
   private readonly _confirmationSvc = inject(ConfirmationService);
+  private readonly globalSvc = inject(GlobalService);
+  private readonly globalRoutineSvc = inject(GlobalRoutinesStore);
+  private readonly messageService = inject(MessageService);
 
   ngOnChanges() {
     if (this.id() != undefined) {
@@ -163,10 +169,14 @@ export class DetailUpdateReportComponent {
 
   public async onSubmit() {
     let _refForm : Partial<IRoutine> = this.routineForm.value;
-    await this._routineSvc.updateRoutine(
-      _refForm
-    );
-    this._router.navigate(['/routines']);
+    const success = await this.globalRoutineSvc.updateRoutine(_refForm as IRoutine);
+
+    if(success){
+      this.globalSvc.toastSignal.set({ severity: 'success', summary: 'Operación realizada', detail: 'Rutina actualizada correctamente!', life: 2000 });
+      this._router.navigate(['/routines']);
+    }else{
+      this.messageService.add({ severity: 'error', summary: 'Operación realizada', detail: 'Fallo al actualizar la rutina' });
+    }
   }
 
   public getExercises(): FormArray {
@@ -196,14 +206,15 @@ export class DetailUpdateReportComponent {
         acceptIcon:"none",
         rejectIcon:"none",
 
-        accept: () => {
-            // this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
-            this.store['removeRoutine'](this.id() ?? 0);
-            this._router.navigate(['/routines']);
+        accept: async () => {
+            const success = await this.store['removeRoutine'](this.id() ?? 0);
+            if(success){
+              this.globalSvc.toastSignal.set({ severity: 'success', summary: 'Operación realizada', detail: 'Rutina eliminada correctamente!', life: 2000 });
+              this._router.navigate(['/routines']);
+            }else{
+              this.messageService.add({ severity: 'error', summary: 'Operación realizada', detail: 'Fallo al eliminar la rutina' });
+            }
         },
-        reject: () => {
-            // this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
-        }
     });
 }
 }

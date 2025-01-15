@@ -1,9 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, sendPasswordResetEmail, signInWithPopup } from '@angular/fire/auth';
-import { Gender, IUser } from '@app/models';
+import { collection, collectionData, doc, Firestore, getDoc, orderBy, query, setDoc, updateDoc } from '@angular/fire/firestore';
+import { IUser } from '@app/models';
 import { APP_CONSTANTS } from '@app/shared/constants';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { collection, doc, Firestore, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -12,10 +13,16 @@ import { collection, doc, Firestore, getDoc, setDoc, updateDoc } from '@angular/
 export class AuthService {
 
   private readonly _firestore = inject(Firestore);
+  private readonly _userCollection = collection(this._firestore, APP_CONSTANTS.COLLECTION_NAME_USERS);
   private _auth = inject(Auth);
 
-  signUp(user: Omit<IUser, 'username' | 'age' | 'gender' | 'objetiveWeight' | 'actualWeight' | 'photo' | 'createdAt'>) {
-  return createUserWithEmailAndPassword(this._auth, user.email, user.password);
+  public getAllUsers() : Observable<IUser[]>{
+    const queryFn = query(this._userCollection);
+    return collectionData(queryFn) as Observable<IUser[]>;
+  }
+
+  signUp(user: Omit<IUser, 'username' | 'age' | 'gender' | 'objetiveWeight' | 'actualWeight' | 'photo' | 'createdAt'>)  {
+    return createUserWithEmailAndPassword(this._auth, user.email, user.password);
   }
 
   signIn(user: Omit<IUser, 'username' | 'age' | 'gender' | 'objetiveWeight' | 'actualWeight' | 'photo' | 'createdAt'>) {
@@ -35,7 +42,6 @@ export class AuthService {
         photo: user.photo,
         createdAt: new Date().toISOString() // Fecha de creación opcional
       });
-      console.log('Usuario creado con éxito');
     }catch (error) {
       console.error('Error al registrar usuario:', error);
       throw error;
