@@ -7,6 +7,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Observable } from 'rxjs';
 
 
+
 @Injectable({
   providedIn: 'root', // Proporciona el servicio a nivel global
 })

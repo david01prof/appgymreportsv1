@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, effect, inject, output, Signal } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '@app/auth/data-access/auth.service';
 import { CustomInputComponent } from '@app/components/custom-input/custom-input.component';
 import { CalculatorService } from '@app/container-reports/services/calculator.service';
 import { emptyReport, Gender, IMeasurement, MeasurementForm } from '@app/models';
@@ -39,6 +41,8 @@ export class CalculatorPgcComponent {
   public gender : Gender = Gender.FEMALE;
 
   private readonly _calculatorSvc = inject(CalculatorService);
+  private readonly _authSvc = inject(AuthService);
+  private readonly _auth = inject(Auth);
 
   public measurementForm: Signal<FormGroup<MeasurementForm>> = computed(
     () => 
@@ -61,10 +65,15 @@ export class CalculatorPgcComponent {
     });
   }
     
-  public onSubmit(): void {
+  public async onSubmit() {
     if (this.measurementForm().valid) {
       const form = this.measurementForm().value as IMeasurement;
-      this._globalSvc.userInfo().actualWeight = form.weight;
+
+      let userInfo =  await this._authSvc.getUserById(this._auth.currentUser!.uid);   
+      userInfo.actualWeight = form.weight;
+
+      this._authSvc.updateUser(this._auth.currentUser!.uid,userInfo)
+      
       
       form.height = form.height;
       form.age = this._globalSvc.userInfo().age;

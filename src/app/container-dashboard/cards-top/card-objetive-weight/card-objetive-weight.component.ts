@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, effect, inject, input, signal } from '@angular/core';
 import { ApexCharLineLabelsComponent } from '@app/components/apex-char-line-labels/apex-char-line-labels.component';
 import { IReport } from '@app/models';
 import { GlobalService } from '@app/services';
@@ -21,10 +21,21 @@ export class CardObjetiveWeightComponent {
   public dataChart = signal<number[]>([0]);
   public improvements = signal<number>(0);
   public isPositive = signal<boolean>(false);
+  public actualWeightN = 0;
 
   private readonly _globalSvc = inject(GlobalService);
 
+  constructor() {
+    effect(() => {
+      if(this._globalSvc.userInfo().actualWeight != 0){
+        this.actualWeightN = this._globalSvc.userInfo().actualWeight;
+      }
+
+    });
+  }
+
   ngOnChanges(){
+    this.actualWeightN = this.actualWeight();
     if(this.reports().length > 0){
       let ref :number[]= [];
       for(let report of this.reports()){

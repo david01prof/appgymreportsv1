@@ -43,6 +43,8 @@ export class UserWeightComponent {
     effect(
       () => {
         if(this._globalSvc.userInfo().actualWeight != 0 && this._globalSvc.userInfo().actualWeight != this.form.controls['actualWeight'].value){
+          console.log(this._globalSvc.userInfo());
+          
           this.form.controls['actualWeight'].setValue(this._globalSvc.userInfo().actualWeight);
         }
       },
@@ -50,10 +52,10 @@ export class UserWeightComponent {
     );
   }
 
-  ngOnInit(){
+  ngOnInit(){    
     this.form = this._formBuilder.group({
       objetiveWeight: new FormControl({value: 0 , disabled: true}),
-      actualWeight: new FormControl( {value: 0 , disabled: true}),
+      actualWeight: new FormControl( {value: this._globalSvc.userInfo().actualWeight , disabled: true}),
     });
   }
 

@@ -40,15 +40,6 @@ import { ButtonModule } from "primeng/button";
 
 export class LayoutComponent {
 
-  private readonly auth = inject(Auth);
-  private readonly _authSvc = inject(AuthService);
-  private readonly _globalSvc = inject(GlobalService);
-
-  async ngOnInit() {
-    let userInfo =  await this._authSvc.getUserById(this.auth.currentUser!.uid);   
-    this._globalSvc.userInfo.set(userInfo);
-  }
-
   showScrollToTopButton = false; // Controla la visibilidad del botón
 
   // Escucha el evento de scroll en la ventana

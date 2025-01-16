@@ -31,7 +31,7 @@
     <div class="card flex justify-content-center">
         <p-accordion>
             <p-accordionTab header="Datos del usuario">
-                <app-data-user></app-data-user>
+                <app-data-user [user]="_globalSvc.userInfo()"></app-data-user>
             </p-accordionTab>
             <p-accordionTab header="Objetivo de peso">
                 <app-user-weight></app-user-weight>

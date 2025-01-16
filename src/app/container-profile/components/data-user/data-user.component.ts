@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { GlobalService } from '@app/services';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { IUser } from '@app/models';
 
 @Component({
   selector: 'app-data-user',
@@ -12,7 +12,7 @@ import { GlobalService } from '@app/services';
 })
 export class DataUserComponent{
 
-  public readonly _globalSvc = inject(GlobalService);
+  user = input.required<IUser>();
   
   getDate(date: string) {
     return new Date(date);

@@ -49,9 +49,9 @@ const PRIME_MODULES = [
 export class ContainerProfileComponent {
   public base64Image = signal<string>('');
   public readonly _authSvc = inject(AuthService);
+  public readonly _globalSvc = inject(GlobalService);
 
   private readonly _confirmationSvc = inject(ConfirmationService);
-  private readonly _globalSvc = inject(GlobalService);
   private readonly _auth = inject(Auth);
   private maxFileSize = 200000;
 
@@ -59,6 +59,11 @@ export class ContainerProfileComponent {
     effect(() => {
       this.base64Image.set(this._globalSvc.userInfo().photo)
     },{ allowSignalWrites: true });
+  }
+
+  async ngOnInit() {
+    let userInfo =  await this._authSvc.getUserById(this._auth.currentUser!.uid);   
+    this._globalSvc.userInfo.set(userInfo);
   }
 
   onUpload(event: any) {
