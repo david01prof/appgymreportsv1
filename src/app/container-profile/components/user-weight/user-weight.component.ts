@@ -42,21 +42,19 @@ export class UserWeightComponent {
   constructor() {
     effect(
       () => {
-        if(this._globalSvc.userInfo().createdAt != ''){
-          this.form = this._formBuilder.group({
-            objetiveWeight: new FormControl(
-              { value: this._globalSvc.userInfo().objetiveWeight, disabled: true },
-              Validators.required
-            ),
-            actualWeight: new FormControl(
-              { value: this._globalSvc.userInfo().actualWeight, disabled: true },
-              Validators.required
-            ),
-          });
+        if(this._globalSvc.userInfo().actualWeight != 0 && this._globalSvc.userInfo().actualWeight != this.form.controls['actualWeight'].value){
+          this.form.controls['actualWeight'].setValue(this._globalSvc.userInfo().actualWeight);
         }
       },
       { allowSignalWrites: true }
     );
+  }
+
+  ngOnInit(){
+    this.form = this._formBuilder.group({
+      objetiveWeight: new FormControl({value: 0 , disabled: true}),
+      actualWeight: new FormControl( {value: 0 , disabled: true}),
+    });
   }
 
   editUserWeight() {

@@ -31,7 +31,6 @@ export class ReportsService {
     })).pipe(
       catchError((error) => {
         console.error('Error al agregar el reporte:', error);
-        console.info("error prevented for testing")
         return Promise.resolve()
       })
     )

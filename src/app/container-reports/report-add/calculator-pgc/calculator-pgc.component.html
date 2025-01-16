@@ -44,9 +44,7 @@
             
 
         <div class="flex justify-content-center">
-            <p-button type="submit" [disabled]="measurementForm().invalid">
-                Calcular
-             </p-button>
+            <p-button type="submit" [disabled]="!measurementForm().valid" label="Calcular"/>
         </div>
     </form>
 

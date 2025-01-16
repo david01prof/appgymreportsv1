@@ -2,17 +2,15 @@
 
 <form [formGroup]="forms" (ngSubmit)="onSubmit()">
     <div  class="flex justify-content-center align-items-center min-h-screen surface-ground">
-        <div
-            class="p-4 surface-card shadow-2 border-round w-full sm:w-10 md:w-6 lg:w-4">
+        <div  class="p-4 surface-card shadow-2 border-round w-11 sm:w-10 md:w-6 lg:w-4">
             <div class="text-center mb-3">
-                <img src="https://primefaces.org/cdn/primeng/images/logo.png"
-                    alt="logo" class="mb-3" style="width: 50px;" />
+                <img src="assets/images/logo3.png" alt="logo" class="border-round-lg shadow-5" style="width: 70px;" />
                 <h2 class="font-bold text-900 mb-2">Crea tu cuenta</h2>
             </div>
 
-            <div class="formgroup">
+            <div class="formgroup grid">
                 <!-- Username -->
-                <div class="mb-3">
+                <div class="mb-2 col-12">
                     <label for="email"
                         class="block text-900 font-medium mb-2">Email</label>
                     <input id="email" type="email" pInputText
@@ -20,40 +18,29 @@
                         class="w-full border-round" formControlName="email" />
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-2 col-12">
                     <label for="username"
                         class="block text-900 font-medium mb-2">Nombre de usuario</label>
-                    <input id="username" type="text" pInputText
-                        placeholder="Introduce tu nombre de usuario"
+                    <input id="username" type="text" pInputText placeholder="Introduce tu nombre de usuario"
                         class="w-full border-round" formControlName="username" (ngModelChange)="checkIfExists()" (blur)="checkIfExists()" />
                         <span class="text-red-500" *ngIf="!isValidUsername">El nombre de usuario ya existe</span>
                 </div>
 
-                <div class="mb-3 flex justify-content-around">
-                    <div class="w-6 mr-1 flex flex-wrap gap-2 p-fluid">
-                        <div class="flex-auto">
-                            <label for="integerAge">Edad:</label>
-                            <p-inputNumber 
-                                inputId="integerAge" 
-                                formControlName="age"
-                                class="mt-2"/>
-                        </div>
+                <div class="col-12 grid">
+                    <div class="col-5">
+                        <label for="integerAge">Edad:</label>
+                        <p-inputNumber  inputId="integerAge" formControlName="age" class="mt-2"/>
                     </div>
-                    <div class="w-6 ml-1 flex flex-wrap gap-2 p-fluid">
+                    <div class="col-7 flex flex-wrap gap-2 p-fluid">
                         <div class="flex-auto">
                             <label for="integerAge">Género:</label>
-                            <p-dropdown 
-                            [options]="genders" 
-                            formControlName="gender"
-                            optionLabel="name" 
-                            placeholder="Selecciona tu genero" 
-                           />
+                            <p-dropdown [options]="genders" formControlName="gender" optionLabel="name" placeholder="Selecciona tu genero" />
                         </div>
                     </div>
                 </div>
 
                 <!-- Password -->
-                <div class="mb-4">
+                <div class="mb-2 col-12">
                     <label for="password"
                         class="block text-900 font-medium mb-2">Contraseña</label>
                         <p-password formControlName="password" [toggleMask]="true" promptLabel="Escribe tu contraseña"
@@ -65,7 +52,7 @@
                 </div>
 
                 <!-- confirm Password -->
-                <div class="mb-4">
+                <div class="mb-4 col-12">
                     <label for="password"
                         class="block text-900 font-medium mb-2">Confirma la contraseña</label>
                         <p-password formControlName="confirmPassword" [toggleMask]="true" [feedback]="false" (onBlur)="checkIfMatch()"  placeholder="Introduce tu contraseña"/>
@@ -75,7 +62,7 @@
 
             <!-- Login Button -->
             <button pButton label="Crear" type="submit"
-                class="w-full p-2 border-round font-bold" [disabled]="!forms.valid"></button>
+                class="w-full p-2 border-round font-bold" [disabled]="!forms.valid && !isPasswordMatch"></button>
 
             <p class="mt-4">Ya tienes una cuenta? <a routerLink="/auth/sign-in" class="text-blue-400">Inicia sesión</a></p>
 

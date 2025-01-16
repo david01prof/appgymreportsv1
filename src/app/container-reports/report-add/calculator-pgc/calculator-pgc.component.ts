@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, computed, inject, output, Signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, output, Signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CustomInputComponent } from '@app/components/custom-input/custom-input.component';
 import { CalculatorService } from '@app/container-reports/services/calculator.service';
@@ -11,7 +12,7 @@ import { DividerModule } from 'primeng/divider';
 @Component({
   selector: 'app-calculator-pgc',
   standalone: true,
-  imports: [CustomInputComponent,ReactiveFormsModule,ButtonModule,DividerModule],
+  imports: [CustomInputComponent,ReactiveFormsModule,ButtonModule,DividerModule,CommonModule],
   templateUrl: './calculator-pgc.component.html',
   styles: `
     .character-add-container {
@@ -52,18 +53,24 @@ export class CalculatorPgcComponent {
         totaligc: new FormControl(this.measurementEmptyForm().totaligc, {nonNullable: true} ),
       }),
   )
-
+  constructor(){
+    effect(() => {
+      if(this._globalSvc.userInfo().gender.code == Gender.MALE){
+        if(this.measurementForm().value.hip == 0){ this.measurementForm().controls.hip.setValue(50)}
+      }
+    });
+  }
+    
   public onSubmit(): void {
     if (this.measurementForm().valid) {
       const form = this.measurementForm().value as IMeasurement;
-
+      this._globalSvc.userInfo().actualWeight = form.weight;
+      
       form.height = form.height;
       form.age = this._globalSvc.userInfo().age;
       form.totaligc = this._calculatorSvc.calculateMeasurement(form).toString();
       form.genre = this._globalSvc.userInfo().gender;
       form.age = this._globalSvc.userInfo().age;
-      console.log(form);
-      
       this.dataMeasurement.emit(form);
     }
   }

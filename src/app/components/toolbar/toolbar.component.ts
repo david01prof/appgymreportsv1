@@ -40,8 +40,6 @@ import { DividerModule } from 'primeng/divider';
           > 
           </p-menu>
           <div class="card flex justify-content-center menuCss">
-            <!-- <p class="styleUsername">{{ _globalSvc.userInfo().username }}</p> -->
-
             <p-button [link]="true" (onClick)="menu.toggle($event)" [text]="true" [raised]="true" [rounded]="true" severity="secondary">
               <i class="pi pi-list"></i>
             </p-button>
@@ -129,25 +127,27 @@ export class ToolbarComponent {
 
     this.itemsProfile = [
       {
-        label: 'Perfil',
-        icon: 'pi pi-cog',
-        routerLink: ['/profile'],
-      },
-      {
-        label: 'Terminos y condiciones',
-        icon: 'pi pi-cog',
-        routerLink: ['/politic-terms'],
-      },
-      {
-        label: 'Salir',
-        icon: 'pi pi-sign-out',
-        command: () => {
-          this._authStateSvc.logout();
-        },
-      },
-      {
-        label: 'V1 BETA',
-      },
-    ];
+          items: [
+            {
+              label: 'Perfil',
+              icon: 'pi pi-cog',
+              routerLink: ['/profile'],
+            },
+            // {
+            //   label: 'Terminos y condiciones',
+            //   icon: 'pi pi-cog',
+            //   routerLink: ['/politic-terms'],
+            // },
+            {
+              label: 'Salir',
+              icon: 'pi pi-sign-out',
+              command: () => {
+                this._authStateSvc.logout();
+              },
+            }
+          ],
+          label: 'MiFitTracker  BETA',
+      }
+  ];
   }
 }
