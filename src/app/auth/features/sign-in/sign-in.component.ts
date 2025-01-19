@@ -3,20 +3,23 @@ import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@app/auth/data-access/auth.service';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [ButtonModule,RouterLink,ReactiveFormsModule,InputTextModule,CommonModule,PasswordModule],
+  imports: [ButtonModule,RouterLink,ReactiveFormsModule,InputTextModule,CommonModule,PasswordModule,ToastModule],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SignInComponent {
 
+  private readonly messageService = inject(MessageService);
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _authSvc = inject(AuthService);
   public  readonly _route = inject(Router);
@@ -27,7 +30,7 @@ export class SignInComponent {
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
-  async onSubmit() {
+  onSubmit() {
     if (this.forms.invalid) return;
 
     try{
@@ -35,8 +38,15 @@ export class SignInComponent {
 
       if (!email || !password) return;
   
-      await this._authSvc.signIn({ email, password });
-      this._route.navigateByUrl('/dashboard')
+      this._authSvc.signIn({ email, password }).subscribe({
+        next: (userCredential) => {
+          this._route.navigateByUrl('/dashboard')
+        },
+        error:(error) => {
+          this.messageService.add({ severity: 'error', summary: 'Operación realizada', detail: 'Fallo al loguearte'});
+        }
+      });
+      
     }
     catch(error){
       console.error(error);

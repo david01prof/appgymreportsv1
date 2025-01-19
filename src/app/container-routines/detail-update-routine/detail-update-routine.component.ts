@@ -198,8 +198,8 @@ export class DetailUpdateReportComponent {
   confirm2(event: Event) {
     this._confirmationSvc.confirm({
         target: event.target as EventTarget,
-        message: 'Quieres borrar la rutina?',
-        header: 'Borrar rutina:' + this.routineForm.controls.titleRoutine.value,
+        message: 'Quieres borrar la rutina: ' + this.routineForm.value.titleRoutine + '?',
+        header: 'Borrar rutina',
         icon: 'pi pi-info-circle',
         acceptButtonStyleClass:"p-button-danger p-button-text",
         rejectButtonStyleClass:"p-button-text p-button-text",

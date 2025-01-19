@@ -11,10 +11,10 @@ import SpinnerComponent from './components/spinner/spinner.component';
   styleUrl: './app.component.scss',
   providers: [MessageService]
 })
-export class AppComponent {
+export class AppComponent{
 
   private readonly renderer = inject(Renderer2);
-
+  
   @HostListener('window:click', ['$event'])
   createRipple(event: MouseEvent): void {
     // Crear el span para el efecto ripple

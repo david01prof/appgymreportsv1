@@ -1,38 +1,58 @@
 import { inject, Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, sendPasswordResetEmail, signInWithPopup } from '@angular/fire/auth';
-import { collection, collectionData, doc, Firestore, getDoc, orderBy, query, setDoc, updateDoc } from '@angular/fire/firestore';
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  getAuth,
+  GoogleAuthProvider,
+  sendPasswordResetEmail,
+  signInWithPopup,
+} from '@angular/fire/auth';
+import {
+  collection,
+  collectionData,
+  doc,
+  Firestore,
+  getDoc,
+  orderBy,
+  query,
+  setDoc,
+  updateDoc,
+} from '@angular/fire/firestore';
 import { IUser } from '@app/models';
 import { APP_CONSTANTS } from '@app/shared/constants';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { Observable } from 'rxjs';
-
-
+import { catchError, from, map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root', // Proporciona el servicio a nivel global
 })
 export class AuthService {
-
   private readonly _firestore = inject(Firestore);
-  private readonly _userCollection = collection(this._firestore, APP_CONSTANTS.COLLECTION_NAME_USERS);
+  private readonly _userCollection = collection(
+    this._firestore,
+    APP_CONSTANTS.COLLECTION_NAME_USERS
+  );
   private _auth = inject(Auth);
 
-  public getAllUsers() : Observable<IUser[]>{
+  public getAllUsers(): Observable<IUser[]> {
     const queryFn = query(this._userCollection);
     return collectionData(queryFn) as Observable<IUser[]>;
   }
 
-  signUp(user: Omit<IUser, 'username' | 'age' | 'gender' | 'objetiveWeight' | 'actualWeight' | 'photo' | 'createdAt'>)  {
-    return createUserWithEmailAndPassword(this._auth, user.email, user.password);
+  signUp(user: Omit<IUser, 'username' | 'age' | 'gender' | 'objetiveWeight' | 'actualWeight' | 'photo' | 'createdAt'>) : Observable<any> {
+    return from(createUserWithEmailAndPassword(this._auth, user.email, user.password))
   }
 
-  signIn(user: Omit<IUser, 'username' | 'age' | 'gender' | 'objetiveWeight' | 'actualWeight' | 'photo' | 'createdAt'>) {
-    return signInWithEmailAndPassword(this._auth,user.email,user.password);
+  signIn(user: Omit<IUser, 'username' | 'age' | 'gender' | 'objetiveWeight' | 'actualWeight' | 'photo' | 'createdAt'>) : Observable<any> {
+    return from(signInWithEmailAndPassword(this._auth, user.email, user.password)); 
   }
 
   async saveUser(user: Omit<IUser, 'createdAt'>, idUser: string) {
-    try{
-      const userRef = doc(this._firestore, `${APP_CONSTANTS.COLLECTION_NAME_USERS}/${idUser}`);
+    try {
+      const userRef = doc(
+        this._firestore,
+        `${APP_CONSTANTS.COLLECTION_NAME_USERS}/${idUser}`
+      );
       await setDoc(userRef, {
         email: user.email,
         username: user.username,
@@ -41,13 +61,12 @@ export class AuthService {
         objetiveWeight: user.objetiveWeight,
         actualWeight: user.actualWeight,
         photo: user.photo,
-        createdAt: new Date().toISOString() // Fecha de creación opcional
+        createdAt: new Date().toISOString(), // Fecha de creación opcional
       });
-    }catch (error) {
+    } catch (error) {
       console.error('Error al registrar usuario:', error);
       throw error;
     }
-
   }
 
   public updateUser(id: string, user: IUser): void {
@@ -64,16 +83,15 @@ export class AuthService {
     return documentData.data() as IUser;
   }
 
-  async resetPassword(email: string): Promise<void> {
+  async resetPassword(email: string): Promise<Observable<any>> {
     const auth = getAuth();
-  
-    try {
-      await sendPasswordResetEmail(auth, email);
-      console.log("Correo de restablecimiento enviado correctamente.");
-    } catch (error) {
-      console.error("Error al enviar correo de restablecimiento:", error);
-      throw error;
-    }
+
+    return from(sendPasswordResetEmail(auth, email)).pipe(
+      map(() => ({ success: true })),
+      catchError((error) => {
+        return Promise.resolve();
+      })
+    );
   }
 
   private _getDocRef(id: string) {
@@ -81,14 +99,11 @@ export class AuthService {
   }
 
   signInWidthGoogle() {
+    const provider = new GoogleAuthProvider();
 
-    const  provider = new GoogleAuthProvider();
-
-    provider.setCustomParameters({prompt: 'select_account'});
+    provider.setCustomParameters({ prompt: 'select_account' });
     return signInWithPopup(this._auth, provider);
   }
-
-
 
   // ------------
 

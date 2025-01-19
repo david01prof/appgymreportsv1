@@ -2,46 +2,51 @@
     [itemsLabels]="_authSvc.getBreadcrumbLabels()"
     urlActive="profile"></app-breadcrumb>
 
-<p-card>
 
-    <!-- header -->
-     <br>
-    <p-divider></p-divider>
-    <div class="flex justify-content-center mb-8">
-        <p-avatar
-            [image]="base64Image()"
-            styleClass="flex align-items-center justify-content-center"
-            class="custom-avatar"
-            size="xlarge">
-            <p-fileUpload
-            mode="basic"
-            class="custom-file-upload"
-            chooseIcon="pi pi-camera"
-            accept="image/*"
-            url="https://www.primefaces.org/cdn/api/upload.php" 
-            (onUpload)="onUpload($event)"
-            [auto]="true" 
-            />
-        </p-avatar>
+@defer (when _globalSvc.userInfo().username != '') {
+    <p-card>
 
-    </div>
+        <!-- header -->
+         <br>
+        <p-divider></p-divider>
+        <div class="flex justify-content-center mb-8">
+            <p-avatar
+                [image]="base64Image()"
+                styleClass="flex align-items-center justify-content-center"
+                class="custom-avatar"
+                size="xlarge">
+                <p-fileUpload
+                mode="basic"
+                class="custom-file-upload"
+                chooseIcon="pi pi-camera"
+                accept="image/*"
+                url="https://www.primefaces.org/cdn/api/upload.php" 
+                (onUpload)="onUpload($event)"
+                [auto]="true" 
+                />
+            </p-avatar>
+    
+        </div>
+    
+        <!-- Body -->
+    
+        <div class="card flex justify-content-center">
+            <p-accordion>
+                <p-accordionTab header="Datos del usuario">
+                    <app-data-user [user]="_globalSvc.userInfo()"></app-data-user>
+                </p-accordionTab>
+                <p-accordionTab header="Objetivo de peso">
+                    <app-user-weight></app-user-weight>
+                </p-accordionTab>
+                <p-accordionTab header="Reestablecer contraseña">
+                    <app-reset-password></app-reset-password>
+                </p-accordionTab>
+            </p-accordion>
+        </div>
+    
+    </p-card>
+}
 
-    <!-- Body -->
 
-    <div class="card flex justify-content-center">
-        <p-accordion>
-            <p-accordionTab header="Datos del usuario">
-                <app-data-user [user]="_globalSvc.userInfo()"></app-data-user>
-            </p-accordionTab>
-            <p-accordionTab header="Objetivo de peso">
-                <app-user-weight></app-user-weight>
-            </p-accordionTab>
-            <p-accordionTab header="Reestablecer contraseña">
-                <app-reset-password></app-reset-password>
-            </p-accordionTab>
-        </p-accordion>
-    </div>
-
-</p-card>
-
-<p-confirmDialog/>
+<p-confirmDialog  acceptLabel="Sí" 
+rejectLabel="No"/>

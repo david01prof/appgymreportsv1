@@ -69,10 +69,11 @@ export class CalculatorPgcComponent {
     if (this.measurementForm().valid) {
       const form = this.measurementForm().value as IMeasurement;
 
-      let userInfo =  await this._authSvc.getUserById(this._auth.currentUser!.uid);   
+      let userInfo =  await this._authSvc.getUserById(this._auth.currentUser!.uid); // TODO Actualiza el usuario   
       userInfo.actualWeight = form.weight;
 
       this._authSvc.updateUser(this._auth.currentUser!.uid,userInfo)
+      this._globalSvc.userInfo.set(userInfo);
       
       
       form.height = form.height;

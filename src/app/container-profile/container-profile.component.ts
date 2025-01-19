@@ -53,17 +53,12 @@ export class ContainerProfileComponent {
 
   private readonly _confirmationSvc = inject(ConfirmationService);
   private readonly _auth = inject(Auth);
-  private maxFileSize = 200000;
+  private maxFileSize = 500000;
 
   constructor() {
     effect(() => {
-      this.base64Image.set(this._globalSvc.userInfo().photo)
+      this.base64Image.set(this._globalSvc.userInfo().photo) // Recoge imagen del usuario
     },{ allowSignalWrites: true });
-  }
-
-  async ngOnInit() {
-    let userInfo =  await this._authSvc.getUserById(this._auth.currentUser!.uid);   
-    this._globalSvc.userInfo.set(userInfo);
   }
 
   onUpload(event: any) {
@@ -77,12 +72,8 @@ export class ContainerProfileComponent {
         } else {
           this._globalSvc.convertFileToBase64(event.files[0]).then((base64) => {
             this.base64Image.set(base64);
-            const userId = this._auth.currentUser!.uid;
-            const activeUser = this._globalSvc.userInfo();
-            activeUser.photo = base64;
-
-            this._authSvc.updateUser(userId, activeUser);
-            this._globalSvc.userInfo.set(activeUser);
+            this._globalSvc.userInfo().photo = base64;
+            this._authSvc.updateUser(this._auth.currentUser!.uid,this._globalSvc.userInfo()); // TODO Actualiza el usuario
           });
         }
       }
@@ -91,7 +82,7 @@ export class ContainerProfileComponent {
 
   private confirm1() {
     this._confirmationSvc.confirm({
-      message: 'El archivo seleccionado excede el límite de  2MB.',
+      message: 'El archivo seleccionado excede el límite de  MB.',
       header: 'Error al subir los ficheros',
       icon: 'pi pi-exclamation-triangle text-orange-300',
       acceptVisible: false,

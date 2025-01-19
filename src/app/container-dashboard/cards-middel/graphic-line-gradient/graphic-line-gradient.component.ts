@@ -46,7 +46,7 @@ export class GraphicLineGradientComponent implements OnChanges {
 
   private readonly _globalSvc = inject(GlobalService);
 
-  ngOnChanges() {
+  async ngOnChanges() {
     if (this.reports().length > 0) {
       var allIgc: number[] = [];
       var objetive: number[] = [];
@@ -64,6 +64,8 @@ export class GraphicLineGradientComponent implements OnChanges {
       allIgc = allIgc.reverse();
 
       var months = this.generateMonths();
+      var maxValue = Math.max(...allIgc);
+      var yAxisMax = maxValue + maxValue * 0.1;
       
       this.chartOptions = {
         series: [
@@ -98,6 +100,8 @@ export class GraphicLineGradientComponent implements OnChanges {
           categories: months,
         },
         yaxis: {
+          min: 0,
+          max: yAxisMax,
           labels: {
             show: true, // Muestra las etiquetas del eje Y
           },
@@ -123,13 +127,18 @@ export class GraphicLineGradientComponent implements OnChanges {
     let  x = [];
     for(let serie of this.chartOptions.series[1].data){
       for (let obj of this.chartOptions.series[1].data){
-        if(serie > obj){
+        const difference = Math.abs(serie - obj);
+        if (difference === 0) {
           x.push('#dc3545')
-        }else{
+        }else if(difference < 3){
           x.push('#28a745')
+        }else{
+          x.push('#dc3545')
         }
       }
     }
+    console.log(x);
+    
     return x;
   }
 

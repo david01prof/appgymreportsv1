@@ -10,8 +10,7 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  ReactiveFormsModule,
-  Validators,
+  ReactiveFormsModule
 } from '@angular/forms';
 import { AuthService } from '@app/auth/data-access/auth.service';
 import { GlobalService } from '@app/services';
@@ -43,8 +42,6 @@ export class UserWeightComponent {
     effect(
       () => {
         if(this._globalSvc.userInfo().actualWeight != 0 && this._globalSvc.userInfo().actualWeight != this.form.controls['actualWeight'].value){
-          console.log(this._globalSvc.userInfo());
-          
           this.form.controls['actualWeight'].setValue(this._globalSvc.userInfo().actualWeight);
         }
       },
@@ -72,19 +69,11 @@ export class UserWeightComponent {
   }
 
   async onSubmit() {
-    if (
-      this.form != undefined &&
-      !this.form.controls['objetiveWeight'].enabled
-    ) {
-      this._globalSvc.userInfo().objetiveWeight =
-        this.form.controls['objetiveWeight'].value;
-      this._globalSvc.userInfo().actualWeight =
-        this.form.controls['actualWeight'].value;
+    if ( this.form != undefined && !this.form.controls['objetiveWeight'].enabled ) {
+      this._globalSvc.userInfo().objetiveWeight = this.form.controls['objetiveWeight'].value;
+      this._globalSvc.userInfo().actualWeight = this.form.controls['actualWeight'].value;
 
-      await this._authSvc.updateUser(
-        this._auth.currentUser!.uid,
-        this._globalSvc.userInfo()
-      );
+      await this._authSvc.updateUser(this._auth.currentUser!.uid,this._globalSvc.userInfo()); // TODO Actualiza el usuario
     }
   }
 }

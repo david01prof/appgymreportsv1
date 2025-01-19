@@ -21,6 +21,10 @@
       <label [for]="id()" class="font-light">{{ label() }}</label>
       <p-inputNumber
         inputId="integeronly"
+        [min] = "minValue()"
+        [max]="maxValue()"
+        [minlength]="minLength()"
+        [maxlength]="maxLength()"
         [formControl]="localControl"
         [id]="id()"
         (ngModelChange)="_globalService.updateSignal(true)"

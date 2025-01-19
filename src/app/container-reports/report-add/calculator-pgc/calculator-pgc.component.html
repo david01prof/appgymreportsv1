@@ -6,6 +6,7 @@
                 id="height"
                 [control]="$any(measurementForm().get('height'))"
                 type="number"
+                maxLength="3"
                 descriptionLabel="Escribe tu altura en cm"
                 errorMessage="El mínimo son 50cm"></app-custom-input>
 
@@ -15,6 +16,7 @@
                 [control]="$any(measurementForm().get('weight'))"
                 type="number"
                 descriptionLabel="Escribe tu peso en kg"
+                maxLength="3"
                 errorMessage="El mínimo son 30kg"></app-custom-input>
 
             <app-custom-input
@@ -23,6 +25,7 @@
                 [control]="$any(measurementForm().get('neck'))"
                 type="number"
                 descriptionLabel="Escribe tu ancho de cuello en cm"
+                maxLength="3"
                 errorMessage="El mínimo son 20cm"></app-custom-input>
 
             <app-custom-input
@@ -31,6 +34,7 @@
                 [control]="$any(measurementForm().get('waist'))"
                 type="number"
                 descriptionLabel="Escribe tu ancho de cintura en cm"
+                maxLength="3"
                 errorMessage="El mínimo son 50cm"></app-custom-input>
 
             @if(_globalSvc.userInfo().gender.code == gender) {
@@ -39,6 +43,7 @@
                 id="hip"
                 [control]="$any(measurementForm().get('hip'))"
                 type="number"
+                maxLength="3"
                 errorMessage="El mínimo son 50cm"></app-custom-input>
             }
             

@@ -4,16 +4,18 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@app/auth/data-access/auth.service';
 import { emptyUser, Gender, IGenderSelect, IUser } from '@app/models';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [ButtonModule,ReactiveFormsModule,InputTextModule,InputNumberModule,DropdownModule,FormsModule,RouterLink,CommonModule,PasswordModule],
+  imports: [ButtonModule,ReactiveFormsModule,InputTextModule,InputNumberModule,DropdownModule,FormsModule,RouterLink,CommonModule,PasswordModule,ToastModule],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -29,6 +31,7 @@ export class SignUpComponent {
   public isPasswordMatch = true;
 
   private readonly _formBuilder = inject(FormBuilder);
+  private readonly messageService = inject(MessageService);
   private readonly _authSvc = inject(AuthService);
   private readonly _route = inject(Router);
 
@@ -76,12 +79,19 @@ export class SignUpComponent {
       const { email, username,password,age,gender, objetiveWeight, actualWeight, photo } = this.forms.value;
 
       if (email != undefined && password != undefined && username != undefined && age != undefined && gender != undefined && objetiveWeight != undefined && actualWeight != undefined && photo != undefined)  {
-        const userCredential = await this._authSvc.signUp({ email, password });
-        const userUid = userCredential.user.uid;
+        this._authSvc.signUp({ email, password }).subscribe({
+          next: (userCredential) => {
+            const userUid = userCredential.user.uid;
+            this._authSvc.saveUser({ email, username,password,age,gender, objetiveWeight, actualWeight, photo},userUid);
+            this._route.navigateByUrl('/dashboard');
+          },
+          error:() => {
+            this.messageService.add({ severity: 'error', summary: 'Operación realizada', detail: 'Fallo al crear el usuario: ' + username });
+          },
+          });
+
         
-        this._authSvc.saveUser({ email, username,password,age,gender, objetiveWeight, actualWeight, photo},userUid);
-  
-        this._route.navigateByUrl('/auth/sign-in')
+
       }
     }
     catch(error){

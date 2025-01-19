@@ -31,4 +31,5 @@ export class CardsTopComponent {
   productReports = input.required<IReport[]>();
   objetiveWeight = input.required<number>();
   actualWeight = input.required<number>();
+
 }

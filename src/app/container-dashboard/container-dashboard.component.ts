@@ -52,62 +52,54 @@ const PRIME_MODULES = [
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContainerDashboardComponent {
-  public date = new Date();
-  public currentUrl: string = '';
-  public visible: boolean = false;
+
   public itemsLabels: MenuItem[] = [];
   public messages: Message[] | undefined;
-  public isVisible = false;
   public dataRoutine = signal<IRoutine[]>([]);
   public dataReports = signal<IReport[]>([]);
   public activeUser = signal<IUser>(emptyUser);
-  public isActive = signal(false);
+  public actualWeight = 0;
+  public objetiveWeight = 0;
+  
   public readonly _globalSvc = inject(GlobalService);
 
   private readonly _dashboardSvc = inject(DashboardService);
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _routineSvc = inject(RoutinesService);
   private readonly _reportSvc = inject(ReportsService);
-  
 
-  constructor() {
-    let actualUser = this._globalSvc.userInfo(); 
+
+  constructor(){
     effect(() => {
-      this.activeUser.set(this._globalSvc.userInfo());
-
-      if(actualUser != this._globalSvc.userInfo() && this._globalSvc.userInfo().actualWeight == 0 && this._globalSvc.userInfo().objetiveWeight == 0){
-        this.isActive.set(true);
-
-        let temp = 'Bienvenido'
-        if(this._globalSvc.userInfo().gender.code == Gender.MALE){
-          temp = 'Bienvenido'
-        }else if(this._globalSvc.userInfo().gender.code == Gender.FEMALE){
-          temp = 'Bienvenida'
-        }
-        this.messages = [
-          {
-            severity: 'secondary',
-            detail:
-              `👋 Hola! ${temp}, a MiFitTracker! Antes de empezar, por favor completa tu perfil para una mejor experiencia.`,
-          },
-        ];
-        actualUser = this._globalSvc.userInfo();
-      }else{
-        this.isActive.set(false);
-      }
-
+      if(this._globalSvc.userInfo().email != ''){
+        this.itemsLabels = this._dashboardSvc.getBreadcrumbLabels();
+    
+        if(this._globalSvc.userInfo().actualWeight == 0 && this._globalSvc.userInfo().objetiveWeight == 0){
+          let temp = 'Bienvenido'
+          if(this._globalSvc.userInfo().gender.code == Gender.MALE){
+            temp = 'Bienvenido'
+          }else if(this._globalSvc.userInfo().gender.code == Gender.FEMALE){
+            temp = 'Bienvenida'
+          }
       
-    }, { allowSignalWrites: true });
+          this.messages = [
+            {
+              severity: 'secondary',
+              detail:
+                `👋 Hola! ${temp}, a MiFitTracker! Antes de empezar, por favor completa tu perfil para una mejor experiencia.`,
+            },
+          ];
+        }
 
-
+        this.actualWeight = this._globalSvc.userInfo().actualWeight;
+        this.objetiveWeight = this._globalSvc.userInfo().objetiveWeight;
+        this.getAllRoutines();
+        this.getAllReports();
+      }
+    });
   }
-
   ngOnInit(): void {
-    this.itemsLabels = this._dashboardSvc.getBreadcrumbLabels();
-
-   
-    this.getAllRoutines();
-    this.getAllReports();
+    
   }
 
   public getAllRoutines() {

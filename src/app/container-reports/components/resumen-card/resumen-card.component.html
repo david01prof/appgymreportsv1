@@ -24,7 +24,7 @@
       <div class="col-6">
         <p><strong>Cintura:</strong> {{ measurement.waist }}cm</p>
       </div>
-      <div class="col-6">
+      <div class="col-6" *ngIf="_globalSvc.userInfo().gender.code == gender">
         <p><strong>Cadera:</strong> {{ measurement.hip }}cm</p>
       </div>
       <div class="col-6">
@@ -32,6 +32,15 @@
       </div>
       <div class="col-6">
         <p><strong>Sexo:</strong> {{ measurement.genre.name }}</p>
+      </div>
+      <div class="col-6">
+        <p><strong>Indice de grasa:</strong> 
+          @if(measurement.totaligc != undefined && measurement.totaligc != ''){
+            {{measurement.totaligc}}
+          }@else {
+            0
+          }
+        %</p>
       </div>
     </div>
     
@@ -44,4 +53,5 @@
   }  
 </p-card>
 
-<p-confirmDialog />
+<p-confirmDialog  acceptLabel="Sí" 
+rejectLabel="No"/>
