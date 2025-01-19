@@ -82,7 +82,7 @@ export class PhotosComponent {
     this._messageSvc.add({
       severity: 'info',
       summary: 'Operación realizada',
-      detail: 'File Uploaded',
+      detail: 'Archivos subidos correctamente',
       life: 3000,
     });
   }
