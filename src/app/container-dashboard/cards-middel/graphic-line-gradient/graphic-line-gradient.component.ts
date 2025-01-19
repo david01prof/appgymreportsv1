@@ -3,7 +3,6 @@ import { IReport } from '@app/models';
 import { GlobalService } from '@app/services';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { CardModule } from 'primeng/card';
-import { min } from 'rxjs';
 
 @Component({
   selector: 'app-graphic-line-gradient',

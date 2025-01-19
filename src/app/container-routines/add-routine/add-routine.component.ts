@@ -12,7 +12,8 @@ import {
   FormGroup,
   FormsModule,
   NonNullableFormBuilder,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  Validators
 } from '@angular/forms';
 import { BreadcrumbComponent } from '@app/components/breadcrumb/breadcrumb.component';
 import {
@@ -106,13 +107,13 @@ export class AddRoutineComponent {
     const itemForm = this.fb.group<RoutineForm>({
       id: this.fb.control(0),
       idRoutine: this.fb.control(id),
-      titleRoutine: this.fb.control(this.routineEmptyForm().titleRoutine),
-      numExercises: this.fb.control(this.routineEmptyForm().numExercises),
+      titleRoutine: this.fb.control(this.routineEmptyForm().titleRoutine, [Validators.required]),
+      numExercises: this.fb.control(this.routineEmptyForm().numExercises , [Validators.min(0)]),
       exercises: this.fb.array<FormGroup<ExercisesFormControls>>([]),
       date: this.fb.control(this.routineEmptyForm().date),
       favourite: this.fb.control(this.routineEmptyForm().favourite),
       tag: this.fb.group<TagFormControls>({
-        title: this.fb.control(this.routineEmptyForm().tag.title) ?? '',
+        title: this.fb.control(this.routineEmptyForm().tag.title, [Validators.required]) ?? '',
         tagDropdown: this.fb.control(emptyRoutine.tag.tagDropdown) ?? emptyRoutine.tag.tagDropdown,
       }),
       comments: this.fb.control(this.routineEmptyForm().comments),
@@ -127,8 +128,8 @@ export class AddRoutineComponent {
   public generateControlsExercises() {
     this.getExercises().push(
       this.fb.group<ExercisesFormControls>({
-        titleExercise: this.fb.control(''),
-        numSeries: this.fb.control(1),
+        titleExercise: this.fb.control('',[Validators.required]),
+        numSeries: this.fb.control(1, [Validators.min(0)]),
         series: this.fb.array<FormGroup<SeriesFormControls>>([]),
       })
     );
@@ -143,8 +144,8 @@ export class AddRoutineComponent {
   public generateControlsSeries(id:number) {
     this.getSeries(id).push(
       this.fb.group<SeriesFormControls>({
-        replays: this.fb.control(0),
-        weight: this.fb.control(0)
+        replays: this.fb.control(0, [Validators.min(0)]),
+        weight: this.fb.control(0, [Validators.min(0)])
       })
     )
   

@@ -32,6 +32,10 @@ export class CustomInputComponent implements ControlValueAccessor {
   descriptionLabel = input<string>('');
   placeHolder = input<string>();
   errorMessage = input<string>();
+  minValue = input<string>('0');
+  maxValue = input<string>('999');
+  minLength = input<string>('0');
+  maxLength = input<string>('5');
 
   public _globalService = inject(GlobalService);
 

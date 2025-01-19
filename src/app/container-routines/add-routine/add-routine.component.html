@@ -8,7 +8,7 @@
     }
 
     <div class="flex justify-content-center mt-2 mb-4">
-        <p-button (onClick)="onSubmit()">Guardar</p-button>
+        <p-button (onClick)="onSubmit()" [disabled]="!routineForm.valid">Guardar</p-button>
     </div>
 </div>
 
