@@ -40,7 +40,22 @@ import { ButtonModule } from "primeng/button";
 
 export class LayoutComponent {
 
-  showScrollToTopButton = false; // Controla la visibilidad del botón
+  public showScrollToTopButton = false; // Controla la visibilidad del botón
+
+  private readonly _globalSvc = inject(GlobalService);
+  private readonly _authSvc = inject(AuthService);
+  private readonly _auth = inject(Auth);
+
+  constructor() {
+    this.initializeUser();
+  }
+
+  async initializeUser() {
+    if(this._auth.currentUser != null){
+      let userInfo = await this._authSvc.getUserById(this._auth.currentUser!.uid);   
+      this._globalSvc.userInfo.set(userInfo);
+    }
+  }
 
   // Escucha el evento de scroll en la ventana
   @HostListener('window:scroll', [])

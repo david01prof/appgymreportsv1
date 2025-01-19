@@ -14,28 +14,17 @@ import { CardModule } from 'primeng/card';
 })
 export class CardObjetiveWeightComponent {
 
-  objetiveWeight  = input.required<number>();
-  actualWeight = input.required<number>();
-  reports = input.required<IReport[]>();
+  public objetiveWeight  = input.required<number>();
+  public actualWeight = input.required<number>();
+  public reports = input.required<IReport[]>();
 
   public dataChart = signal<number[]>([0]);
   public improvements = signal<number>(0);
   public isPositive = signal<boolean>(false);
-  public actualWeightN = 0;
 
   private readonly _globalSvc = inject(GlobalService);
 
-  constructor() {
-    effect(() => {
-      if(this._globalSvc.userInfo().actualWeight != 0){
-        this.actualWeightN = this._globalSvc.userInfo().actualWeight;
-      }
-
-    });
-  }
-
   ngOnChanges(){
-    this.actualWeightN = this.actualWeight();
     if(this.reports().length > 0){
       let ref :number[]= [];
       for(let report of this.reports()){
