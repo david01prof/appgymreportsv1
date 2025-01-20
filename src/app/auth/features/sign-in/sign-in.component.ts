@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '@app/auth/data-access/auth.service';
+import { UserCredential } from 'firebase/auth';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
+import { AuthService } from '../../data-access/auth.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -15,7 +16,8 @@ import { ToastModule } from 'primeng/toast';
   imports: [ButtonModule,RouterLink,ReactiveFormsModule,InputTextModule,CommonModule,PasswordModule,ToastModule],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [MessageService,AuthService]
 })
 export class SignInComponent {
 
@@ -39,10 +41,10 @@ export class SignInComponent {
       if (!email || !password) return;
   
       this._authSvc.signIn({ email, password }).subscribe({
-        next: (userCredential) => {
+        next: (UserCredential: UserCredential) => {
           this._route.navigateByUrl('/dashboard')
         },
-        error:(error) => {
+        error:() => {
           this.messageService.add({ severity: 'error', summary: 'Operación realizada', detail: 'Fallo al loguearte'});
         }
       });

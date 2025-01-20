@@ -13,14 +13,13 @@ import {
   doc,
   Firestore,
   getDoc,
-  orderBy,
   query,
   setDoc,
-  updateDoc,
+  updateDoc
 } from '@angular/fire/firestore';
 import { IUser } from '@app/models';
 import { APP_CONSTANTS } from '@app/shared/constants';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, UserCredential } from 'firebase/auth';
 import { catchError, from, map, Observable } from 'rxjs';
 
 @Injectable({
@@ -32,19 +31,20 @@ export class AuthService {
     this._firestore,
     APP_CONSTANTS.COLLECTION_NAME_USERS
   );
-  private _auth = inject(Auth);
+
+  constructor(private _auth: Auth) {}
 
   public getAllUsers(): Observable<IUser[]> {
     const queryFn = query(this._userCollection);
     return collectionData(queryFn) as Observable<IUser[]>;
   }
 
-  signUp(user: Omit<IUser, 'username' | 'age' | 'gender' | 'objetiveWeight' | 'actualWeight' | 'photo' | 'createdAt'>) : Observable<any> {
-    return from(createUserWithEmailAndPassword(this._auth, user.email, user.password))
+  signUp(user: Omit<IUser, 'username' | 'age' | 'gender' | 'objetiveWeight' | 'actualWeight' | 'photo' | 'createdAt'>) : Observable<UserCredential> {
+    return from(createUserWithEmailAndPassword(this._auth, user['email'], user['password']))
   }
 
   signIn(user: Omit<IUser, 'username' | 'age' | 'gender' | 'objetiveWeight' | 'actualWeight' | 'photo' | 'createdAt'>) : Observable<any> {
-    return from(signInWithEmailAndPassword(this._auth, user.email, user.password)); 
+    return from(signInWithEmailAndPassword(this._auth,  user['email'], user['password'])); 
   }
 
   async saveUser(user: Omit<IUser, 'createdAt'>, idUser: string) {
@@ -54,13 +54,13 @@ export class AuthService {
         `${APP_CONSTANTS.COLLECTION_NAME_USERS}/${idUser}`
       );
       await setDoc(userRef, {
-        email: user.email,
-        username: user.username,
-        age: user.age,
-        gender: user.gender,
-        objetiveWeight: user.objetiveWeight,
-        actualWeight: user.actualWeight,
-        photo: user.photo,
+        email: user['email'],
+        username: user['username'],
+        age: user['age'],
+        gender: user['gender'],
+        objetiveWeight: user['objetiveWeight'],
+        actualWeight: user['actualWeight'],
+        photo: user['photo'],
         createdAt: new Date().toISOString(), // Fecha de creación opcional
       });
     } catch (error) {
