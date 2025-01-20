@@ -1,0 +1,1 @@
+import"./chunk-25N2FLV6.js";var t=[{path:"sign-in",loadComponent:()=>import("./chunk-4GPV3KTR.js").then(o=>o.SignInComponent)},{path:"sign-up",loadComponent:()=>import("./chunk-E3T66OVM.js").then(o=>o.SignUpComponent)},{path:"forgetPassword",loadComponent:()=>import("./chunk-2BCHD25U.js").then(o=>o.ForgetPasswordComponent)}];export{t as routesAuth};

@@ -1,0 +1,1 @@
+import{b as a}from"./chunk-ECKXUXWC.js";import"./chunk-CWLNJ3RN.js";import"./chunk-OAPPQKJA.js";import"./chunk-5DSIRKQH.js";import"./chunk-YGEN2ETO.js";import"./chunk-PO5N23L5.js";import"./chunk-25N2FLV6.js";export{a as BreadcrumbComponent};
