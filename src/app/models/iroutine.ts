@@ -31,7 +31,7 @@ export interface ITag {
 
 export  interface Status {
   label: string;
-  severity: 'success' | 'secondary' | 'info' | 'warning' | 'danger' | 'contrast';
+  severity: 'success' | 'secondary' | 'info' | 'warn' | 'danger' | 'contrast';
 }
 
 

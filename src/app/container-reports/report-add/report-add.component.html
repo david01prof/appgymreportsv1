@@ -3,123 +3,105 @@
     urlActive="reports"></app-breadcrumb>
 
 <p-card class="stylesCard">
-  <p-stepper [(activeStep)]="active" [linear]="true">
-    <p-stepperPanel>
-      <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
-        <button
-          class="bg-transparent border-none inline-flex flex-column gap-2"
-        >
-          <span
-            class="border-round border-2 w-3rem h-3rem inline-flex align-items-center justify-content-center"
-            [ngClass]="{
-              'bg-primary border-primary': index <= active,
-              'surface-border': index > active
-            }"
-          >
-            <i class="pi pi-calculator"></i>
-          </span>
-        </button>
-      </ng-template>
-      <ng-template pTemplate="content" let-nextCallback="nextCallback">
+  <p-stepper [(value)]="activeStep" class="basis-[40rem]">
 
-        <!-- CalculatorPgc -->
+    <p-step-list>
 
-        <app-calculator-pgc (dataMeasurement)="getValueMeasurement($event)" (disabledNextPage)="disabledNextPage($event)" class="fadein animation-duration-300"></app-calculator-pgc>
+        <!-- Paso 1 -->
+        <p-step [value]="1" class="flex flex-row flex-auto gap-2">
+          <ng-template #content let-activateCallback="activateCallback" let-value="value">
+              <button class="bg-transparent border-0 inline-flex flex-col gap-2" (click)="activateCallback()">
+                  <span
+                      class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center"
+                      [ngClass]="{
+                          'bg-primary text-primary-contrast border-primary': value <= activeStep,
+                          'border-surface': value > activeStep
+                      }"
+                  >
+                      <i class="pi pi-calculator"></i>
+                  </span>
+              </button>
+          </ng-template>
+        </p-step>
 
-        <!--  -->
+        <!-- Paso 2 -->
+        <p-step [value]="2" class="flex flex-row flex-auto gap-2">
+          <ng-template #content let-activateCallback="activateCallback" let-value="value">
+              <button class="bg-transparent border-0 inline-flex flex-col gap-2" (click)="activateCallback()">
+                  <span
+                      class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center"
+                      [ngClass]="{
+                          'bg-primary text-primary-contrast border-primary': value <= activeStep,
+                          'border-surface': value > activeStep
+                      }"
+                  >
+                      <i class="pi pi-camera"></i>
+                  </span>
+              </button>
+          </ng-template>
+        </p-step>
 
-        <div class="flex pt-4 justify-content-end">
-          <p-button
-            (onClick)="nextCallback.emit()"
-            [label]="getLabelNext()"
-            icon="pi pi-arrow-right"
-            iconPos="right"
-            [disabled]="disabledPage"
-          />
-        </div>
-      </ng-template>
-    </p-stepperPanel>
-    <p-stepperPanel>
-      <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
-        <button
-          class="bg-transparent border-none inline-flex flex-column gap-2"
-        >
-          <span
-            class="border-round border-2 w-3rem h-3rem inline-flex align-items-center justify-content-center"
-            [ngClass]="{
-              'bg-primary border-primary': index <= active,
-              'surface-border': index > active
-            }"
-          >
-            <i class="pi pi-camera"></i>
-          </span>
-        </button>
-      </ng-template>
-      <ng-template
-        pTemplate="content"
-        let-prevCallback="prevCallback"
-        let-nextCallback="nextCallback"
-      >
-        <!-- Photos -->
+        <!-- Paso 3 -->
+        <p-step [value]="3" class="flex flex-row flex-auto gap-2">
+          <ng-template #content let-activateCallback="activateCallback" let-value="value">
+              <button class="bg-transparent border-0 inline-flex flex-col gap-2" (click)="activateCallback()">
+                  <span
+                      class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center"
+                      [ngClass]="{
+                          'bg-primary text-primary-contrast border-primary': value <= activeStep,
+                          'border-surface': value > activeStep
+                      }"
+                  >
+                      <i class="pi pi-list"></i>
+                  </span>
+              </button>
+          </ng-template>
+        </p-step>
 
-        <app-photos (dataPhotos)="getValuePhotos($event)" (activeInputImage)="activeInputImage($event)" class="fadein animation-duration-300"></app-photos>
+    </p-step-list>
 
-        <!--  -->
-        <div class="flex pt-4 justify-content-between">
-          <p-button
-            (onClick)="prevCallback.emit()"
-            [label]="getLabelBack()"
-            severity="secondary"
-            icon="pi pi-arrow-left"
-          />
-          <p-button
-            (onClick)="nextCallback.emit();"
-            [label]="getLabelNext()"
-            icon="pi pi-arrow-right"
-            iconPos="right"
-            [disabled]="disabledPage"
-          />
-        </div>
-      </ng-template>
-    </p-stepperPanel>
-    <p-stepperPanel>
-      <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
-        <button
-          class="bg-transparent border-none inline-flex flex-column gap-2"
-        >
-          <span
-            class="border-round border-2 w-3rem h-3rem inline-flex align-items-center justify-content-center"
-            [ngClass]="{
-              'bg-primary border-primary': index <= active,
-              'surface-border': index > active
-            }"
-          >
-            <i class="pi pi-list"></i>
-          </span>
-        </button>
-      </ng-template>
-      <ng-template pTemplate="content" let-prevCallback="prevCallback">
-        <!-- Resumen Report -->
+    <p-step-panels>
 
-        <app-resumen-card [report]="dataReport()" [isDetail]="false" class="fadein animation-duration-300"></app-resumen-card>
+      <p-step-panel [value]="1">
+        <ng-template #content let-activateCallback="activateCallback">
 
-        <!--  -->
-        <div class="flex pt-4 justify-content-between">
-          <p-button
-            (onClick)="prevCallback.emit()"
-            [label]="getLabelBack()"
-            severity="secondary"
-            icon="pi pi-arrow-left"
-          />
-          <p-button
-            [label]="getLabelSave()"
-            (onClick)="submit(dataReport())"
-            icon="pi pi-save"
-            iconPos="right"
-          />
-        </div>
-      </ng-template>
-    </p-stepperPanel>
+            <!-- CalculatorPgc -->
+            <app-calculator-pgc (dataMeasurement)="getValueMeasurement($event)" (disabledNextPage)="disabledNextPage($event)" class="fadein animation-duration-300"></app-calculator-pgc>
+
+            <div class="flex pt-6 justify-end">
+              <p-button (onClick)="activateCallback(2)" [label]="getLabelNext()" icon="pi pi-arrow-right" iconPos="right" [disabled]="disabledPage"/>
+            </div> 
+
+        </ng-template>
+      </p-step-panel>
+
+      <p-step-panel [value]="2">
+        <ng-template #content let-activateCallback="activateCallback">
+
+            <!-- Photos -->
+            <app-photos (dataPhotos)="getValuePhotos($event)" (activeInputImage)="activeInputImage($event)" class="fadein animation-duration-300"></app-photos>
+
+            <div class="flex pt-6 justify-between">
+              <p-button (onClick)="activateCallback(1)" [label]="getLabelBack()" severity="secondary" icon="pi pi-arrow-left" />
+              <p-button (onClick)="activateCallback(3)" [label]="getLabelNext()" icon="pi pi-arrow-right" iconPos="right" [disabled]="disabledPage"/>
+            </div>
+        </ng-template>
+      </p-step-panel>
+
+      <p-step-panel [value]="3">
+        <ng-template #content let-activateCallback="activateCallback">
+
+            <!-- Resumen Report -->
+            <app-resumen-card [report]="dataReport()" [isDetail]="false" class="fadein animation-duration-300"></app-resumen-card>
+
+            <div class="flex pt-4 justify-between">
+              <p-button (onClick)="activateCallback(2)" [label]="getLabelBack()" severity="secondary" icon="pi pi-arrow-left" />
+              <p-button [label]="getLabelSave()" (onClick)="submit(dataReport())" icon="pi pi-save" iconPos="right" />
+            </div>
+
+        </ng-template>
+      </p-step-panel> …
+    </p-step-panels>
   </p-stepper>
 </p-card>
   

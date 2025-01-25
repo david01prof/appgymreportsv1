@@ -10,11 +10,10 @@ import {
 import {
   FormArray,
   FormGroup,
-  FormsModule,
   NonNullableFormBuilder,
-  ReactiveFormsModule,
   Validators
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { BreadcrumbComponent } from '@app/components/breadcrumb/breadcrumb.component';
 import {
   emptyRoutine,
@@ -24,41 +23,16 @@ import {
   SeriesFormControls,
   TagFormControls
 } from '@app/models';
-import { ButtonModule } from 'primeng/button';
-import { CalendarModule } from 'primeng/calendar';
-import { CardModule } from 'primeng/card';
-import { CheckboxModule } from 'primeng/checkbox';
-import { DividerModule } from 'primeng/divider';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { ScrollPanelModule } from 'primeng/scrollpanel';
-import { TagModule } from 'primeng/tag';
-import { RoutinesService } from '../services/routines.service';
-import { FormRoutineChildComponent } from './form-routine-child/form-routine-child.component';
-import { Router } from '@angular/router';
+import { GlobalService } from '@app/services';
 import { GlobalRoutinesStore } from '@app/store/globalRoutines.store';
 import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
-import { GlobalService } from '@app/services';
+import { RoutinesService } from '../services/routines.service';
+import { FormRoutineChildComponent } from './form-routine-child/form-routine-child.component';
 
 const PRIME_MODULES = [
-  CardModule,
   ButtonModule,
-  CalendarModule,
-  InputNumberModule,
-  InputTextModule,
-  InputTextareaModule,
-  DividerModule,
-  ScrollPanelModule,
-  TagModule,
-  DropdownModule,
-  CheckboxModule,
-  InputGroupModule,
-  InputGroupAddonModule,
   ToastModule
 ];
 
@@ -68,10 +42,8 @@ export type CustomFormGroup = FormGroup<RoutineForm>;
   selector: 'app-add-routine',
   standalone: true,
   imports: [
-    ReactiveFormsModule,
     PRIME_MODULES,
     CommonModule,
-    FormsModule,
     BreadcrumbComponent,
     FormRoutineChildComponent,
   ],

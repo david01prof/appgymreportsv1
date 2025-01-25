@@ -5,12 +5,12 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import { TextareaModule } from 'primeng/textarea';
 
 @Component({
   selector: 'app-custom-input',
   standalone: true,
-  imports: [ReactiveFormsModule,InputTextModule,InputNumberModule,InputTextareaModule,CheckboxModule,DropdownModule],
+  imports: [ReactiveFormsModule,InputTextModule,InputNumberModule,TextareaModule,CheckboxModule,DropdownModule],
   templateUrl: './custom-input.component.html',
   styleUrl: './custom-input.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

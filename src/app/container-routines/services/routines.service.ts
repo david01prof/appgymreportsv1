@@ -101,7 +101,7 @@ export class RoutinesService {
     return [
       { label: 'Rojo', severity: 'danger' },
       { label: 'Verde', severity: 'success' },
-      { label: 'Naranja', severity: 'warning' },
+      { label: 'Naranja', severity: 'warn' },
       { label: 'Negro', severity: 'contrast' },
     ]
   }

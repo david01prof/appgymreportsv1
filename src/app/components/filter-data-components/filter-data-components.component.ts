@@ -4,9 +4,9 @@ import { IFilter } from '@app/models';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
+import { PrimeNG } from 'primeng/config';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
-import { PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-filter-data-components',
@@ -27,7 +27,7 @@ export class FilterDataComponentsComponent {
   value : any | undefined;
   rangeDates: Date[] | undefined;
 
-  public readonly primengConfig = inject(PrimeNGConfig);
+  public readonly primengConfig = inject(PrimeNG);
 
   ngOnInit() {
     this.primengConfig.setTranslation({

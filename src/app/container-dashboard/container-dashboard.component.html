@@ -3,7 +3,9 @@
     urlActive="Home"></app-breadcrumb>
 
 <div class="card" *ngIf="this._globalSvc.userInfo().actualWeight == 0 && this._globalSvc.userInfo().objetiveWeight == 0">
-    <p-messages [(value)]="messages!"    [showTransitionOptions]="'500ms'"  [hideTransitionOptions]="'500ms'"  [enableService]="false"/>
+    <p-message severity="secondary"  [showTransitionOptions]="'500ms'"  [hideTransitionOptions]="'500ms'">
+        `👋 Hola! {{genreUser}}, a MiFitTracker! Antes de empezar, por favor completa tu perfil para una mejor experiencia.
+    </p-message>
 </div>
 
 <!-- Trio de cards del top del body -->

@@ -51,7 +51,7 @@
                     <span>{{ file.name }}</span>
                     <div class="font-light text-sm">{{
                         _reportSvc.formatSize(file.size) }}</div>
-                    <p-badge value="Pendiente" severity="warning" />
+                    <p-badge value="Pendiente" severity="warn" />
                     <p-button icon="pi pi-times"
                         (onClick)="onRemoveTemplatingFile($event, file, removeFileCallback, i)"
                         [outlined]="true" [rounded]="true" severity="danger"

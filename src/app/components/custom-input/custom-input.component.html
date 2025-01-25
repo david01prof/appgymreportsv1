@@ -36,12 +36,11 @@
     <div class="my-3 gap-2">
       <label [id]="id()" class="font-light">{{ label() }}</label>
       <textarea
-        pInputTextarea
+        pTextarea
         [formControl]="localControl"
         [id]="id()"
         rows="5"
         cols="30"
-        pInputTextarea
         [autoResize]="true"
         (blur)="onTouched()"
       ></textarea>

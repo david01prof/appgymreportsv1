@@ -3,7 +3,7 @@ import { addDoc, collection, collectionData, deleteDoc, doc, Firestore, orderBy,
 import { IReport } from '@app/models/ireport';
 import { APP_CONSTANTS } from '@app/shared/constants';
 import { AuthStateService } from '@app/shared/data-access/auth.state.service';
-import { PrimeNGConfig } from 'primeng/api';
+import { PrimeNG } from 'primeng/config';
 import { catchError, from, map, Observable } from 'rxjs';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class ReportsService {
   private dataReports: IReport[] = [];
   private readonly _firestore = inject(Firestore);
   private readonly _reportCollection = collection(this._firestore, APP_CONSTANTS.COLLECTION_NAME_REGISTERS);
-  private readonly config = inject(PrimeNGConfig);
+  private readonly config = inject(PrimeNG);
   private readonly _auth = inject(AuthStateService);
 
   public getAllReports() : Observable<IReport[]>{

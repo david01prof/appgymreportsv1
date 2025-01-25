@@ -1,16 +1,18 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withComponentInputBinding } from '@angular/router';
-
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideClientHydration } from '@angular/platform-browser';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
+import Aura from '@primeng/themes/aura';
+import { providePrimeNG } from 'primeng/config';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { ErrorResponseInterceptor } from './shared/interceptors/error-response.interceptor';
 import { SpinnerInterceptor } from './shared/interceptors/spinner.interceptor';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,7 +22,12 @@ export const appConfig: ApplicationConfig = {
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    provideAnimations(),
-    provideHttpClient(withFetch(),withInterceptors([ErrorResponseInterceptor,SpinnerInterceptor]))
+    provideHttpClient(withFetch(),withInterceptors([ErrorResponseInterceptor,SpinnerInterceptor])),
+    provideAnimationsAsync(),
+    providePrimeNG({
+        theme: {
+            preset: Aura
+        }
+    })
   ],
 };
