@@ -1,109 +1,103 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { GlobalService } from '@app/services';
 import { AuthStateService } from '@app/shared/data-access/auth.state.service';
+import { AccordionModule } from 'primeng/accordion';
 import { MenuItem } from 'primeng/api';
-import { AvatarModule } from 'primeng/avatar';
-import { AvatarGroupModule } from 'primeng/avatargroup';
 import { ButtonModule } from 'primeng/button';
-import { MenuModule } from 'primeng/menu';
-import { MenubarModule } from 'primeng/menubar';
-import { ToolbarModule } from 'primeng/toolbar';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { SplitButtonModule } from 'primeng/splitbutton';
-import { DividerModule } from 'primeng/divider';
+import { SidebarModule } from 'primeng/sidebar';
+
 
 @Component({
   selector: 'app-toolbar',
   standalone: true,
   imports: [
-    MenubarModule,
-    AvatarModule,
-    AvatarGroupModule,
     RouterLink,
     ButtonModule,
-    MenuModule,
-    ToolbarModule,
-    IconFieldModule,
-    InputIconModule,
-    SplitButtonModule,
-    DividerModule
-  ],
+    SidebarModule,
+    AccordionModule],
   template: `
+    <p-sidebar [(visible)]="sidebarVisible4" position="bottom">
+
+      <!-- Home -->
+      <div class="flex justify-content-start align-items-center pl-3">
+        <div class="circle shadow-4 backgroundHome flex justify-content-center align-items-center mr-3">
+          <a class="fa-solid fa-house alignHouse"></a>
+        </div>  
+        <h3 class="font-lighter text-xl"  routerLink="/">Home</h3>
+      </div>
+
+      <p-accordion class="w-full">
+        <p-accordionTab>
+            <ng-template pTemplate="header">
+              <div class="flex justify-content-start align-items-center">
+                <div class="circle backgroundRoutines flex justify-content-center align-items-center mr-3">
+                  <a class="fa-solid fa-dumbbell"></a>
+                </div>  
+                <h3 class="font-lighter text-xl"  routerLink="/routines">Rutinas</h3>
+              </div>
+            </ng-template>
+            <p class="m-0 pl-7">  <a class="pi pi-plus mr-1"></a> Nueva rutina </p>
+        </p-accordionTab>
+      </p-accordion>
+
+      <p-accordion class="w-full">
+        <p-accordionTab>
+            <ng-template pTemplate="header">
+              <div class="flex justify-content-start align-items-center">
+                <div class="circle backgroundReports flex justify-content-center align-items-center mr-3">
+                  <a class="fa-solid fa-heart-pulse"></a>
+                </div>  
+                <h3 class="font-lighter text-xl"  routerLink="/reports">Reportes</h3>
+              </div>
+            </ng-template>
+            <p class="m-0 pl-7">  <a class="pi pi-plus mr-1"></a> Nuevo reporte </p>
+        </p-accordionTab>
+      </p-accordion>
+
+      <!-- Home -->
+      <div class="flex justify-content-start align-items-center pl-3">
+        <div class="circle backgroundProfile flex justify-content-center align-items-center mr-3">
+          <a class="pi pi-cog alignProfile"></a>
+        </div>  
+        <h3 class="font-lighter text-xl"  routerLink="/profile">Ajustes</h3>
+      </div>
+
+
+      <!-- Home -->
+      <div class="flex justify-content-start align-items-center pl-3">
+        <div class="circle backgroundTerms flex justify-content-center align-items-center mr-3">
+          <a class="fa-solid fa-file-pen alignTerms"></a>
+        </div>  
+        <h3 class="font-lighter text-xl"  routerLink="/politic-terms">Política de privacidad y cookies</h3>
+      </div>
+
+      <!-- Home -->
+      <div class="flex justify-content-start align-items-center pl-3">
+        <div class="circle backgroundLogout flex justify-content-center align-items-center mr-3">
+          <a class="pi pi-sign-out"></a>
+        </div>  
+        <h3 class="font-lighter text-xl" (click)=" _authStateSvc.logout()">Cerrar sesión</h3>
+      </div>
+    </p-sidebar>
+
     <div class="flex align-items-center gap-2">
-          <p-menu
-              #menu
-              [model]="itemsProfile"
-              [popup]="true"
-              class="styleButton"
-          > 
-          </p-menu>
+
           <div class="card flex justify-content-center menuCss">
-            <p-button [link]="true" (onClick)="menu.toggle($event)" [text]="true" [raised]="true" [rounded]="true" severity="secondary">
+            <p-button [link]="true" [text]="true" [raised]="true" [rounded]="true" severity="secondary" (onClick)="sidebarVisible4 = true">
               <i class="pi pi-list"></i>
             </p-button>
           </div>
         </div>
-
-    <div class="card">
-      <p-toolbar class="custom-toolbar">
-        <div class="p-toolbar-group-center flex justify-content-around w-full">
-            <div class="flex flex-column toolbarButton">
-              <p-button icon="pi pi-book" severity="primary" routerLink="/reports"/>
-              <span class="font-light text-gray-400 mt-1 text-sm">Reportes</span>
-            </div>
-            <div class="flex flex-column toolbarButton">
-              <p-button icon="pi pi-home" severity="primary" routerLink="/"/>
-              <span class="font-light text-gray-400 mt-1 text-sm">Home</span>
-            </div>
-            <div class="flex flex-column toolbarButton">
-              <p-button icon="pi pi-list" severity="primary" routerLink="/routines"/>
-              <span class="font-light text-gray-400 mt-1 text-sm">Rutinas</span>
-            </div>
-        </div>
-      </p-toolbar>
-    </div>
   `,
-  styles: `
-    ::ng-deep .p-button.p-button-link  {
-      height: 35px;
-    }
-    .styleUsername{
-      margin: 10px 0;
-    }
-
-    .toolbarButton{
-      margin-top: -30px;
-    }
-
-    ::ng-deep .p-toolbar{
-      border: none;
-    }
-
-    .custom-toolbar {
-      position: fixed;    /* Fija la barra en la ventana */
-      bottom: 0;          /* Posición en la parte inferior */
-      left: 0;            /* Alinea a la izquierda */
-      width: 100%;        /* Abarca todo el ancho de la ventana */
-      z-index: 1000;      /* Asegura que esté sobre otros elementos */
-      background-color: white; /* Color de fondo para que sea visible */
-    }
-
-    .menuCss{
-      position: fixed;
-        right: 1rem;
-        top: 1.5rem;
-        z-index: 1000;
-    }
-    
-  `,
+  styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent {
+  public sidebarVisible4 = false;
   public items: MenuItem[] | undefined;
   public itemsProfile: MenuItem[] | undefined;
 
-  private readonly _authStateSvc = inject(AuthStateService);
+  public readonly _authStateSvc = inject(AuthStateService);
   public readonly _globalSvc = inject(GlobalService);
 
   async ngOnInit() {
@@ -127,27 +121,27 @@ export class ToolbarComponent {
 
     this.itemsProfile = [
       {
-          items: [
-            {
-              label: 'Perfil',
-              icon: 'pi pi-cog',
-              routerLink: ['/profile'],
+        items: [
+          {
+            label: 'Perfil',
+            icon: 'pi pi-cog',
+            routerLink: ['/profile'],
+          },
+          // {
+          //   label: 'Terminos y condiciones',
+          //   icon: 'pi pi-cog',
+          //   routerLink: ['/politic-terms'],
+          // },
+          {
+            label: 'Salir',
+            icon: 'pi pi-sign-out',
+            command: () => {
+              this._authStateSvc.logout();
             },
-            // {
-            //   label: 'Terminos y condiciones',
-            //   icon: 'pi pi-cog',
-            //   routerLink: ['/politic-terms'],
-            // },
-            {
-              label: 'Salir',
-              icon: 'pi pi-sign-out',
-              command: () => {
-                this._authStateSvc.logout();
-              },
-            }
-          ],
-          label: 'MiFitTracker  BETA',
-      }
-  ];
+          },
+        ],
+        label: 'MiFitTracker  BETA',
+      },
+    ];
   }
 }
