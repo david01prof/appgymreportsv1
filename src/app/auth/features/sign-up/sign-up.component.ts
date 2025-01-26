@@ -1,21 +1,15 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { AuthPrimeModule } from '@app/auth/auth-prime.module';
 import { AuthService } from '@app/auth/data-access/auth.service';
 import { emptyUser, Gender, IGenderSelect, IUser } from '@app/models';
 import { MessageService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
-import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [ButtonModule,ReactiveFormsModule,InputTextModule,InputNumberModule,DropdownModule,FormsModule,RouterLink,CommonModule,PasswordModule,ToastModule],
+  imports: [ReactiveFormsModule,FormsModule,RouterLink,AuthPrimeModule],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -40,7 +34,7 @@ export class SignUpComponent {
     username: ['', [Validators.required, Validators.minLength(1)]],
     password: ['', [Validators.required, Validators.minLength(1)]],
     confirmPassword: ['', [Validators.required, Validators.minLength(1)]],
-    age: [0],
+    age: [0, [Validators.required]],
     gender: [{ name: 'Femenino', code: Gender.FEMALE }],
     objetiveWeight: [0],
     actualWeight: [0],
@@ -61,7 +55,6 @@ export class SignUpComponent {
         }
       })
     }
-
   }
 
   checkIfMatch(){
@@ -88,14 +81,12 @@ export class SignUpComponent {
           error:() => {
             this.messageService.add({ severity: 'error', summary: 'Operación realizada', detail: 'Fallo al crear el usuario: ' + username });
           },
-          });
-
-        
-
+          })
       }
     }
     catch(error){
       console.error(error);
+      this.messageService.add({ severity: 'error', summary: 'Operación realizada', detail: 'Error al realizar la operación' });
     }
   }
 

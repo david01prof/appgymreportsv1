@@ -1,18 +1,15 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { AuthPrimeModule } from '@app/auth/auth-prime.module';
 import { AuthService } from '@app/auth/data-access/auth.service';
 import { MessageService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
-import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [ButtonModule,RouterLink,ReactiveFormsModule,InputTextModule,CommonModule,PasswordModule,ToastModule],
+  imports: [RouterLink,ReactiveFormsModule,PasswordModule,AuthPrimeModule],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

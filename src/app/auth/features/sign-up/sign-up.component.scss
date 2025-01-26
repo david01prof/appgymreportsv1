@@ -1,3 +1,25 @@
-::ng-deep .p-fluid .p-dropdown {
-    margin-top: 0.5rem;
+@import '../../../../variables.scss';
+
+form{
+    background: var(--bg_login, linear-gradient(348deg, #A0D0F0 0.02%, #EFF3F8 99.19%));
+}
+
+a{
+    color: $infoColor;
+}
+
+a:hover{
+    color: $infoHoverColor;
+}
+
+.textColor{
+    color: $textColor;
+}
+
+.widthGroup{
+    width: 103%;
+}
+
+.cardWidth{
+    max-width: 450px;
 }

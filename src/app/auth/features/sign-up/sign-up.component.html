@@ -1,74 +1,86 @@
 
 
 <form [formGroup]="forms" (ngSubmit)="onSubmit()">
-    <div  class="flex justify-content-center align-items-center min-h-screen surface-ground">
-        <div  class="p-4 surface-card shadow-2 border-round w-11 sm:w-10 md:w-6 lg:w-4">
+    <div class="flex justify-content-center align-items-center min-h-screen">
+        <p-card class="cardWidth">
             <div class="text-center mb-3">
-                <img src="assets/images/logo3.png" alt="logo" class="border-round-lg shadow-5" style="width: 70px;" />
-                <h2 class="font-bold text-900 mb-2">Crea tu cuenta</h2>
+                <img src="assets/images/logo3.png" alt="logo"
+                    class="border-round-xl shadow-5 mt-5"
+                    style="width: 124px;" />
+                <div
+                    class="flex justify-content-center align-items-center mt-3">
+                    <p class="textColor w-10">Hola! Por favor introduce tus datos para crear tu perfil.</p>
+                </div>
             </div>
 
             <div class="formgroup grid">
+
+                <!-- Email -->
+                <div class="mb-4 mt-4 col-12">
+                    <p-floatLabel>
+                        <input pInputText id="email" type="email"  formControlName="email"  class="w-full"/>
+                        <label for="email" class="textColor">Email</label>
+                    </p-floatLabel>
+                </div>
+
                 <!-- Username -->
-                <div class="mb-2 col-12">
-                    <label for="email"
-                        class="block text-900 font-medium mb-2">Email</label>
-                    <input id="email" type="email" pInputText
-                        placeholder="Introduce tu email"
-                        class="w-full border-round" formControlName="email" />
-                </div>
-
-                <div class="mb-2 col-12">
-                    <label for="username"
-                        class="block text-900 font-medium mb-2">Nombre de usuario</label>
-                    <input id="username" type="text" pInputText placeholder="Introduce tu nombre de usuario"
-                        class="w-full border-round" formControlName="username" (ngModelChange)="checkIfExists()" (blur)="checkIfExists()" />
+                <div class="mb-4 col-12">
+                    <p-floatLabel>
+                        <input pInputText id="username" type="text"  formControlName="username"  class="w-full"/>
+                        <label for="username" class="textColor" (ngModelChange)="checkIfExists()" (blur)="checkIfExists()">Nombre de usuario</label>
                         <span class="text-red-500" *ngIf="!isValidUsername">El nombre de usuario ya existe</span>
+                    </p-floatLabel>
                 </div>
 
-                <div class="col-12 grid">
-                    <div class="col-5">
-                        <label for="integerAge">Edad:</label>
-                        <p-inputNumber  inputId="integerAge" formControlName="age" class="mt-2"/>
+                <!-- Age -->
+                <div class="col-12 grid mb-2 widthGroup">
+                    <div class="col-6">
+                        <p-floatLabel>
+                            <p-inputNumber [maxlength]="3" inputId="integeronly" formControlName="age"  [showButtons]="true" /> 
+                            <label for="email" class="textColor">Edad</label>
+                        </p-floatLabel>
                     </div>
-                    <div class="col-7 flex flex-wrap gap-2 p-fluid">
-                        <div class="flex-auto">
-                            <label for="integerAge">Género:</label>
-                            <p-dropdown [options]="genders" formControlName="gender" optionLabel="name" placeholder="Selecciona tu genero" />
-                        </div>
+                    <div class="col-6 flex  justify-content-end">
+                        <p-floatLabel>
+                            <p-dropdown [options]="genders" formControlName="gender" optionLabel="name" />
+                            <label for="genre" class="textColor">Género</label>
+                        </p-floatLabel>
                     </div>
                 </div>
 
                 <!-- Password -->
-                <div class="mb-2 col-12">
-                    <label for="password"
-                        class="block text-900 font-medium mb-2">Contraseña</label>
-                        <p-password formControlName="password" [toggleMask]="true" promptLabel="Escribe tu contraseña"
+                <div class="mb-4 col-12">
+                    <p-floatLabel>
+                        <p-password formControlName="password" [toggleMask]="true"
+                        promptLabel="Escribe tu contraseña"
                         weakLabel="Muy simple"
-                        mediumLabel="Complejidad media" 
+                        mediumLabel="Complejidad media"
                         strongLabel="Contraseña compleja"
-                        placeholder="Introduce tu contraseña"
-                        (blur)="checkIfMatch()"/>
+                        (blur)="checkIfMatch()" />
+                        <label for="email" class="textColor">Contraseña</label>
+                    </p-floatLabel>
                 </div>
 
                 <!-- confirm Password -->
                 <div class="mb-4 col-12">
-                    <label for="password"
-                        class="block text-900 font-medium mb-2">Confirma la contraseña</label>
-                        <p-password formControlName="confirmPassword" [toggleMask]="true" [feedback]="false" (onBlur)="checkIfMatch()"  placeholder="Introduce tu contraseña"/>
+                    <p-floatLabel>
+                        <p-password formControlName="confirmPassword" [toggleMask]="true" [feedback]="false" (onBlur)="checkIfMatch()"/>
+                        <label for="email" class="textColor">Confirma la contraseña</label>
+                    </p-floatLabel>
                     <span class="text-red-500" *ngIf="!isPasswordMatch">Las contraseñas no coinciden</span>
                 </div>
             </div>
 
-            <!-- Login Button -->
-            <button pButton label="Crear" type="submit"
-                class="w-full p-2 border-round font-bold" [disabled]="!forms.valid && !isPasswordMatch"></button>
+            <!-- Create Button -->
+            <div class="flex justify-content-center">
+                <p-button label="Crear cuenta" type="submit"  severity="info" [disabled]="!forms.valid && !isPasswordMatch"/>
+            </div>
 
-            <p class="mt-4">Ya tienes una cuenta? <a routerLink="/auth/sign-in" class="text-blue-400">Inicia sesión</a></p>
+            <!-- Remember account -->
+            <p class="mt-3 text-center">Ya tienes una cuenta? <a routerLink="/auth/sign-in" class="no-underline">Iniciar sesión</a></p>
 
-        </div>
+        </p-card>
     </div>
 </form>
+
 <p-toast></p-toast>
-<!-- <button pButton label="Google"
-class="w-full p-3 border-round font-bold" (click)="submitGoogle()"></button> -->

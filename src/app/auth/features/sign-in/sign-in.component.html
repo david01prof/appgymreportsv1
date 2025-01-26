@@ -1,55 +1,47 @@
 <form action [formGroup]="forms" (ngSubmit)="onSubmit()">
-    <div class="flex justify-content-center align-items-center min-h-screen surface-ground">
-        <div class="p-4 surface-card shadow-2 border-round w-11 sm:w-10 md:w-6 lg:w-4">
+    <div class="flex justify-content-center align-items-center min-h-screen">
+        <p-card class="cardWidth">
             <div class="text-center mb-3">
-                <img src="assets/images/logo3.png" alt="logo" class="border-round-lg shadow-5" style="width: 70px;" />
-                <h2 class="font-bold text-900 mb-2">Login</h2>
-                <p class="text-600">Bienvenido de nuevo! Por favor inicia sesión en tu cuenta.</p>
+                <img src="assets/images/logo3.png" alt="logo" class="border-round-xl shadow-5 mt-5" style="width: 124px;" />
+                <div class="flex justify-content-center align-items-center mt-3">
+                    <p class="textColor w-10">Bienvenido de nuevo! Por favor inicia sesión en tu cuenta.</p>
+                </div>
             </div>
 
             <div class="formgroup">
-                <!-- Username -->
-                <div class="mb-3">
-                    <label for="username"
-                        class="block text-900 font-medium mb-2">Email</label>
-                    <input id="username" type="email" pInputText
-                        placeholder="Introduce tu email"
-                        class="w-full border-round"  formControlName="email"/>
+
+                <!-- Email -->
+                <div class="mb-5 mt-4">
+                    <p-floatLabel>
+                        <input pInputText id="email"  type="email" formControlName="email"  class="w-full"/>
+                        <label for="email" class="textColor">Email</label>
+                    </p-floatLabel>
                 </div>
 
                 <!-- Password -->
                 <div class="mb-4">
-                    <label for="password"
-                        class="block text-900 font-medium mb-2">Contraseña</label>
-                    <p-password formControlName="password" [toggleMask]="true" [feedback]="false"
-                    placeholder="Introduce tu contraseña"></p-password>
+                    <p-floatLabel>
+                        <p-password formControlName="password" [toggleMask]="true" [feedback]="false"/>
+                        <label for="email" class="textColor">Contraseña</label>
+                    </p-floatLabel>
                 </div>
+
             </div>
 
             <!-- Login Button -->
-            <p-button type="submit"  class="w-full p-2 border-round font-bold">Login</p-button>
+             <div class="flex justify-content-center">
+                <p-button type="submit" severity="info">Iniciar sesión</p-button>
+             </div>
+  
 
             <!-- Additional Links -->
             <div class="text-center mt-3">
-                <a class="text-primary font-medium no-underline" (click)="forgetPassword = true">Olvidaste tu contraseña?</a>
-                @if (forgetPassword) {
-                    <div class="my-2">
-                        <p-button severity="warning" class="mt-4 fadein animation-duration-200" *ngIf="forgetPassword" routerLink="/auth/forgetPassword" >Reestablecer contraseña</p-button>
-                    </div>
-                }
+                <a class="no-underline" routerLink="/auth/forgetPassword">Olvidaste tu contraseña?</a>
 
-                <p class="text-600 mt-2">
-                    No tienes una cuenta? <a href="#" 
-                        class="text-primary font-medium no-underline"
-                        routerLink="/auth/sign-up">Regístrate</a>
-                </p>
+                <p>No tienes una cuenta? <a class="no-underline" routerLink="/auth/sign-up">Crear cuenta</a> </p>
             </div>
-        </div>
+        </p-card>
     </div>
-
 </form>
 
 <p-toast></p-toast>
-<!-- --------- Google -->
-<!-- <button pButton label="Google"
-    class="w-full p-3 border-round font-bold" (click)="submitGoogle()"></button> -->
