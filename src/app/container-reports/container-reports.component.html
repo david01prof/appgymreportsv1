@@ -2,6 +2,12 @@
     [itemsLabels]="_reportSvc.getBreadcrumbLabels()"
     urlActive="reports"></app-breadcrumb>
 
+<p-card>
+  <app-chart-reports [dataReports]="store.reports()"></app-chart-reports>
+</p-card>
+
+<br>
+
 <app-filter-data-components [inputsSelect]="dataInputSelect" (dataToFilter)="filterData($event)" (clear)="this.storeReports.set(this.store.reports())"></app-filter-data-components>
 
 <div class="flex justify-content-between flex-wrap alignItems mt-4 fadein animation-duration-2000">  

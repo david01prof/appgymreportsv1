@@ -8,11 +8,13 @@ import { FilterDataComponentsComponent } from "../components/filter-data-compone
 import { ReportCardComponent } from "./components/report-card/report-card.component";
 import { ReportsService } from './services/reports.service';
 import { ReportsPrimeModule } from './reports-prime.module';
+import { ChartReportsComponent } from "./components/chart-reports/chart-reports.component";
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-container-reports',
   standalone: true,
-  imports: [ReportCardComponent,BreadcrumbComponent, FilterDataComponentsComponent,ReportsPrimeModule],
+  imports: [ReportCardComponent, BreadcrumbComponent, FilterDataComponentsComponent, ReportsPrimeModule,ChartReportsComponent,CardModule],
   templateUrl: './container-reports.component.html',
   styleUrl: './container-reports.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
