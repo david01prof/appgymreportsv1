@@ -4,17 +4,10 @@
 
 <app-filter-data-components [inputsSelect]="dataInputSelect" (dataToFilter)="filterData($event)" (clear)="this.storeReports.set(this.store.reports())"></app-filter-data-components>
 
-<div class="card flex justify-content-between flex-wrap alignItems mt-4 fadein animation-duration-2000">  
-  <div>
-    <p-card class="mb-3" [ngClass]="{ 'borde-degradado': aplicarEstilo }" (click)="visible = true" [routerLink]="[{  outlets: { content: ['add'] }} ]" >
-      <i class="pi pi-plus p-6 text-2xl text-color-secondary"> </i>
-    </p-card>
-    <pre class="text-center text-color-secondary ">Crear nuevo reporte</pre>
-  </div>
-
+<div class="flex justify-content-between flex-wrap alignItems mt-4 fadein animation-duration-2000">  
   @defer (when storeReports().length) {
     @for (report of storeReports(); track report.id) {
-          <app-report-card [report]="report" />
+        <app-report-card [report]="report" class="w-full mb-3" />
     }
   }
 

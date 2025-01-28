@@ -38,8 +38,8 @@ import { SidebarModule } from 'primeng/sidebar';
                 <h3 class="font-lighter text-xl"  routerLink="/routines">Rutinas</h3>
               </div>
             </ng-template>
-            <p class="m-0 pl-7">  <a class="pi pi-plus mr-1 text-sm"></a> Nueva rutina </p>
-        </p-accordionTab>
+            <p class="m-0 pl-7 cursor-pointer" [routerLink]="['/routines',{  outlets: { content: ['add'] }} ]">  <a class="pi pi-plus mr-1 text-sm"></a> Nueva rutina </p>
+        </p-accordionTab> 
       </p-accordion>
 
       <!-- Reports -->
@@ -53,7 +53,7 @@ import { SidebarModule } from 'primeng/sidebar';
                 <h3 class="font-lighter text-xl"  routerLink="/reports">Reportes</h3>
               </div>
             </ng-template>
-            <p class="m-0 pl-7">  <a class="pi pi-plus mr-1 text-sm"></a> Nuevo reporte </p>
+            <p class="m-0 pl-7 cursor-pointer" [routerLink]="['/reports',{  outlets: { content: ['add'] }} ]">  <a class="pi pi-plus mr-1 text-sm"></a> Nuevo reporte </p>
         </p-accordionTab>
       </p-accordion>
 

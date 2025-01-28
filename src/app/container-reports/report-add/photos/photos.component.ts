@@ -1,90 +1,72 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  output,
-  signal,
+  output
 } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReportsPrimeModule } from '@app/container-reports/reports-prime.module';
 import { ReportsService } from '@app/container-reports/services/reports.service';
 import { IPhotos } from '@app/models';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { BadgeModule } from 'primeng/badge';
-import { ButtonModule } from 'primeng/button';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { FileSelectEvent, FileUploadModule } from 'primeng/fileupload';
-import { ToastModule } from 'primeng/toast';
-
-const PRIME_MODULES = [
-  FileUploadModule,
-  ButtonModule,
-  BadgeModule,
-  ToastModule,
-  ConfirmDialogModule,
-];
+import { MessageService } from 'primeng/api';
+import { FileSelectEvent } from 'primeng/fileupload';
 
 @Component({
   selector: 'app-photos',
   standalone: true,
-  imports: [PRIME_MODULES, CommonModule],
+  imports: [ReportsPrimeModule,FormsModule,ReactiveFormsModule],
   templateUrl: './photos.component.html',
   styleUrl: './photos.component.scss',
-  providers: [MessageService, ConfirmationService],
+  providers: [MessageService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PhotosComponent {
+
   public readonly _reportSvc = inject(ReportsService);
   public readonly _messageSvc = inject(MessageService);
 
-  public dataPhotos = output<IPhotos[]>();
   public activeInputImage = output<boolean>();
-  public imageErrorTittle: string[] = [];
-  public files = [];
-  public filesRefresh = signal<File[]>([]);
-  public base64images = signal<IPhotos[]>([]);
+  public dataPhotos = output<IPhotos[]>();
+
+  public imageErrorTitle: string[] = [];
   public maxSize: number = 1.3;
+  public files : any[]= [];
 
-  private readonly _confirmationSvc = inject(ConfirmationService);
-  // Método personalizado para manejar la carga de archivos
+  private readonly fb = inject(FormBuilder);
+  public form : FormGroup = this.fb.group({
+    photos: this.fb.array([]) // Inicialmente vacío
+  });
 
-  onSelectedFileUpload(event: FileSelectEvent) {
-    let maxSize: number = this.maxSize * 1024 * 1024; // Tamaño máximo de 1.3 MB en bytes de firebase
-    let filesArray = Array.from(event.files);
-
-    for (let indexFile in filesArray) {
-      if (filesArray[indexFile].size > maxSize) {
-        this.imageErrorTittle.push(filesArray[indexFile].name);
-      }
-
-      for (let fileRefresh of this.filesRefresh()) {
-        if (filesArray.length > 0 && fileRefresh.name == filesArray[indexFile].name) {
-          filesArray.splice(parseInt(indexFile), 1);
-          this.confirm2(fileRefresh.name);
-        }
-      }
-    }
-
-    if (this.imageErrorTittle.length > 0) {
-      this.confirm1();
-    }
-
-    this.refresListFiles(filesArray);
-
-    if(this.filesRefresh().length > 0){
-      this.activeInputImage.emit(true);
-    }else{
-      this.activeInputImage.emit(false);
-    }
+  // Getter para el FormArray
+  get photos(): FormArray {
+    return this.form.get('photos') as FormArray;
   }
 
-  //TODO TEMPORAL
-  onTemplatedUpload() {
-    this._messageSvc.add({
-      severity: 'info',
-      summary: 'Operación realizada',
-      detail: 'Archivos subidos correctamente',
-      life: 3000,
+  onSelectedFileUpload(event: FileSelectEvent) {
+
+    const maxSize: number = this.maxSize * 1024 * 1024; // Tamaño máximo de 1.3 MB en bytes de firebase
+    let filesArray = Array.from(event.files);
+
+    filesArray.forEach((file) => {
+      if(file.size > maxSize){
+        this.imageErrorTitle.push(file.name);
+        this._messageSvc.add( { severity: 'warn', summary: 'Archivo duplicado', detail: 'El archivo seleccionado excede el límite de  '+this.maxSize+'MB.', life:3000 });
+      }
     });
+
+    let filesWithoutErrors = filesArray.filter((file) => !this.imageErrorTitle.includes(file.name)); // Archivos sin errores
+
+    for(let file of filesWithoutErrors){
+      if(!this.files.find(f => f.name == file.name)){
+        this.files.push(file);
+      }else{
+        this._messageSvc.add( { severity: 'warn', summary: 'Archivo duplicado', detail: 'El archivo: ' + file.name + ' ya existe', life:3000 });
+      }
+    }    
+  
+    this.changeImageToBase64(filesWithoutErrors);
+
+    if(this.files.length > 0){ this.activeInputImage.emit(true); }else{ this.activeInputImage.emit(false); }
   }
 
   // Buttons actions
@@ -95,7 +77,7 @@ export class PhotosComponent {
 
   uploadEvent(callback: any) {
     callback();
-    this.dataPhotos.emit(this.base64images());
+    this.dataPhotos.emit(this.form.get('photos')?.value);
     this.activeInputImage.emit(false);
   }
 
@@ -103,83 +85,45 @@ export class PhotosComponent {
 
   onRemoveTemplatingFile(
     event: any,
-    file: any,
     removeFileCallback: any,
     index: any
   ) {
     removeFileCallback(event, index);
-    this.base64images().splice(index, 1);
-    this.filesRefresh().splice(index, 1);
-    this.activeInputImage.emit(false);
+    this.removePhoto(index);
   }
 
-  refresListFiles(files: File[]) {
-    if (this.imageErrorTittle.length > 0) {
-      //Fitrados sin errores de maxsizing
-      let filteredFiles = files.filter(
-        (file) => !this.imageErrorTittle.includes(file.name)
-      );
-
-      let copyFilesRefresh = this.filesRefresh();
-      for (let filtered of filteredFiles) {
-        if (!this.filesRefresh().includes(filtered)) {
-          copyFilesRefresh.push(filtered);
-        }
-      }
-      this.filesRefresh.set([...copyFilesRefresh]);
-    } else {
-      for (let file of files) {
-        this.filesRefresh().push(file);
-      }
-    }
-
-    this.base64images.set([]);
-    this.changeImageToBase64(this.filesRefresh());
+  private removePhoto(index: number) {
+    this.photos.removeAt(index);
   }
-
-  private confirm1() {
-    let message = '';
-    if (this.imageErrorTittle.length == 1) {
-      message =
-        'El archivo:' +
-        this.imageErrorTittle[0] +
-        ' seleccionado excede el límite de  '+this.maxSize+'MB.';
-    } else {
-      let jonText = this.imageErrorTittle.join(', ');
-      message =
-        'Los archivos:' + jonText + ' exceden cada uno el límite de '+this.maxSize+'MB.';
-    }
-    this._confirmationSvc.confirm({
-      message: message,
-      header: 'Error al subir los ficheros',
-      icon: 'pi pi-exclamation-triangle text-orange-300',
-      acceptVisible: false,
-      rejectVisible: false,
-    });
-  }
-
-  private confirm2(title: string) {
-    let message = 'El archivo:' + title + ' ya existe';
-    this._confirmationSvc.confirm({
-      message: message,
-      header: 'Fichero resubidos',
-      icon: 'pi pi-exclamation-triangle text-orange-300',
-      acceptVisible: false,
-      rejectVisible: false,
-    });
-  }
-
   private changeImageToBase64(files: File[]) {
-    let copyBase64Images = this.base64images();
+    let photosBase64 = []
     for (let file of files) {
       this.convertFileToBase64(file).then((base64) => {
-        copyBase64Images.push({ base64: base64 });
-        this.base64images.set([...copyBase64Images]);
+        photosBase64.push({ base64: base64 , observations: '', title: file.name, size: file.size });
+        this.createForm(photosBase64);
       });
     }
   }
+  
+  private createForm(photosBase64:IPhotos[]){
+    for(let photo of photosBase64){  
+      const existingFormGroup = this.photos.controls.find(group => group.get('base64')?.value === photo.base64);
 
-  convertFileToBase64(file: File): Promise<string> {
+      if(!existingFormGroup){
+        const photoGroup = this.fb.group({
+          base64: new FormControl(photo.base64),
+          observations: new FormControl(photo.observations),
+          title: new FormControl(photo.title),
+          size: new FormControl(photo.size),
+        });
+
+        this.photos.push(photoGroup);
+      }
+    }
+    
+  }
+
+  private convertFileToBase64(file: File): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
 

@@ -1,55 +1,70 @@
-<div class="character-add-container flex flex-column align-items-center justify-content-center">
-    <form [formGroup]="measurementForm()" (ngSubmit)="onSubmit()">
+<h4 class="font-bold text-xl">Calcula tu índice de grasa corporal</h4>
 
-            <app-custom-input
+<span>Para realizar este cálculo se aplica la fórmula Jackson y Pollock</span>
+
+<div class="flex flex-column justify-content-center mt-6">
+    <form [formGroup]="measurementForm()" (ngSubmit)="onSubmit()">
+        
+            <div class="mb-4 flex justify-content-center">
+                <app-custom-input
                 label="Altura (cm):"
                 id="height"
                 [control]="$any(measurementForm().get('height'))"
                 type="number"
                 maxLength="3"
-                descriptionLabel="Escribe tu altura en cm"
-                errorMessage="El mínimo son 50cm"></app-custom-input>
+                minLength="1"
+                errorMessage="El mínimo son 50cm"/>
+            </div>
 
-            <app-custom-input
-                label="Peso (kg):"
-                id="weight"
-                [control]="$any(measurementForm().get('weight'))"
-                type="number"
-                descriptionLabel="Escribe tu peso en kg"
-                maxLength="3"
-                errorMessage="El mínimo son 30kg"></app-custom-input>
+            <div class="mb-4 flex justify-content-center">
+                <app-custom-input
+                    label="Peso (kg):"
+                    id="weight"
+                    [control]="$any(measurementForm().get('weight'))"
+                    type="number"
+                    maxLength="3"
+                    minLength="1"
+                    errorMessage="El mínimo son 30kg"/>
+            </div>
 
-            <app-custom-input
-                label="Cuello (cm):"
-                id="neck"
-                [control]="$any(measurementForm().get('neck'))"
-                type="number"
-                descriptionLabel="Escribe tu ancho de cuello en cm"
-                maxLength="3"
-                errorMessage="El mínimo son 20cm"></app-custom-input>
+            <div class="mb-4 flex justify-content-center">
+                <app-custom-input
+                    label="Cuello (cm):"
+                    id="neck"
+                    [control]="$any(measurementForm().get('neck'))"
+                    type="number"
+                    maxLength="3"
+                    minLength="1"
+                    errorMessage="El mínimo son 20cm"/>
+            </div>
 
+            <div class="mb-4 flex justify-content-center">
             <app-custom-input
                 label="Cintura (cm):"
                 id="waist"
                 [control]="$any(measurementForm().get('waist'))"
                 type="number"
-                descriptionLabel="Escribe tu ancho de cintura en cm"
                 maxLength="3"
-                errorMessage="El mínimo son 50cm"></app-custom-input>
+                minLength="1"
+                errorMessage="El mínimo son 50cm"/>
+            </div>
 
             @if(_globalSvc.userInfo().gender.code == gender) {
-                <app-custom-input
-                label="Cadera (cm):"
-                id="hip"
-                [control]="$any(measurementForm().get('hip'))"
-                type="number"
-                maxLength="3"
-                errorMessage="El mínimo son 50cm"></app-custom-input>
+                <div class="mb-3 flex justify-content-center">
+                    <app-custom-input
+                    label="Cadera (cm):"
+                    id="hip"
+                    [control]="$any(measurementForm().get('hip'))"
+                    type="number"
+                    maxLength="3"
+                    minLength="1"
+                    errorMessage="El mínimo son 50cm"/>
+                </div>
             }
             
 
         <div class="flex justify-content-center">
-            <p-button type="submit" [disabled]="!measurementForm().valid" label="Calcular"/>
+            <p-button type="submit" [disabled]="!measurementForm().valid" label="Calcular" severity="info"/>
         </div>
     </form>
 
@@ -59,7 +74,10 @@
     @if (totaPgc != undefined && !totaPgc.includes('Error al realizar esta operacion') && totaPgc != ''){
         <div class="fadein animation-duration-1000">
             <p-divider></p-divider>
-            <span> Indice de grasa: {{totaPgc}}%</span>
+            <div class="flex justify-content-center align-items-center">
+                <span class="text-center"> Indice de grasa: {{totaPgc}}%</span>
+            </div>
+
         </div>
     }
 </div>

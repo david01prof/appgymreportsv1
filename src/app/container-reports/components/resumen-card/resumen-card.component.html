@@ -1,39 +1,35 @@
 <p-card class="fadein animation-duration-500">
-  <h4 *ngIf="!isDetail()">Detalle del reporte:</h4>
+  <h4 *ngIf="!isDetail()" class="text-center font-bold">Detalle del reporte:</h4>
 
   @if (isDetail()) {
-    <div class="flex justify-content-between">
-      <h4 *ngIf="isDetail()">Detalle del reporte {{report().idReport + 1}}:</h4>
-      <p-button icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true" severity="danger" class="absolute styleButton" (onClick)="confirm2($event)" />
-    </div>
+    <h4 class="text-center font-bold" *ngIf="isDetail()">Detalle del reporte {{report().idReport + 1}}:</h4>
   }
 
-  
   <p-divider></p-divider>
   
   @defer (when report() != undefined) {
   
     @let measurement = report().measurement;
     <div class="grid">
-      <div class="col-6">
+      <div class="col-6 text-center">
         <p><strong>Altura:</strong> {{ measurement.height }}m</p>
       </div>
-      <div class="col-6">
+      <div class="col-6 text-center">
         <p><strong>Peso:</strong> {{ measurement.weight }}kg</p>
       </div>
-      <div class="col-6">
+      <div class="col-6 text-center">
         <p><strong>Cintura:</strong> {{ measurement.waist }}cm</p>
       </div>
-      <div class="col-6" *ngIf="_globalSvc.userInfo().gender.code == gender">
+      <div class="col-6 text-center" *ngIf="_globalSvc.userInfo().gender.code == gender">
         <p><strong>Cadera:</strong> {{ measurement.hip }}cm</p>
       </div>
-      <div class="col-6">
+      <div class="col-6 text-center">
         <p><strong>Edad:</strong> {{ measurement.age }}</p>
       </div>
-      <div class="col-6">
+      <div class="col-6 text-center">
         <p><strong>Sexo:</strong> {{ measurement.genre.name }}</p>
       </div>
-      <div class="col-12">
+      <div class="col-12 md:col-6 text-center">
         <p><strong>Indice de grasa:</strong> 
           @if(measurement.totaligc != undefined && measurement.totaligc != ''){
             {{measurement.totaligc}}
@@ -45,13 +41,11 @@
     </div>
     
     
-    <h4>Imágenes aportadas:</h4>
+    <h4 class="text-center font-bold">Imágenes aportadas:</h4>
     
     <p-divider></p-divider>
+    <br>
   
     <app-carousel-images [images]="report().photos"></app-carousel-images>
   }  
 </p-card>
-
-<p-confirmDialog  acceptLabel="Sí" 
-rejectLabel="No"/>

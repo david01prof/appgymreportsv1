@@ -2,36 +2,31 @@
 
 <div class="form-group">
   @if (type() == 'text') {
-    <div class="flex flex-column gap-2">
+    <div class="flex flex-column gap-2 ">
+      <p-floatLabel>
+        <input pInputText [id]="id()"  type="text"  [formControl]="localControl"  class="w-full" (blur)="onTouched()"/>
+        <label [for]="id()" class="font-light">{{ label() }}</label>
+      </p-floatLabel>
       <label [for]="id()" class="font-light">{{ label() }}</label>
-      <input
-        pInputText
-        [id]="id()"
-        aria-describedby="username-help"
-        [formControl]="localControl"
-        [placeholder]="placeHolder()"
-        (blur)="onTouched()"
-      />
       <small id="username-help">
         {{ descriptionLabel() }}
       </small>
     </div>
   } @else if (type() == 'number') {
-    <div class="flex flex-column gap-2 my-2">
-      <label [for]="id()" class="font-light">{{ label() }}</label>
+    <p-floatLabel>
       <p-inputNumber
-        inputId="integeronly"
-        [min] = "minValue()"
-        [max]="maxValue()"
-        [minlength]="minLength()"
-        [maxlength]="maxLength()"
-        [formControl]="localControl"
-        [id]="id()"
-        (ngModelChange)="_globalService.updateSignal(true)"
-        autocomplete="off"
-        (blur)="onTouched()"
-      />
-    </div>
+      inputId="integeronly"
+      [min] = "minValue()"
+      [max]="maxValue()"
+      [minlength]="minLength()"
+      [maxlength]="maxLength()"
+      [formControl]="localControl"
+      [id]="id()"
+      (ngModelChange)="_globalService.updateSignal(true)"
+      autocomplete="off"
+      (blur)="onTouched()"/>
+      <label [for]="id()" class="font-light">{{ label() }}</label>
+    </p-floatLabel>
   } @else if(type() == 'textarea') {
     <div class="my-3 gap-2">
       <label [id]="id()" class="font-light">{{ label() }}</label>

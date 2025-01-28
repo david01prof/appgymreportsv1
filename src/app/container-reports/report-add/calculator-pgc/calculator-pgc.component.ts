@@ -57,10 +57,28 @@ export class CalculatorPgcComponent {
         totaligc: new FormControl(this.measurementEmptyForm().totaligc, {nonNullable: true} ),
       }),
   )
+
   constructor(){
     effect(() => {
       if(this._globalSvc.userInfo().gender.code == Gender.MALE){
         if(this.measurementForm().value.hip == 0){ this.measurementForm().controls.hip.setValue(50)}
+      }
+   
+    });
+  }
+
+  ngOnInit(): void {
+    this.measurementForm().valueChanges.subscribe(value => {
+      if(value != null && value != undefined){
+        if(this.measurementForm().valid && value?.height! > 0 && value?.weight! > 0 && value?.waist! > 0 && value?.hip! > 0 && value?.neck! > 0){
+          this.disabledNextPage.emit(false);
+        }else if(!this.measurementForm().valid && value?.height! == 0 && value?.weight! == 0 && value?.waist! == 0  && value?.neck! == 0){    
+          this.disabledNextPage.emit(false);
+        } else if(!this.measurementForm().valid && value?.height! > 0 && value?.weight! > 0 && value?.waist! > 0 && value?.hip! > 0 && value?.neck! > 0){
+          this.disabledNextPage.emit(true);
+        }else if(!this.measurementForm().valid) {
+          this.disabledNextPage.emit(true);
+        }
       }
     });
   }

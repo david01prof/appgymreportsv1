@@ -17,6 +17,9 @@ export interface Photos extends IPhotos {}
 
 export interface IPhotos {
   base64: Blob | string;
+  observations: string;
+  title: string;
+  size: number;
 }
 
 export interface IMeasurement {

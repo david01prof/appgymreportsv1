@@ -4,119 +4,62 @@
 
 <p-card class="stylesCard">
   <p-stepper [(activeStep)]="active" [linear]="true">
+
+    <!-- CalculatorPgc -->
     <p-stepperPanel>
+
+      <!-- Header -->
       <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
-        <button
-          class="bg-transparent border-none inline-flex flex-column gap-2"
-        >
-          <span
-            class="border-round border-2 w-3rem h-3rem inline-flex align-items-center justify-content-center"
-            [ngClass]="{
-              'bg-primary border-primary': index <= active,
-              'surface-border': index > active
-            }"
-          >
-            <i class="pi pi-calculator"></i>
-          </span>
-        </button>
+        <p-button severity="info" icon="pi pi-calculator" size="large"/>
       </ng-template>
+
+      <!-- Content -->
       <ng-template pTemplate="content" let-nextCallback="nextCallback">
-
-        <!-- CalculatorPgc -->
-
-        <app-calculator-pgc (dataMeasurement)="getValueMeasurement($event)" (disabledNextPage)="disabledNextPage($event)" class="fadein animation-duration-300"></app-calculator-pgc>
-
-        <!--  -->
+        <app-calculator-pgc (dataMeasurement)="dataMeasurement.set($event); _globalSvc.updateSignal(false)" (disabledNextPage)="disabledPage = $event" class="fadein animation-duration-300"/>
 
         <div class="flex pt-4 justify-content-end">
-          <p-button
-            (onClick)="nextCallback.emit()"
-            [label]="getLabelNext()"
-            icon="pi pi-arrow-right"
-            iconPos="right"
-            [disabled]="disabledPage"
-          />
+          <p-button (onClick)="nextCallback.emit()" [label]="getLabelNext()" icon="pi pi-arrow-right" iconPos="right" [disabled]="disabledPage"  severity="info"/>
         </div>
       </ng-template>
+
     </p-stepperPanel>
+
+    <!-- Photos -->
     <p-stepperPanel>
+      
+      <!-- Header -->
       <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
-        <button
-          class="bg-transparent border-none inline-flex flex-column gap-2"
-        >
-          <span
-            class="border-round border-2 w-3rem h-3rem inline-flex align-items-center justify-content-center"
-            [ngClass]="{
-              'bg-primary border-primary': index <= active,
-              'surface-border': index > active
-            }"
-          >
-            <i class="pi pi-camera"></i>
-          </span>
-        </button>
+        <p-button severity="info" icon="pi pi-camera" size="large" [raised]="isActive(index,active)" [text]="isActive(index,active)"/>
       </ng-template>
-      <ng-template
-        pTemplate="content"
-        let-prevCallback="prevCallback"
-        let-nextCallback="nextCallback"
-      >
-        <!-- Photos -->
 
-        <app-photos (dataPhotos)="getValuePhotos($event)" (activeInputImage)="activeInputImage($event)" class="fadein animation-duration-300"></app-photos>
+      <!-- Content -->
+      <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback">
+        <app-photos (dataPhotos)="dataPhotos.set($event)" (activeInputImage)="disabledPage = ($event)" class="fadein animation-duration-300"></app-photos>
 
-        <!--  -->
         <div class="flex pt-4 justify-content-between">
-          <p-button
-            (onClick)="prevCallback.emit()"
-            [label]="getLabelBack()"
-            severity="secondary"
-            icon="pi pi-arrow-left"
-          />
-          <p-button
-            (onClick)="nextCallback.emit();"
-            [label]="getLabelNext()"
-            icon="pi pi-arrow-right"
-            iconPos="right"
-            [disabled]="disabledPage"
-          />
+          <p-button (onClick)="prevCallback.emit()" [label]="getLabelBack()" severity="info" icon="pi pi-arrow-left" />
+
+          <p-button (onClick)="nextCallback.emit();" [label]="getLabelNext()" icon="pi pi-arrow-right" iconPos="right" [disabled]="disabledPage"  severity="info"/>
         </div>
       </ng-template>
     </p-stepperPanel>
-    <p-stepperPanel>
-      <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
-        <button
-          class="bg-transparent border-none inline-flex flex-column gap-2"
-        >
-          <span
-            class="border-round border-2 w-3rem h-3rem inline-flex align-items-center justify-content-center"
-            [ngClass]="{
-              'bg-primary border-primary': index <= active,
-              'surface-border': index > active
-            }"
-          >
-            <i class="pi pi-list"></i>
-          </span>
-        </button>
-      </ng-template>
-      <ng-template pTemplate="content" let-prevCallback="prevCallback">
-        <!-- Resumen Report -->
 
+    <!-- Resumen -->
+    <p-stepperPanel>
+
+      <!-- Header -->
+      <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+        <p-button severity="info" icon="pi pi-list" size="large"  [raised]="isActive(index,active)" [text]="isActive(index,active)"/>
+      </ng-template>
+
+      <!-- Content -->
+      <ng-template pTemplate="content" let-prevCallback="prevCallback">
         <app-resumen-card [report]="dataReport()" [isDetail]="false" class="fadein animation-duration-300"></app-resumen-card>
 
-        <!--  -->
         <div class="flex pt-4 justify-content-between">
-          <p-button
-            (onClick)="prevCallback.emit()"
-            [label]="getLabelBack()"
-            severity="secondary"
-            icon="pi pi-arrow-left"
-          />
-          <p-button
-            [label]="getLabelSave()"
-            (onClick)="submit(dataReport())"
-            icon="pi pi-save"
-            iconPos="right"
-          />
+          <p-button (onClick)="prevCallback.emit()" [label]="getLabelBack()" severity="info" icon="pi pi-arrow-left" />
+
+          <p-button [label]="getLabelSave()" (onClick)="submit(dataReport())" icon="pi pi-save" iconPos="right"  severity="info"/>
         </div>
       </ng-template>
     </p-stepperPanel>

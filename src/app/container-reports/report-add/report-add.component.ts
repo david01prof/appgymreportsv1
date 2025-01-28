@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -6,29 +5,25 @@ import {
   effect,
   inject,
   signal,
+  SimpleChanges,
 } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { BreadcrumbComponent } from '@app/components/breadcrumb/breadcrumb.component';
 import { emptyReport, IMeasurement, IPhotos, IReport } from '@app/models';
 import { GlobalService } from '@app/services/global.service';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { StepperModule } from 'primeng/stepper';
+import { GlobalReportStore } from '@app/store/globalReport.store';
+import { MessageService } from 'primeng/api';
 import { ResumenCardComponent } from '../components/resumen-card/resumen-card.component';
+import { ReportsPrimeModule } from '../reports-prime.module';
 import { ReportsService } from '../services/reports.service';
 import { CalculatorPgcComponent } from './calculator-pgc/calculator-pgc.component';
 import { PhotosComponent } from './photos/photos.component';
-import { GlobalReportStore } from '@app/store/globalReport.store';
-import { MessageService } from 'primeng/api';
-
-const PRIME_MODULES = [CardModule, StepperModule, ButtonModule];
 
 @Component({
   selector: 'app-report-add-edit',
   standalone: true,
   imports: [
-    CommonModule,
-    PRIME_MODULES,
+    ReportsPrimeModule,
     CalculatorPgcComponent,
     PhotosComponent,
     ResumenCardComponent,
@@ -50,7 +45,7 @@ export class ReportAddComponent {
   public active: number = 0;
   public disabledPage: boolean = false;
 
-  private readonly _globalSvc = inject(GlobalService);
+  public readonly _globalSvc = inject(GlobalService);
   private readonly router = inject(Router);
   private readonly messageSvc = inject(MessageService);
 
@@ -65,11 +60,15 @@ export class ReportAddComponent {
           measurement: measurement,
           photos: photos,
         });
-
-        this.disabledPage = this._globalSvc.sharedSignal();
       },
       { allowSignalWrites: true }
     );
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+    console.log(this.disabledPage);
+    
   }
 
   getId() {
@@ -82,24 +81,6 @@ export class ReportAddComponent {
       }
       return 0;
     }
-  }
-
-  getValuePhotos(e: any) {
-    this.dataPhotos.set(e);
-  }
-
-  getValueMeasurement(e: any) {
-    this.dataMeasurement.set(e);
-    this.disabledPage = false;
-    this._globalSvc.updateSignal(false);
-  }
-
-  disabledNextPage(e: boolean) {
-    this.disabledPage = e;
-  }
-
-  activeInputImage(e: boolean){
-    this.disabledPage = e;
   }
 
   getLabelNext(){
@@ -134,6 +115,14 @@ export class ReportAddComponent {
       this.router.navigate(['/reports']);
     }else{
       this.messageSvc.add({ severity: 'error', summary: 'Operación realizada', detail: 'Fallo al crear el reporte' });
+    }
+  }
+
+  isActive(index: number,active: number){
+    if(index <= active){
+      return false;
+    }else{
+      return true;
     }
   }
 }

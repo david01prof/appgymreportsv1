@@ -1,17 +1,24 @@
 @let reportLocal = report();
 
 @if (reportLocal) {
-    <p-card class="mb-3 custom-card" [routerLink]="[{  outlets: { content: [reportLocal.id] }} ]">
+    <p-card>
 
-      <div class="flex justify-content-center">
-        <img ngSrc="assets/images/registros.png" width="90"  height="90" priority/>
+      <div class="flex justify-content-start gap-2">
+        <i class="fa-solid fa-heart-pulse iconSize"></i>
+      
+        <div class="flex flex-column">
+          <span class="text-center text-lg font-bold text-color-secondary">Reporte {{reportLocal.idReport + 1}}</span>
+          <span class="ml-2">{{ getCurrentDate(reportLocal.created!) | date: 'dd/MM/yyyy'}}</span>
+        </div>
+
+        <div class="flex justify-content-end w-full">
+          <i class="fa-solid fa-ellipsis-vertical iconSizeMenu cursor-pointer" (click)="menu.toggle($event)"></i>
+        </div>
+        <p-menu #menu [model]="items" [popup]="true" />
+      
       </div>
-    
-      <pre
-        class="text-center text-base text-color-secondary">Reporte {{reportLocal.idReport + 1}}</pre>
-    
-      <div class="card flex justify-content-center">
-        {{ getCurrentDate(reportLocal.created!) | date: 'dd/MM/yyyy'}}
-      </div>
+  
     </p-card>
+
+    <p-confirmDialog  acceptLabel="Sí" rejectLabel="No"/>
 }

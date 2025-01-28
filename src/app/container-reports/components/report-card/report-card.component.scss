@@ -1,7 +1,17 @@
-.character-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 1rem;
+@import '../../../../variables.scss';
+
+.iconSize{
+    font-size: 3rem;
+    color: $successColor;
+}
+
+.iconSizeMenu{
+    font-size: 2rem;
+    color: #7d7b7b;
+    margin-top: 8px;
+}
+
+::ng-deep .p-menu.p-menu-overlay {
+    top:65px !important;
+    position: absolute;
 }
