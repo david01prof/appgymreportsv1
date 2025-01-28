@@ -14,4 +14,17 @@
 ::ng-deep .p-menu.p-menu-overlay {
     top:65px !important;
     position: absolute;
+    left: 215px !important;
+}
+
+@media (min-width: 330px) and (max-width: 400px) {
+    ::ng-deep .p-menu.p-menu-overlay {
+        left: 180px !important;
+    }
+}
+
+@media (max-width: 329px) {
+    ::ng-deep .p-menu.p-menu-overlay {
+        left: 115px !important;
+    }
 }
