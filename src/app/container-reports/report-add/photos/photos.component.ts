@@ -112,7 +112,7 @@ export class PhotosComponent {
       if(!existingFormGroup){
         const photoGroup = this.fb.group({
           base64: new FormControl(photo.base64),
-          observations: new FormControl(photo.observations),
+          observations: new FormControl('No hay observaciones'),
           title: new FormControl(photo.title),
           size: new FormControl(photo.size),
         });

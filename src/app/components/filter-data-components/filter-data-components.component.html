@@ -5,7 +5,8 @@
         <div class="fadein animation-duration-500 mt-2">
             <!-- <p-card> -->
                 <div class="flex justify-content-center flex-column">
-                    <p-dropdown 
+                    @if(inputsSelect().length> 1){
+                        <p-dropdown 
                         [options]="inputsSelect()" 
                         [(ngModel)]="valueSelected" 
                         optionLabel="name"
@@ -13,6 +14,8 @@
                         class="w-full mb-2"
                         (ngModelChange)="selectedValue.emit($event)" />
                     
+                    }
+
                     @if (valueSelected.code != "noFavourite" && valueSelected.code != "favourite"){
                         @if(valueSelected.code != "date"){
                             <input type="text" pInputText [(ngModel)]="value" />
@@ -21,13 +24,16 @@
                             [(ngModel)]="rangeDates" 
                             selectionMode="range" 
                             [readonlyInput]="true"  class="w-full"
+                            [iconDisplay]="'input'" 
+                            [showIcon]="true" 
+                            inputId="icondisplay"
                             />
                         }
                     }
     
                     <div class="flex justify-content-center gap-2 mt-3">
                         <p-button icon="pi pi-filter-slash" severity="warning" (onClick)="clear.emit(0); value = ''; rangeDates = [];"></p-button>
-                        <p-button icon="pi pi-search" (onClick)="search()"></p-button>
+                        <p-button icon="pi pi-search" severity="info" (onClick)="search()"></p-button>
                     </div>
                 </div>
             <!-- </p-card> -->
