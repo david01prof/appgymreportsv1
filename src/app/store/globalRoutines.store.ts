@@ -1,6 +1,4 @@
 import { inject, InjectionToken } from '@angular/core';
-import { Router } from '@angular/router';
-import { ReportsService } from '@app/container-reports/services/reports.service';
 import { RoutinesService } from '@app/container-routines/services/routines.service';
 import { IReport, IRoutine } from '@app/models';
 import {
@@ -11,7 +9,6 @@ import {
   withState,
 } from '@ngrx/signals';
 import { withEntities } from '@ngrx/signals/entities';
-import { MessageService } from 'primeng/api';
 import { lastValueFrom } from 'rxjs';
 
 type StoreStateReport = {
@@ -99,6 +96,8 @@ export const GlobalRoutinesStore = signalStore(
 
       try {
         _routinesSvc.getAllRoutines().subscribe((routines : IRoutine[]) => {
+          console.log(routines);
+          
           patchState(store, { routines });
         });
       } catch (error) {
