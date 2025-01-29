@@ -3,15 +3,15 @@
 @if (routinelocal) {
     <p-card>
 
-      <div class="flex justify-content-start gap-2">
-        <i class="fa-solid fa-heart-pulse iconSize"></i>
+      <div class="grid">
+        <i class="fa-solid fa-dumbbell iconSize col-4"></i>
       
-        <div class="flex flex-column">
-          <span class="text-center text-lg font-bold text-color-secondary">Reporte {{routinelocal.idRoutine + 1}}</span>
+        <div class="col-4 flex flex-column w-10">
+          <span class="text-center text-lg font-bold text-color-secondary">Rutina:  {{routinelocal.titleRoutine}}</span>
           <span class="ml-2">{{ getCurrentDate(routinelocal.created!) | date: 'dd/MM/yyyy'}}</span>
         </div>
 
-        <div class="flex justify-content-end w-full">
+        <div class="col-4 flex justify-content-end w-full">
           <i class="fa-solid fa-ellipsis-vertical iconSizeMenu cursor-pointer" (click)="menu.toggle($event)"></i>
         </div>
         <p-menu #menu [model]="items" [popup]="true" />

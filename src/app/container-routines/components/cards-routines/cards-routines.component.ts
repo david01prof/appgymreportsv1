@@ -45,10 +45,10 @@ export class CardsRoutinesComponent {
             command: () => {
               this._confirmationSvc.confirm({
                 message:
-                  'Quieres borrar el reporte ' +
-                  (this.routine().idRoutine + 1) +
+                  'Quieres borrar la rutina: ' +
+                  (this.routine().titleRoutine) +
                   '?',
-                header: 'Borrar reporte',
+                header: 'Borrar rutina',
                 icon: 'pi pi-info-circle',
                 acceptButtonStyleClass: 'p-button-danger p-button-text',
                 rejectButtonStyleClass: 'p-button-text p-button-text',
@@ -64,7 +64,7 @@ export class CardsRoutinesComponent {
                     this.messageSvc.add({
                       severity: 'success',
                       summary: 'Operación realizada',
-                      detail: 'Reporte eliminado correctamente!',
+                      detail: 'Rutina eliminada correctamente!',
                       life: 2000,
                     });
                     this.router.navigate(['/routines']);
@@ -72,7 +72,7 @@ export class CardsRoutinesComponent {
                     this.messageSvc.add({
                       severity: 'error',
                       summary: 'Operación realizada',
-                      detail: 'Fallo al eliminar el reporte',
+                      detail: 'Fallo al eliminar la rutina',
                     });
                   }
                 },
