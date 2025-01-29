@@ -1,29 +1,90 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, output } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import { Router } from '@angular/router';
+import { RoutinePrimeModule } from '@app/container-routines/routine-prime.module';
 import { IRoutine } from '@app/models/iroutine';
-import { CardModule } from 'primeng/card';
-import { TagModule } from 'primeng/tag';
-
-
-const PRIME_MODULES = [CardModule, TagModule];
+import { GlobalReportStore } from '@app/store/globalReport.store';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-cards-routines',
   standalone: true,
-  imports: [CommonModule, PRIME_MODULES,RouterLink],
+  imports: [CommonModule,RoutinePrimeModule],
   templateUrl: './cards-routines-component.component.html',
-  styleUrl: './cards-routines-component.component.scss'
+  styleUrl: './cards-routines-component.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ConfirmationService]
 })
 export class CardsRoutinesComponent {
-  
-  public data = input.required<IRoutine>();
+  public routine = input.required<IRoutine>();
+  public items: MenuItem[] | undefined;
 
-  public sidebarVisible = output<boolean>();
-  public activeItem = output<IRoutine>();
+  private readonly store = inject(GlobalReportStore);
+  private readonly router = inject(Router);
+  private readonly _confirmationSvc = inject(ConfirmationService);
+  private readonly messageSvc = inject(MessageService);
 
-  checkActiveCard(item: IRoutine) {
-    this.sidebarVisible.emit(true);
-    this.activeItem.emit(item);
+  ngOnInit() {
+    this.items = [
+      {
+        label: 'Acciones',
+        items: [
+          {
+            label: 'Detalle',
+            icon: 'pi pi-eye',
+            command: () => {
+              this.router.navigate([
+                '/routines',
+                { outlets: { content: [this.routine().id] } },
+              ]);
+            },
+          },
+          {
+            label: 'Eliminar',
+            icon: 'pi pi-trash',
+            command: () => {
+              this._confirmationSvc.confirm({
+                message:
+                  'Quieres borrar el reporte ' +
+                  (this.routine().idRoutine + 1) +
+                  '?',
+                header: 'Borrar reporte',
+                icon: 'pi pi-info-circle',
+                acceptButtonStyleClass: 'p-button-danger p-button-text',
+                rejectButtonStyleClass: 'p-button-text p-button-text',
+                acceptIcon: 'none',
+                rejectIcon: 'none',
+
+                accept: async () => {
+                  const success = await this.store.removeReport(
+                    this.routine().id ?? 0
+                  );
+
+                  if (success) {
+                    this.messageSvc.add({
+                      severity: 'success',
+                      summary: 'Operación realizada',
+                      detail: 'Reporte eliminado correctamente!',
+                      life: 2000,
+                    });
+                    this.router.navigate(['/routines']);
+                  } else {
+                    this.messageSvc.add({
+                      severity: 'error',
+                      summary: 'Operación realizada',
+                      detail: 'Fallo al eliminar el reporte',
+                    });
+                  }
+                },
+              });
+            },
+          },
+        ],
+      },
+    ];
+  }
+
+  getCurrentDate(date: number) {
+    return new Date(date);
   }
 }

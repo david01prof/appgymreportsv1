@@ -1,21 +1,24 @@
-@let routineLocal = data();
+@let routinelocal = routine();
 
-@if (routineLocal) {
-  <p-card class="mb-3 custom-card" (click)="checkActiveCard(routineLocal)" class="fadein animation-duration-1000" [routerLink]="[{  outlets: { content: [routineLocal.id] }} ]">
-    @if (routineLocal.favourite) {
-      <i class="pi pi-bookmark-fill favouriteItem">
-        <i class="pi pi-star-fill"></i>
-      </i>
-    }
+@if (routinelocal) {
+    <p-card>
 
-    <div class="flex justify-content-center">
-      <img src=".../../assets/images/serio.png" alt="" width="90" />
-    </div>
+      <div class="flex justify-content-start gap-2">
+        <i class="fa-solid fa-heart-pulse iconSize"></i>
+      
+        <div class="flex flex-column">
+          <span class="text-center text-lg font-bold text-color-secondary">Reporte {{routinelocal.idRoutine + 1}}</span>
+          <span class="ml-2">{{ getCurrentDate(routinelocal.created!) | date: 'dd/MM/yyyy'}}</span>
+        </div>
 
-    <pre class="text-center text-base text-color-secondary break-text">{{routineLocal.titleRoutine}}</pre>
+        <div class="flex justify-content-end w-full">
+          <i class="fa-solid fa-ellipsis-vertical iconSizeMenu cursor-pointer" (click)="menu.toggle($event)"></i>
+        </div>
+        <p-menu #menu [model]="items" [popup]="true" />
+      
+      </div>
+  
+    </p-card>
 
-    <div class="card flex justify-content-center">
-      <p-tag [value]="routineLocal.tag.title" [severity]="routineLocal.tag.tagDropdown?.severity" />
-    </div>
-  </p-card>
+    <p-confirmDialog  acceptLabel="Sí" rejectLabel="No"/>
 }

@@ -12,7 +12,7 @@ import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
   templateUrl: './report-card.component.html',
   styleUrl: './report-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ConfirmationService]
+  providers: [ConfirmationService,MessageService]
 })
 export class ReportCardComponent {
   

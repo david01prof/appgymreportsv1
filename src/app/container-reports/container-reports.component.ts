@@ -14,7 +14,7 @@ import { CardModule } from 'primeng/card';
 @Component({
   selector: 'app-container-reports',
   standalone: true,
-  imports: [ReportCardComponent, BreadcrumbComponent, FilterDataComponentsComponent, ReportsPrimeModule,ChartReportsComponent,CardModule],
+  imports: [ReportCardComponent, BreadcrumbComponent, FilterDataComponentsComponent, ReportsPrimeModule,ChartReportsComponent],
   templateUrl: './container-reports.component.html',
   styleUrl: './container-reports.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
