@@ -4,14 +4,14 @@
     <p-card>
 
       <div class="grid">
-        <i class="fa-solid fa-dumbbell iconSize col-4"></i>
+        <i class="fa-solid fa-dumbbell iconSize col-2"></i>
       
-        <div class="col-4 flex flex-column w-10">
-          <span class="text-center text-lg font-bold text-color-secondary">Rutina:  {{routinelocal.titleRoutine}}</span>
+        <div class="col-8 flex flex-column">
+          <span class="text-start text-lg font-bold text-color-secondary">Rutina:  {{routinelocal.titleRoutine}}</span>
           <span class="ml-2">{{ getCurrentDate(routinelocal.created!) | date: 'dd/MM/yyyy'}}</span>
         </div>
 
-        <div class="col-4 flex justify-content-end w-full">
+        <div class="col-2 flex justify-content-end">
           <i class="fa-solid fa-ellipsis-vertical iconSizeMenu cursor-pointer" (click)="menu.toggle($event)"></i>
         </div>
         <p-menu #menu [model]="items" [popup]="true" />

@@ -9,6 +9,7 @@ import { MessageService } from 'primeng/api';
 import { CardsRoutinesComponent } from './components/cards-routines/cards-routines.component';
 import { RoutinePrimeModule } from './routine-prime.module';
 import { RoutinesService } from './services/routines.service';
+import { ChartRoutineComponent } from "./components/chart-routine/chart-routine.component";
 
 
 @Component({
@@ -18,8 +19,9 @@ import { RoutinesService } from './services/routines.service';
     BreadcrumbComponent,
     CardsRoutinesComponent,
     FilterDataComponentsComponent,
-    RoutinePrimeModule
-  ],
+    RoutinePrimeModule,
+    ChartRoutineComponent
+],
   templateUrl: './container-routines.component.html',
   styleUrl: './container-routines.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,29 +1,25 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  input
-} from '@angular/core';
-import { IReport } from '@app/models';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { IRoutine } from '@app/models';
 import { NgApexchartsModule } from 'ng-apexcharts';
 
 @Component({
-  selector: 'app-chart-reports',
+  selector: 'app-chart-routine',
   standalone: true,
   imports: [NgApexchartsModule, CommonModule],
-  templateUrl: './chart-reports.component.html',
-  styleUrl: './chart-reports.component.scss',
+  templateUrl: './chart-routine.component.html',
+  styleUrl: './chart-routine.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChartReportsComponent {
-  dataReports = input.required<IReport[]>();
+export class ChartRoutineComponent {
+  dataRoutines = input.required<IRoutine[]>();
 
   public chartOptions: any | null;
 
   ngOnChanges() {
-    if (this.dataReports().length > 0) {
+    if (this.dataRoutines().length > 0) {
       let dataByMonth: any[] = [0];
-      this.dataReports().forEach((item) => {
+      this.dataRoutines().forEach((item) => {
         const date = new Date(item.created);
         const month = date.getMonth() + 1; // Meses comienzan en 0
         if (!dataByMonth[month]) {
@@ -32,11 +28,10 @@ export class ChartReportsComponent {
         dataByMonth[month] += 1;
       });
 
-
       this.chartOptions = {
         series: [
           {
-            name: 'Reportes',
+            name: 'Rutinas',
             data: Object.values(dataByMonth),
           },
         ],
@@ -70,9 +65,11 @@ export class ChartReportsComponent {
             colors: ['#304758'],
           },
         },
-        colors: ['#43ec0d'],
+        colors: ['#0EA5E9'],
         xaxis: {
-          categories: Object.keys(dataByMonth).map((date,index) => this.generateMonths(parseInt(date),[],index)),
+          categories: Object.keys(dataByMonth).map((date, index) =>
+            this.generateMonths(parseInt(date), [], index)
+          ),
           position: 'top',
           labels: {
             offsetY: -18,
@@ -102,27 +99,27 @@ export class ChartReportsComponent {
         },
         yaxis: {
           axisBorder: {
-            show: false
+            show: false,
           },
           axisTicks: {
-            show: false
+            show: false,
           },
           labels: {
             show: false,
-            formatter: function(val:any) {
+            formatter: function (val: any) {
               return val;
-            }
-          }
+            },
+          },
         },
         title: {
-          text: "Reportes" + " " +  new Date().getFullYear(),
+          text: 'Rutinas' + ' ' + new Date().getFullYear(),
           floating: 0,
           offsetY: 329,
-          align: "center",
+          align: 'center',
           style: {
-            color: "#444"
-          }
-        }
+            color: '#444',
+          },
+        },
       };
     }
   }
@@ -171,7 +168,7 @@ export class ChartReportsComponent {
         month = 'Noviembre';
         break;
       case 12:
-        month = 'Diciembre'
+        month = 'Diciembre';
     }
 
     if (labelData.length == 0) {
